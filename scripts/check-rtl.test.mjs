@@ -35,6 +35,12 @@ describe("findPhysicalClasses", () => {
     ).toEqual([]);
   });
 
+  it("skips comment lines", () => {
+    expect(classes(`// Code is always left-to-right\n * right-to-left`)).toEqual(
+      [],
+    );
+  });
+
   it("respects the rtl-ok escape hatch", () => {
     expect(
       classes(`<div className="left-0" /> // rtl-ok: tooltip arrow`),

@@ -45,6 +45,7 @@ export function findPhysicalClasses(source) {
   const hits = [];
   source.split("\n").forEach((line, i) => {
     if (/rtl-ok/.test(line)) return;
+    if (/^\s*(\/\/|\/\*|\*)/.test(line)) return; // comment lines
     for (const m of line.matchAll(PHYSICAL)) {
       const cls = m[0].replace(/^-/, "");
       hits.push({ line: i + 1, cls, use: LOGICAL[cls] });
