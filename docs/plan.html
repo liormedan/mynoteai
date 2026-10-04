@@ -135,7 +135,7 @@ footer { margin-top: 56px; color: var(--muted); font-size: 0.85rem; }
 
 <header>
   <h1>mynoteai — תוכנית פיתוח</h1>
-  <p class="sub">מערכת פתקים בסגנון Notion, קוד פתוח, פרוסה ב-Vercel. עודכן: 4.10.2026</p>
+  <p class="sub">מחברת אישית בסגנון Notion, בקוד פתוח, שכל מפתח מתקין לעצמו ב-Vercel וב-Firebase. עודכן: 5.10.2026</p>
   <nav class="toc">
     <a href="#decisions">החלטות</a>
     <a href="#repos">מאגרים</a>
@@ -160,6 +160,8 @@ footer { margin-top: 56px; color: var(--muted); font-size: 0.85rem; }
     <li><b>לא בונים עורך לבד.</b> העורך הוא רוב העבודה בפרויקט כזה, ו-BlockNote נותן אותו מוכן: תפריט <code>/</code>, גרירת בלוקים, קינון, טבלאות ותמונות.</li>
     <li><b>לא לוקחים מערכת שלמה.</b> AppFlowy, AFFiNE, Docmost ו-Outline דורשים שרת קבוע עם Docker ולא רצים ב-Vercel.</li>
     <li><b>לא משתמשים בחבילות <code>@blocknote/xl-*</code>.</b> הן ברישיון GPL-3.0 ויכפו את הרישיון על כל המאגר. את הבינה המלאכותית בונים ישירות עם Vercel AI SDK, וייצוא נעשה ל-Markdown עם פונקציות הליבה.</li>
+    <li><b>מודל הפצה: משתמש יחיד לכל התקנה.</b> המאגר הוא קוד פתוח שמפתחים מורידים ומתקינים כמחברת עצמאית, עם חשבון Vercel ופרויקט Firebase משלהם. אין שרת מרכזי, אין הרשמה ואין ריבוי משתמשים. ההתחברות קיימת רק כדי לנעול את ההתקנה לבעלים שלה.</li>
+    <li><b>חוויית ההתקנה היא חלק מהמוצר.</b> <code>pnpm dev</code> רץ מול Firebase Emulator בלי שום חשבון, וסקריפט התקנה מחבר לענן. היעד: ממאגר נקי למחברת שעובדת ב-Vercel תוך 15 דקות.</li>
     <li><b>Firebase כי זה מה שעובדים איתו</b> בשאר הפרויקטים. הקוד בצד הלקוח מדבר ישירות עם Firestore דרך כללי אבטחה, ונתיבי שרת ב-Next.js משתמשים ב-Admin SDK רק למה שחייב שרת: עוגיית התחברות, בינה מלאכותית, פרסום ציבורי.</li>
     <li><b>תוכן העמוד נשמר כ-JSON של BlockNote במסמך נפרד</b> מהמטא-דאטה של העמוד, כדי שטעינת העץ בסרגל הצד לא תמשוך את כל התוכן. במקביל נשמר טקסט שטוח לחיפוש.</li>
     <li><b>ל-Firestore אין חיפוש מלא בטקסט.</b> למשתמש יחיד בונים אינדקס בדפדפן (FlexSearch). אם יהיו הרבה משתמשים — הרחבה של Typesense או Algolia.</li>
@@ -187,7 +189,7 @@ footer { margin-top: 56px; color: var(--muted); font-size: 0.85rem; }
       <tr><td class="repo"><a href="https://github.com/vercel/ai">vercel/ai</a></td><td>Vercel AI SDK — כתיבה בעזרת מודל, צ'אט על הפתקים</td><td>Apache-2.0</td><td class="num">27.1k</td><td class="num">10/2026</td><td><span class="tag use">ספרינט 6</span></td></tr>
       <tr><td class="repo"><a href="https://github.com/lucaong/minisearch">lucaong/minisearch</a></td><td>אינדקס חיפוש קטן יותר — חלופה ל-FlexSearch</td><td>MIT</td><td class="num">6.2k</td><td class="num">09/2025</td><td><span class="tag ref">חלופה</span></td></tr>
       <tr><td class="repo"><a href="https://github.com/genkit-ai/genkit">genkit-ai/genkit</a></td><td>מסגרת הבינה המלאכותית של Firebase. מיותרת כשיש Vercel AI SDK</td><td>Apache-2.0</td><td class="num">6.5k</td><td class="num">10/2026</td><td><span class="tag no">נדחה — כפילות</span></td></tr>
-      <tr><td class="repo"><a href="https://github.com/yjs/yjs">yjs/yjs</a></td><td>עריכה משותפת בזמן אמת (BlockNote תומך מובנה)</td><td>MIT</td><td class="num">22.9k</td><td class="num">10/2026</td><td><span class="tag ref">אולי, ספרינט 8</span></td></tr>
+      <tr><td class="repo"><a href="https://github.com/yjs/yjs">yjs/yjs</a></td><td>עריכה משותפת בזמן אמת (BlockNote תומך מובנה)</td><td>MIT</td><td class="num">22.9k</td><td class="num">10/2026</td><td><span class="tag no">נדחה — משתמש יחיד</span></td></tr>
       <tr><td class="repo"><a href="https://github.com/jameskerr/react-arborist">jameskerr/react-arborist</a></td><td>עץ עם גרירה מוכנה — חלופה ל-dnd-kit בסרגל הצד</td><td>MIT</td><td class="num">3.7k</td><td class="num">07/2026</td><td><span class="tag ref">חלופה</span></td></tr>
       <tr><td class="repo"><a href="https://github.com/ueberdosis/tiptap">ueberdosis/tiptap</a></td><td>השכבה ש-BlockNote בנוי עליה. ניגע בה רק להרחבות מיוחדות</td><td>MIT</td><td class="num">38.6k</td><td class="num">10/2026</td><td><span class="tag ref">מתחת לעורך</span></td></tr>
       <tr><td class="repo"><a href="https://github.com/adityaphasu/notion-clone">adityaphasu/notion-clone</a></td><td>Zotion — שכפול Notion עם BlockNote. השראה לעץ עמודים, סל מחזור ופרסום</td><td>MIT</td><td class="num">179</td><td class="num">09/2026</td><td><span class="tag ref">השראה</span></td></tr>
@@ -226,18 +228,19 @@ footer { margin-top: 56px; color: var(--muted); font-size: 0.85rem; }
   </details>
 
   <details class="sprint" data-sprint="1" data-branch="sprint-1" data-verify="pnpm test:rules">
-    <summary><span class="num">1</span><h3>התחברות ומבנה נתונים</h3><span class="progress"></span>
-      <span class="goal">משתמש נכנס, ורואה רק את העמודים שלו.</span></summary>
+    <summary><span class="num">1</span><h3>בעלים יחיד ומבנה נתונים</h3><span class="progress"></span>
+      <span class="goal">רק הבעלים של ההתקנה נכנס, ומפתח חדש יכול להריץ הכול מקומית בלי חשבון.</span></summary>
     <div class="body">
       <ul class="tasks">
         <li data-task="S1-1"><span class="tid">S1-1</span><span class="st"></span><span class="txt">פרויקט Firebase, ומשתני סביבה ב-Vercel (הגדרות לקוח + חשבון שירות ל-Admin SDK)</span></li>
         <li data-task="S1-2"><span class="tid">S1-2</span><span class="st"></span><span class="txt">התחברות עם Google ועם קישור במייל דרך Firebase Auth</span></li>
-        <li data-task="S1-3"><span class="tid">S1-3</span><span class="st"></span><span class="txt">מבנה נתונים: <code>users/{uid}/pages/{pageId}</code> עם <code>title, icon, coverUrl, parentId, position, type, isArchived, isFavorite, createdAt, updatedAt</code>, ותוכן ב-<code>users/{uid}/pages/{pageId}/content/main</code> עם <code>blocks, plainText</code></span></li>
-        <li data-task="S1-4"><span class="tid">S1-4</span><span class="st"></span><span class="txt"><code>firestore.rules</code>: משתמש קורא וכותב רק תחת <code>users/{uid}</code> שלו, עם בדיקת שדות וטיפוסים</span></li>
+        <li data-task="S1-3"><span class="tid">S1-3</span><span class="st"></span><span class="txt">מבנה נתונים למשתמש יחיד: <code>pages/{pageId}</code> עם <code>title, icon, coverUrl, parentId, position, type, isArchived, isFavorite, createdAt, updatedAt</code>, ותוכן ב-<code>pages/{pageId}/content/main</code> עם <code>blocks, plainText</code></span></li>
+        <li data-task="S1-4"><span class="tid">S1-4</span><span class="st"></span><span class="txt">בעלים יחיד: <code>firestore.rules</code> ו-<code>storage.rules</code> נוצרים מתבנית עם <code>OWNER_EMAIL</code>, ומאשרים גישה רק לאימייל הזה כשהוא מאומת. כולל בדיקת שדות וטיפוסים</span></li>
         <li data-task="S1-5"><span class="tid">S1-5</span><span class="st"></span><span class="txt"><code>firebase.json</code>, <code>firestore.rules</code>, <code>firestore.indexes.json</code> ו-<code>storage.rules</code> במאגר, ופריסה שלהם עם <code>firebase deploy</code></span></li>
-        <li data-task="S1-6"><span class="tid">S1-6</span><span class="st"></span><span class="txt">middleware עם <code>next-firebase-auth-edge</code> שמפנה משתמש לא מחובר לעמוד הכניסה</span></li>
+        <li data-task="S1-6"><span class="tid">S1-6</span><span class="st"></span><span class="txt">middleware עם <code>next-firebase-auth-edge</code> שמפנה משתמש לא מחובר לעמוד הכניסה, ודוחה כל מי שאינו <code>OWNER_EMAIL</code></span></li>
+        <li data-task="S1-7"><span class="tid">S1-7</span><span class="st"></span><span class="txt"><code>pnpm dev</code> רץ כברירת מחדל מול Firebase Emulator עם נתוני דוגמה — מפתח חדש מנסה את המחברת בלי שום חשבון</span></li>
       </ul>
-      <div class="dod"><b>הגדרת סיום</b>בדיקות כללי אבטחה ב-Firebase Emulator (<code>@firebase/rules-unit-testing</code>) מוכיחות ששני משתמשים לא רואים זה את העמודים של זה.</div>
+      <div class="dod"><b>הגדרת סיום</b>בדיקות כללי אבטחה ב-Firebase Emulator (<code>@firebase/rules-unit-testing</code>) מוכיחות שמשתמש מחובר שאינו הבעלים לא קורא ולא כותב כלום. שכפול נקי של המאגר ו-<code>pnpm dev</code> מגיעים למחברת עובדת בלי חשבון ענן.</div>
     </div>
   </details>
 
@@ -249,7 +252,7 @@ footer { margin-top: 56px; color: var(--muted); font-size: 0.85rem; }
         <li data-task="S2-1"><span class="tid">S2-1</span><span class="st"></span><span class="txt">רכיב העורך נטען בצד הלקוח בלבד (<code>dynamic</code> עם <code>ssr: false</code>)</span></li>
         <li data-task="S2-2"><span class="tid">S2-2</span><span class="st"></span><span class="txt">שמירה אוטומטית עם השהיה של כשנייה, וחיווי "נשמר" / "שומר…"</span></li>
         <li data-task="S2-3"><span class="tid">S2-3</span><span class="st"></span><span class="txt">כותרת, אייקון ותמונת שער לכל עמוד</span></li>
-        <li data-task="S2-4"><span class="tid">S2-4</span><span class="st"></span><span class="txt">העלאת תמונות וקבצים ל-Cloud Storage for Firebase מתוך העורך, תחת <code>users/{uid}/</code></span></li>
+        <li data-task="S2-4"><span class="tid">S2-4</span><span class="st"></span><span class="txt">העלאת תמונות וקבצים ל-Cloud Storage for Firebase מתוך העורך. Storage דורש תוכנית Blaze, ולכן הוא רשות: בלעדיו ההעלאה מוסתרת ונשארת הדבקת קישור לתמונה</span></li>
         <li data-task="S2-5"><span class="tid">S2-5</span><span class="st"></span><span class="txt">קישור לעמוד אחר מתוך הטקסט (<code>@</code> או <code>[[</code>)</span></li>
         <li data-task="S2-6"><span class="tid">S2-6</span><span class="st"></span><span class="txt">מצב כהה שמשפיע גם על העורך</span></li>
       </ul>
@@ -310,11 +313,11 @@ footer { margin-top: 56px; color: var(--muted); font-size: 0.85rem; }
       <span class="goal">העוזר שנותן לפרויקט את השם: כתיבה, סיכום ושאלות על הפתקים.</span></summary>
     <div class="body">
       <ul class="tasks">
-        <li data-task="S6-1"><span class="tid">S6-1</span><span class="st"></span><span class="txt">נתיב API עם Vercel AI SDK והזרמת תשובות, מפתח המודל רק בצד השרת</span></li>
+        <li data-task="S6-1"><span class="tid">S6-1</span><span class="st"></span><span class="txt">נתיב API עם Vercel AI SDK והזרמת תשובות. כל מפתח מביא מפתח API משלו (Anthropic, OpenAI או Google) במשתנה סביבה בצד השרת. בלי מפתח — כל פיצ'רי הבינה המלאכותית מוסתרים והמחברת עובדת כרגיל</span></li>
         <li data-task="S6-2"><span class="tid">S6-2</span><span class="st"></span><span class="txt">פקודות בעורך: המשך כתיבה, סיכום, שכתוב, תרגום, רשימת משימות מהטקסט</span></li>
         <li data-task="S6-3"><span class="tid">S6-3</span><span class="st"></span><span class="txt">embeddings לכל עמוד כשדה וקטורי ב-Firestore, עם אינדקס וקטורי וחיפוש <code>findNearest</code> דרך Admin SDK</span></li>
         <li data-task="S6-4"><span class="tid">S6-4</span><span class="st"></span><span class="txt">"שאל את הפתקים שלי": צ'אט שעונה עם הפניות לעמודים</span></li>
-        <li data-task="S6-5"><span class="tid">S6-5</span><span class="st"></span><span class="txt">מגבלת שימוש לכל משתמש, כדי שהחשבון לא יתרוקן</span></li>
+        <li data-task="S6-5"><span class="tid">S6-5</span><span class="st"></span><span class="txt">תקרת שימוש יומית במשתנה סביבה, כדי שחשבון ה-API של המפתח לא יתרוקן</span></li>
       </ul>
       <div class="dod"><b>הגדרת סיום</b>שאלה על פתק שנכתב לפני חודש מקבלת תשובה נכונה עם קישור לעמוד.</div>
     </div>
@@ -336,16 +339,33 @@ footer { margin-top: 56px; color: var(--muted); font-size: 0.85rem; }
   </details>
 
   <details class="sprint" data-sprint="8" data-branch="sprint-8" data-verify="pnpm test">
-    <summary><span class="num">8</span><h3>עריכה משותפת (רשות)</h3><span class="progress"></span>
-      <span class="goal">רק אם יוחלט שהמערכת משמשת יותר ממשתמש אחד.</span></summary>
+    <summary><span class="num">8</span><h3>עריכה משותפת — בוטל</h3><span class="progress"></span>
+      <span class="goal">בוטל ב-5.10.2026: המוצר הוא מחברת למשתמש יחיד בכל התקנה, ואין עם מי לשתף.</span></summary>
     <div class="body">
       <ul class="tasks">
-        <li data-task="S8-1"><span class="tid">S8-1</span><span class="st"></span><span class="txt">שיתוף עמוד עם משתמש אחר, הרשאות קריאה ועריכה</span></li>
-        <li data-task="S8-2"><span class="tid">S8-2</span><span class="st"></span><span class="txt">Yjs עם ספק סנכרון: מעל Firestore (שכבר נותן עדכונים בזמן אמת) או שרת חיצוני. Vercel לא מחזיק חיבורי WebSocket ארוכים</span></li>
-        <li data-task="S8-3"><span class="tid">S8-3</span><span class="st"></span><span class="txt">סמנים של משתמשים אחרים בזמן אמת</span></li>
-        <li data-task="S8-4"><span class="tid">S8-4</span><span class="st"></span><span class="txt">הערות על בלוקים</span></li>
+        <li data-task="S8-1" data-status="dropped"><span class="tid">S8-1</span><span class="st"></span><span class="txt">שיתוף עמוד עם משתמש אחר, הרשאות קריאה ועריכה</span></li>
+        <li data-task="S8-2" data-status="dropped"><span class="tid">S8-2</span><span class="st"></span><span class="txt">Yjs עם ספק סנכרון: מעל Firestore (שכבר נותן עדכונים בזמן אמת) או שרת חיצוני. Vercel לא מחזיק חיבורי WebSocket ארוכים</span></li>
+        <li data-task="S8-3" data-status="dropped"><span class="tid">S8-3</span><span class="st"></span><span class="txt">סמנים של משתמשים אחרים בזמן אמת</span></li>
+        <li data-task="S8-4" data-status="dropped"><span class="tid">S8-4</span><span class="st"></span><span class="txt">הערות על בלוקים</span></li>
       </ul>
       <div class="dod"><b>הגדרת סיום</b>שני דפדפנים עורכים את אותו עמוד בלי לדרוס זה את זה.</div>
+    </div>
+  </details>
+
+  <details class="sprint" data-sprint="9" data-branch="sprint-9" data-verify="pnpm test && pnpm test:install">
+    <summary><span class="num">9</span><h3>הפצה למפתחים</h3><span class="progress"></span>
+      <span class="goal">מפתח שלא מכיר את הפרויקט מגיע למחברת משלו ב-Vercel תוך 15 דקות. בסוף הספרינט: גרסה v1.0.</span></summary>
+    <div class="body">
+      <ul class="tasks">
+        <li data-task="S9-1"><span class="tid">S9-1</span><span class="st"></span><span class="txt">סקריפט התקנה <code>pnpm setup</code>: בחירה או יצירה של פרויקט Firebase, כתיבת <code>.env.local</code>, יצירת כללי האבטחה עם <code>OWNER_EMAIL</code>, ופריסת הכללים והאינדקסים</span></li>
+        <li data-task="S9-2"><span class="tid">S9-2</span><span class="st"></span><span class="txt">כפתור Deploy to Vercel ב-README, עם רשימת משתני הסביבה ובדיקה בהפעלה שמסבירה מה חסר</span></li>
+        <li data-task="S9-3"><span class="tid">S9-3</span><span class="st"></span><span class="txt">מדריך התקנה צעד אחר צעד: Firebase, Vercel, Google sign-in, מפתח API לבינה מלאכותית, ו-Storage כרשות</span></li>
+        <li data-task="S9-4"><span class="tid">S9-4</span><span class="st"></span><span class="txt">בדיקת התקנה נקייה ב-CI (<code>pnpm test:install</code>): שכפול טרי, התקנה ובנייה מול האמולטור</span></li>
+        <li data-task="S9-5"><span class="tid">S9-5</span><span class="st"></span><span class="txt">עדכונים: איך מפתח מושך גרסה חדשה לעותק שלו, ומיגרציות לנתונים קיימים ב-Firestore</span></li>
+        <li data-task="S9-6"><span class="tid">S9-6</span><span class="st"></span><span class="txt">CHANGELOG, גרסאות סמנטיות ו-GitHub Release לכל תגית</span></li>
+        <li data-task="S9-7"><span class="tid">S9-7</span><span class="st"></span><span class="txt">CONTRIBUTING, תבניות ל-issue ול-PR, ומדיניות דיווח על בעיות אבטחה</span></li>
+      </ul>
+      <div class="dod"><b>הגדרת סיום</b>מישהו שלא עבד על הפרויקט מתקין אותו לפי המדריך בלבד, בלי לשאול שאלות, ומגיע למחברת עובדת ב-Vercel תוך 15 דקות.</div>
     </div>
   </details>
 </section>
@@ -388,7 +408,9 @@ footer { margin-top: 56px; color: var(--muted); font-size: 0.85rem; }
       <tr><td>עברית ב-BlockNote. היו תקלות בתפריט הצד ובגרירה בכיוון ימין-לשמאל; הן סגורות מ-2025–2026, אבל לא נבדקו אצלנו</td><td>ספרינט 0 נגמר בשער החלטה. חלופה: Tiptap</td></tr>
       <tr><td>BlockNote עדיין בגרסה 0.x, ושינויים שוברים אפשריים</td><td>נעילת גרסה מדויקת, ועדכון רק בענף נפרד</td></tr>
       <tr><td>רישיון: חבילות <code>xl-*</code> ב-GPL-3.0</td><td>לא מתקינים אותן. בדיקה ב-CI שנכשלת אם הן מופיעות ב-<code>package.json</code></td></tr>
-      <tr><td>Cloud Storage for Firebase דורש תוכנית Blaze (חשבון חיוב) מאז 3.2.2026, גם בשימוש קטן</td><td>להפעיל Blaze עם התראת תקציב נמוכה. בתוך מכסת החינם החשבון נשאר על אפס</td></tr>
+      <tr><td>Cloud Storage for Firebase דורש תוכנית Blaze (חשבון חיוב) מאז 3.2.2026, גם בשימוש קטן. מפתח שלא רוצה לחבר כרטיס אשראי לא יוכל להעלות תמונות</td><td>Storage הוא רשות. בלעדיו המחברת עובדת, וההעלאה מוחלפת בהדבקת קישור. המדריך מסביר איך להפעיל Blaze עם התראת תקציב</td></tr>
+      <tr><td>התקנה מסובכת = אף אחד לא משתמש. Firebase + Vercel + Google sign-in הם הרבה צעדים למפתח חדש</td><td>מצב אמולטור בלי חשבון מספרינט 1, סקריפט התקנה ומדריך בספרינט 9, ובדיקת התקנה נקייה ב-CI</td></tr>
+      <tr><td>Vercel ו-Firebase הם שני ספקים שהמפתח צריך לפתוח בהם חשבון</td><td>לבדוק בספרינט 9 אם Firebase App Hosting יכול להחליף את Vercel כאפשרות התקנה בספק אחד</td></tr>
       <tr><td>מסמך ב-Firestore מוגבל ל-1MiB, ועמוד ארוך מאוד עלול לחרוג</td><td>תמונות נשמרות כקישור ל-Storage, ובדיקת גודל לפני שמירה עם אזהרה למשתמש</td></tr>
       <tr><td>Firestore גובה לפי קריאה, ועץ של מאות עמודים נקרא בכל טעינה</td><td>מאזין אחד עם מטמון מקומי, ומטא-דאטה מופרדת מהתוכן</td></tr>
       <tr><td>עלויות: Firebase ו-Vercel בחינם עד גבול, ומודל השפה בתשלום לפי שימוש</td><td>מגבלת שימוש בספרינט 6, והתראה בחשבון הספק</td></tr>
@@ -400,8 +422,8 @@ footer { margin-top: 56px; color: var(--muted); font-size: 0.85rem; }
 <section id="open">
   <h2>שאלות פתוחות</h2>
   <ul class="plain">
-    <li><b>משתמש יחיד או רבים?</b> ההנחה כרגע: אדם אחד, עם התחברות כדי שהנתונים יהיו פרטיים. משפיע על ספרינט 8.</li>
-    <li><b>איזה מודל לבינה המלאכותית?</b> ההנחה: Claude דרך Vercel AI SDK, עם אפשרות להחליף ספק.</li>
+    <li><b>הוכרע ב-5.10.2026 — משתמש יחיד:</b> קוד פתוח שמפתחים מורידים ומתקינים כמחברת עצמאית. ספרינט 8 בוטל ונוסף ספרינט 9.</li>
+    <li><b>הוכרע ב-5.10.2026 — בינה מלאכותית:</b> כל מפתח מביא מפתח API משלו. ברירת המחדל Claude, ו-AI SDK מאפשר להחליף ספק.</li>
     <li><b>שפת התיעוד במאגר הציבורי:</b> כרגע עברית. אנגלית תפתח את הפרויקט לתורמים מבחוץ.</li>
   </ul>
 </section>
@@ -434,7 +456,7 @@ footer { margin-top: 56px; color: var(--muted); font-size: 0.85rem; }
     });
     var n = sprint.getAttribute("data-sprint");
     var st = P && P.sprints[n];
-    var state = !st ? "" : st.closed ? " · סגור " + st.tag : st.ref ? " · " + st.ref : "";
+    var state = !st ? "" : st.dropped ? " · בוטל" : st.closed ? " · סגור " + st.tag : st.ref ? " · " + st.ref : "";
     sprint.querySelector(".progress").textContent = done + " / " + active + state;
   });
 
@@ -458,6 +480,8 @@ footer { margin-top: 56px; color: var(--muted); font-size: 0.85rem; }
   document.querySelectorAll(".sprint").forEach(function (sprint) {
     var branch = sprint.getAttribute("data-branch");
     var n = sprint.getAttribute("data-sprint");
+    var tasks = sprint.querySelectorAll("li[data-task]");
+    if (tasks.length === sprint.querySelectorAll('li[data-status="dropped"]').length) return;
     lines.push("  branch " + branch);
     sprint.querySelectorAll("li[data-task]").forEach(function (li) {
       var status = li.getAttribute("data-status-live");

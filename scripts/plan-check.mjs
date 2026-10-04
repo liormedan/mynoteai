@@ -98,7 +98,9 @@ for (const s of sprints) {
   for (const sha of unique) if (!branchOf.has(sha)) branchOf.set(sha, s.n);
   const merged = ref ? unique.length === 0 : false;
   const started = Boolean(ref) || tagExists || [...commits.values()].some((c) => c.ids.some((id) => taskIndex.get(id)?.sprint === s.n));
-  sprintState[s.n] = { branch: s.branch, ref, tag, tagExists, merged, started, closed: tagExists, verify: s.verify ? { cmd: s.verify, ok: null } : null };
+  const dropped = s.tasks.length > 0 && s.tasks.every((t) => t.dropped);
+  sprintState[s.n] = { branch: s.branch, ref, tag, tagExists, merged, started, dropped, closed: tagExists || dropped, verify: s.verify ? { cmd: s.verify, ok: null } : null };
+  if (dropped && ref) warn(`ספרינט ${s.n} בוטל בתוכנית, אבל הענף ${s.branch} קיים.`);
 
   if (tagExists && !isAncestor(tag, mainRef)) err(`התגית ${tag} לא נמצאת על main. ספרינט נסגר רק אחרי מיזוג.`);
   if (tagExists && ref && unique.length) err(`ספרינט ${s.n} סגור (${tag}), אבל בענף ${s.branch} יש ${unique.length} קומיטים שלא מוזגו.`);
@@ -187,7 +189,7 @@ for (const s of sprints) {
   const counts = { done: 0, progress: 0, todo: 0, dropped: 0 };
   for (const t of s.tasks) counts[taskState[t.id].status]++;
   const active = s.tasks.length - counts.dropped;
-  const state = st.closed ? `סגור (${st.tag})` : st.ref ? `פתוח בענף ${st.ref}` : st.started ? "התחיל" : "לא התחיל";
+  const state = st.dropped ? "בוטל" : st.closed ? `סגור (${st.tag})` : st.ref ? `פתוח בענף ${st.ref}` : st.started ? "התחיל" : "לא התחיל";
   lines.push(`  ספרינט ${s.n} ${s.title}: ${counts.done}/${active} — ${state}`);
   if (st.started && !st.closed) {
     for (const t of s.tasks) {
