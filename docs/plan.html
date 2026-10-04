@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mynoteai — תוכנית פיתוח</title>
+<style>
+:root {
+  --bg: #fbfaf8;
+  --surface: #ffffff;
+  --surface-2: #f3f1ed;
+  --text: #1f1d1a;
+  --muted: #6b665e;
+  --border: #e4e0d8;
+  --accent: #2f6fde;
+  --accent-soft: #e6eefc;
+  --use: #1f7a4d;
+  --use-soft: #e3f3ea;
+  --ref: #8a5a00;
+  --ref-soft: #fbf0d9;
+  --no: #a33a3a;
+  --no-soft: #f8e4e4;
+  --radius: 10px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #191816;
+    --surface: #22211e;
+    --surface-2: #2b2a26;
+    --text: #ece9e3;
+    --muted: #a39e94;
+    --border: #3a3833;
+    --accent: #7aa7f5;
+    --accent-soft: #24324b;
+    --use: #6fcf9b;
+    --use-soft: #1f3529;
+    --ref: #e6b85c;
+    --ref-soft: #3a3020;
+    --no: #ee8a8a;
+    --no-soft: #3d2424;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #191816;
+  --surface: #22211e;
+  --surface-2: #2b2a26;
+  --text: #ece9e3;
+  --muted: #a39e94;
+  --border: #3a3833;
+  --accent: #7aa7f5;
+  --accent-soft: #24324b;
+  --use: #6fcf9b;
+  --use-soft: #1f3529;
+  --ref: #e6b85c;
+  --ref-soft: #3a3020;
+  --no: #ee8a8a;
+  --no-soft: #3d2424;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Segoe UI", "Rubik", "Assistant", system-ui, sans-serif;
+  line-height: 1.6;
+}
+main { max-width: 980px; margin: 0 auto; padding: 32px 16px 80px; }
+h1 { font-size: 2rem; margin: 0 0 4px; }
+h2 { font-size: 1.35rem; margin: 48px 0 12px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+h3 { font-size: 1.05rem; margin: 0; }
+p { margin: 8px 0; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+code { font-family: "Cascadia Code", Consolas, monospace; font-size: 0.88em; background: var(--surface-2); padding: 1px 5px; border-radius: 4px; direction: ltr; unicode-bidi: embed; }
+.sub { color: var(--muted); margin: 0; }
+nav.toc { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+nav.toc a { background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 4px 12px; font-size: 0.9rem; color: var(--text); }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; }
+.card .k { color: var(--muted); font-size: 0.82rem; }
+.card .v { font-weight: 600; }
+
+.table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
+table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+th, td { text-align: start; padding: 9px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+th { background: var(--surface-2); font-weight: 600; white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+td.repo { direction: ltr; text-align: right; white-space: nowrap; }
+td.num { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.tag { display: inline-block; font-size: 0.78rem; font-weight: 600; padding: 1px 8px; border-radius: 999px; white-space: nowrap; }
+.tag.use { background: var(--use-soft); color: var(--use); }
+.tag.ref { background: var(--ref-soft); color: var(--ref); }
+.tag.no { background: var(--no-soft); color: var(--no); }
+
+.sprint { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin: 14px 0; overflow: hidden; }
+.sprint > summary { list-style: none; cursor: pointer; padding: 14px 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.sprint > summary::-webkit-details-marker { display: none; }
+.sprint .num { background: var(--accent-soft); color: var(--accent); font-weight: 700; border-radius: 8px; padding: 2px 10px; font-size: 0.9rem; }
+.sprint .goal { color: var(--muted); font-size: 0.92rem; flex-basis: 100%; }
+.sprint .progress { margin-inline-start: auto; font-size: 0.82rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.sprint .body { padding: 0 16px 16px; border-top: 1px solid var(--border); }
+.sprint ul.tasks { list-style: none; padding: 0; margin: 12px 0; }
+.sprint ul.tasks li { display: flex; gap: 10px; align-items: flex-start; padding: 5px 0; }
+.sprint ul.tasks input { margin-top: 5px; width: 16px; height: 16px; accent-color: var(--accent); flex-shrink: 0; }
+.sprint ul.tasks li.done span { color: var(--muted); text-decoration: line-through; }
+.dod { background: var(--surface-2); border-radius: 8px; padding: 10px 12px; font-size: 0.9rem; }
+.dod b { display: block; margin-bottom: 2px; }
+.gate { border-inline-start: 3px solid var(--ref); }
+
+ul.plain { padding-inline-start: 20px; }
+ul.plain li { margin: 4px 0; }
+footer { margin-top: 56px; color: var(--muted); font-size: 0.85rem; }
+</style>
+</head>
+<body>
+<main>
+
+<header>
+  <h1>mynoteai — תוכנית פיתוח</h1>
+  <p class="sub">מערכת פתקים בסגנון Notion, קוד פתוח, פרוסה ב-Vercel. עודכן: 4.10.2026</p>
+  <nav class="toc">
+    <a href="#decisions">החלטות</a>
+    <a href="#repos">מאגרים</a>
+    <a href="#sprints">ספרינטים</a>
+    <a href="#risks">סיכונים</a>
+    <a href="#open">שאלות פתוחות</a>
+  </nav>
+</header>
+
+<section id="decisions">
+  <h2>החלטות יסוד</h2>
+  <div class="grid">
+    <div class="card"><div class="k">מסגרת</div><div class="v">Next.js 16 (App Router) + TypeScript</div></div>
+    <div class="card"><div class="k">עורך</div><div class="v">BlockNote 0.55 (ליבה, MPL-2.0)</div></div>
+    <div class="card"><div class="k">נתונים, התחברות, קבצים</div><div class="v">Supabase (Postgres + Auth + Storage)</div></div>
+    <div class="card"><div class="k">ממשק</div><div class="v">Tailwind + shadcn/ui</div></div>
+    <div class="card"><div class="k">פריסה</div><div class="v">Vercel, פריסה אוטומטית מ-<code>main</code></div></div>
+    <div class="card"><div class="k">רישיון המאגר</div><div class="v">MIT</div></div>
+  </div>
+  <ul class="plain">
+    <li><b>לא בונים עורך לבד.</b> העורך הוא רוב העבודה בפרויקט כזה, ו-BlockNote נותן אותו מוכן: תפריט <code>/</code>, גרירת בלוקים, קינון, טבלאות ותמונות.</li>
+    <li><b>לא לוקחים מערכת שלמה.</b> AppFlowy, AFFiNE, Docmost ו-Outline דורשים שרת קבוע עם Docker ולא רצים ב-Vercel.</li>
+    <li><b>לא משתמשים בחבילות <code>@blocknote/xl-*</code>.</b> הן ברישיון GPL-3.0 ויכפו את הרישיון על כל המאגר. את הבינה המלאכותית בונים ישירות עם Vercel AI SDK, וייצוא נעשה ל-Markdown עם פונקציות הליבה.</li>
+    <li><b>תוכן העמוד נשמר כ-JSON של BlockNote</b> בעמודת <code>jsonb</code>, ובמקביל טקסט שטוח לחיפוש.</li>
+  </ul>
+</section>
+
+<section id="repos">
+  <h2>רשימת מאגרים</h2>
+  <p class="sub">נתונים מ-GitHub API נכון ל-4.10.2026. "פעילות" = הדחיפה האחרונה למאגר.</p>
+
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>מאגר</th><th>תפקיד</th><th>רישיון</th><th>כוכבים</th><th>פעילות</th><th>החלטה</th></tr></thead>
+    <tbody>
+      <tr><td class="repo"><a href="https://github.com/TypeCellOS/BlockNote">TypeCellOS/BlockNote</a></td><td>עורך הבלוקים. חבילות: <code>@blocknote/core</code>, <code>react</code>, <code>shadcn</code></td><td>MPL-2.0 (ליבה)</td><td class="num">10.3k</td><td class="num">10/2026</td><td><span class="tag use">בשימוש</span></td></tr>
+      <tr><td class="repo"><a href="https://github.com/vercel/next.js">vercel/next.js</a></td><td>מסגרת היישום</td><td>MIT</td><td class="num">143k</td><td class="num">10/2026</td><td><span class="tag use">בשימוש</span></td></tr>
+      <tr><td class="repo"><a href="https://github.com/supabase/supabase">supabase/supabase</a></td><td>מסד נתונים, התחברות, אחסון תמונות, חיפוש</td><td>Apache-2.0</td><td class="num">111k</td><td class="num">10/2026</td><td><span class="tag use">בשימוש</span></td></tr>
+      <tr><td class="repo"><a href="https://github.com/shadcn-ui/ui">shadcn-ui/ui</a></td><td>רכיבי ממשק (סרגל צד, דיאלוגים, תפריטים)</td><td>MIT</td><td class="num">125k</td><td class="num">10/2026</td><td><span class="tag use">בשימוש</span></td></tr>
+      <tr><td class="repo"><a href="https://github.com/dip/cmdk">dip/cmdk</a></td><td>חלון פקודות וחיפוש <code>Ctrl+K</code></td><td>MIT</td><td class="num">13k</td><td class="num">10/2025</td><td><span class="tag use">בשימוש</span></td></tr>
+      <tr><td class="repo"><a href="https://github.com/clauderic/dnd-kit">clauderic/dnd-kit</a></td><td>גרירה בעץ העמודים ובלוח קנבן</td><td>MIT</td><td class="num">17.7k</td><td class="num">09/2026</td><td><span class="tag use">בשימוש</span></td></tr>
+      <tr><td class="repo"><a href="https://github.com/TanStack/table">TanStack/table</a></td><td>תצוגת טבלה למסדי נתונים בסגנון Notion</td><td>MIT</td><td class="num">28.5k</td><td class="num">10/2026</td><td><span class="tag use">ספרינט 5</span></td></tr>
+      <tr><td class="repo"><a href="https://github.com/vercel/ai">vercel/ai</a></td><td>Vercel AI SDK — כתיבה בעזרת מודל, צ'אט על הפתקים</td><td>Apache-2.0</td><td class="num">27.1k</td><td class="num">10/2026</td><td><span class="tag use">ספרינט 6</span></td></tr>
+      <tr><td class="repo"><a href="https://github.com/pgvector/pgvector">pgvector/pgvector</a></td><td>חיפוש סמנטי בתוך Supabase</td><td>PostgreSQL</td><td class="num">23.2k</td><td class="num">10/2026</td><td><span class="tag use">ספרינט 6</span></td></tr>
+      <tr><td class="repo"><a href="https://github.com/yjs/yjs">yjs/yjs</a></td><td>עריכה משותפת בזמן אמת (BlockNote תומך מובנה)</td><td>MIT</td><td class="num">22.9k</td><td class="num">10/2026</td><td><span class="tag ref">אולי, ספרינט 8</span></td></tr>
+      <tr><td class="repo"><a href="https://github.com/jameskerr/react-arborist">jameskerr/react-arborist</a></td><td>עץ עם גרירה מוכנה — חלופה ל-dnd-kit בסרגל הצד</td><td>MIT</td><td class="num">3.7k</td><td class="num">07/2026</td><td><span class="tag ref">חלופה</span></td></tr>
+      <tr><td class="repo"><a href="https://github.com/ueberdosis/tiptap">ueberdosis/tiptap</a></td><td>השכבה ש-BlockNote בנוי עליה. ניגע בה רק להרחבות מיוחדות</td><td>MIT</td><td class="num">38.6k</td><td class="num">10/2026</td><td><span class="tag ref">מתחת לעורך</span></td></tr>
+      <tr><td class="repo"><a href="https://github.com/adityaphasu/notion-clone">adityaphasu/notion-clone</a></td><td>Zotion — שכפול Notion עם BlockNote. השראה לעץ עמודים, סל מחזור ופרסום</td><td>MIT</td><td class="num">179</td><td class="num">09/2026</td><td><span class="tag ref">השראה</span></td></tr>
+      <tr><td class="repo"><a href="https://github.com/sgbj/notion-clone">sgbj/notion-clone</a></td><td>אותו מבנה עם Convex. בלי רישיון — קוראים, לא מעתיקים</td><td>אין</td><td class="num">30</td><td class="num">11/2023</td><td><span class="tag ref">קריאה בלבד</span></td></tr>
+      <tr><td class="repo"><a href="https://github.com/steven-tey/novel">steven-tey/novel</a></td><td>עורך Notion עם בינה מלאכותית</td><td>Apache-2.0</td><td class="num">16.5k</td><td class="num">01/2025</td><td><span class="tag no">נדחה — לא מתוחזק</span></td></tr>
+      <tr><td class="repo"><a href="https://github.com/aldhyx/station-a-notion-clone">aldhyx/station-a-notion-clone</a></td><td>שכפול עם Supabase ו-Editor.js</td><td>MIT</td><td class="num">28</td><td class="num">09/2024</td><td><span class="tag no">נדחה — בארכיון</span></td></tr>
+      <tr><td class="repo"><a href="https://github.com/AppFlowy-IO/AppFlowy">AppFlowy-IO/AppFlowy</a></td><td>מערכת שלמה</td><td>AGPL-3.0</td><td class="num">77.1k</td><td class="num">10/2026</td><td><span class="tag no">נדחה — דורש שרת</span></td></tr>
+      <tr><td class="repo"><a href="https://github.com/toeverything/AFFiNE">toeverything/AFFiNE</a></td><td>מערכת שלמה עם לוח ציור</td><td>מותאם</td><td class="num">73.2k</td><td class="num">10/2026</td><td><span class="tag no">נדחה — דורש שרת</span></td></tr>
+      <tr><td class="repo"><a href="https://github.com/outline/outline">outline/outline</a></td><td>ויקי לצוותים</td><td>BSL</td><td class="num">40.8k</td><td class="num">10/2026</td><td><span class="tag no">נדחה — דורש שרת</span></td></tr>
+      <tr><td class="repo"><a href="https://github.com/docmost/docmost">docmost/docmost</a></td><td>ויקי לצוותים</td><td>AGPL-3.0</td><td class="num">21.9k</td><td class="num">10/2026</td><td><span class="tag no">נדחה — דורש שרת</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section id="sprints">
+  <h2>ספרינטים</h2>
+  <p class="sub">ספרינט = שבוע עבודה בערך. כל ספרינט נגמר בגרסה שעובדת ופרוסה ב-Vercel. סימוני ההתקדמות נשמרים בדפדפן הזה בלבד.</p>
+
+  <details class="sprint gate" open>
+    <summary><span class="num">0</span><h3>תשתית ובדיקת עברית</h3><span class="progress"></span>
+      <span class="goal">שלד ריק שעולה ל-Vercel, ותשובה ברורה: האם BlockNote עובד טוב בעברית.</span></summary>
+    <div class="body">
+      <ul class="tasks">
+        <li><input type="checkbox"><span>מאגר ציבורי ב-GitHub עם רישיון MIT, README ותוכנית</span></li>
+        <li><input type="checkbox"><span>שלד Next.js 16 + TypeScript + Tailwind + shadcn/ui, עם <code>pnpm</code></span></li>
+        <li><input type="checkbox"><span>ESLint, Prettier, ובדיקות Vitest ריקות שרצות</span></li>
+        <li><input type="checkbox"><span>GitHub Actions: בדיקת טיפוסים, lint ובנייה על כל PR</span></li>
+        <li><input type="checkbox"><span>חיבור הפרויקט ל-Vercel ופריסה ראשונה</span></li>
+        <li><input type="checkbox"><span>עמוד ניסוי עם BlockNote: כתיבה בעברית, ערבוב עברית ואנגלית, רשימות, גרירת בלוקים, תפריט <code>/</code>, טבלה</span></li>
+        <li><input type="checkbox"><span>כיוון לכל בלוק לפי התוכן (<code>dir="auto"</code>) ובדיקה שתפריט הצד נמצא בצד הנכון</span></li>
+      </ul>
+      <div class="dod"><b>שער החלטה</b>אם העברית ב-BlockNote שבורה ואין לה תיקון סביר — עוברים ל-Tiptap עם ממשק משלנו, והספרינטים 2–3 מתארכים בשבועיים.</div>
+    </div>
+  </details>
+
+  <details class="sprint">
+    <summary><span class="num">1</span><h3>התחברות ומבנה נתונים</h3><span class="progress"></span>
+      <span class="goal">משתמש נכנס, ורואה רק את העמודים שלו.</span></summary>
+    <div class="body">
+      <ul class="tasks">
+        <li><input type="checkbox"><span>פרויקט Supabase, ומשתני סביבה ב-Vercel</span></li>
+        <li><input type="checkbox"><span>התחברות עם קישור במייל ועם Google דרך Supabase Auth</span></li>
+        <li><input type="checkbox"><span>טבלת <code>pages</code>: <code>id, owner_id, parent_id, title, icon, cover_url, content jsonb, plain_text, position, is_archived, created_at, updated_at</code></span></li>
+        <li><input type="checkbox"><span>מדיניות RLS: כל משתמש רואה וכותב רק את השורות שלו</span></li>
+        <li><input type="checkbox"><span>קובצי migration במאגר (<code>supabase/migrations</code>) וטיפוסים שנוצרים אוטומטית</span></li>
+        <li><input type="checkbox"><span>middleware שמפנה משתמש לא מחובר לעמוד הכניסה</span></li>
+      </ul>
+      <div class="dod"><b>הגדרת סיום</b>שני משתמשים שונים לא רואים זה את העמודים של זה, וזה נבדק בבדיקה אוטומטית.</div>
+    </div>
+  </details>
+
+  <details class="sprint">
+    <summary><span class="num">2</span><h3>העורך</h3><span class="progress"></span>
+      <span class="goal">פותחים עמוד, כותבים, והתוכן נשמר לבד.</span></summary>
+    <div class="body">
+      <ul class="tasks">
+        <li><input type="checkbox"><span>רכיב העורך נטען בצד הלקוח בלבד (<code>dynamic</code> עם <code>ssr: false</code>)</span></li>
+        <li><input type="checkbox"><span>שמירה אוטומטית עם השהיה של כשנייה, וחיווי "נשמר" / "שומר…"</span></li>
+        <li><input type="checkbox"><span>כותרת, אייקון ותמונת שער לכל עמוד</span></li>
+        <li><input type="checkbox"><span>העלאת תמונות וקבצים ל-Supabase Storage מתוך העורך</span></li>
+        <li><input type="checkbox"><span>קישור לעמוד אחר מתוך הטקסט (<code>@</code> או <code>[[</code>)</span></li>
+        <li><input type="checkbox"><span>מצב כהה שמשפיע גם על העורך</span></li>
+      </ul>
+      <div class="dod"><b>הגדרת סיום</b>רענון הדפדפן באמצע כתיבה לא מאבד יותר משנייה של טקסט.</div>
+    </div>
+  </details>
+
+  <details class="sprint">
+    <summary><span class="num">3</span><h3>עץ עמודים</h3><span class="progress"></span>
+      <span class="goal">סרגל צד עם עמודים מקוננים, כמו ב-Notion.</span></summary>
+    <div class="body">
+      <ul class="tasks">
+        <li><input type="checkbox"><span>סרגל צד עם עץ שנפתח ונסגר, טעינה עצלה של ילדים</span></li>
+        <li><input type="checkbox"><span>יצירת עמוד חדש בכל רמה, שינוי שם, שכפול</span></li>
+        <li><input type="checkbox"><span>גרירה להזזת עמוד ולשינוי סדר</span></li>
+        <li><input type="checkbox"><span>סל מחזור: מחיקה רכה, שחזור, ומחיקה סופית רק בלחיצה מפורשת</span></li>
+        <li><input type="checkbox"><span>שביל ניווט (breadcrumbs) בראש העמוד</span></li>
+        <li><input type="checkbox"><span>מועדפים</span></li>
+      </ul>
+      <div class="dod"><b>הגדרת סיום</b>עץ של 500 עמודים נטען בפחות משנייה, והזזת ענף שלם שומרת על כל הילדים.</div>
+    </div>
+  </details>
+
+  <details class="sprint">
+    <summary><span class="num">4</span><h3>חיפוש וניווט</h3><span class="progress"></span>
+      <span class="goal">מוצאים כל פתק תוך שתי שניות מהמקלדת.</span></summary>
+    <div class="body">
+      <ul class="tasks">
+        <li><input type="checkbox"><span>חיפוש מלא בטקסט ב-Postgres על <code>title</code> ו-<code>plain_text</code>, כולל עברית</span></li>
+        <li><input type="checkbox"><span>חלון פקודות <code>Ctrl+K</code>: חיפוש, עמודים אחרונים, יצירת עמוד</span></li>
+        <li><input type="checkbox"><span>קיצורי מקלדת: עמוד חדש, מעבר לסרגל, החלפת מצב כהה</span></li>
+        <li><input type="checkbox"><span>תצוגה מותאמת לנייד</span></li>
+        <li><input type="checkbox"><span>PWA: התקנה כאפליקציה במחשב ובטלפון</span></li>
+      </ul>
+      <div class="dod"><b>הגדרת סיום</b>מילה עברית עם תחילית (ה, ו, ב, ל) נמצאת בחיפוש.</div>
+    </div>
+  </details>
+
+  <details class="sprint">
+    <summary><span class="num">5</span><h3>מסדי נתונים</h3><span class="progress"></span>
+      <span class="goal">עמוד שהוא טבלה, עם שדות, מיון, סינון ולוח קנבן.</span></summary>
+    <div class="body">
+      <ul class="tasks">
+        <li><input type="checkbox"><span>סוג עמוד <code>database</code>, וכל שורה היא עמוד רגיל עם מאפיינים</span></li>
+        <li><input type="checkbox"><span>סוגי שדות: טקסט, מספר, בחירה, בחירה מרובה, תאריך, תיבת סימון, קישור</span></li>
+        <li><input type="checkbox"><span>תצוגת טבלה עם TanStack Table: עריכה בתא, מיון, סינון</span></li>
+        <li><input type="checkbox"><span>תצוגת לוח (קנבן) לפי שדה בחירה, עם גרירה</span></li>
+        <li><input type="checkbox"><span>תצוגות שמורות לכל מסד נתונים</span></li>
+      </ul>
+      <div class="dod"><b>הגדרת סיום</b>אפשר לנהל רשימת משימות שלמה בלוח קנבן בלי לגעת בקוד.</div>
+    </div>
+  </details>
+
+  <details class="sprint">
+    <summary><span class="num">6</span><h3>בינה מלאכותית</h3><span class="progress"></span>
+      <span class="goal">העוזר שנותן לפרויקט את השם: כתיבה, סיכום ושאלות על הפתקים.</span></summary>
+    <div class="body">
+      <ul class="tasks">
+        <li><input type="checkbox"><span>נתיב API עם Vercel AI SDK והזרמת תשובות, מפתח המודל רק בצד השרת</span></li>
+        <li><input type="checkbox"><span>פקודות בעורך: המשך כתיבה, סיכום, שכתוב, תרגום, רשימת משימות מהטקסט</span></li>
+        <li><input type="checkbox"><span>embeddings לכל עמוד ב-pgvector, עדכון אחרי שמירה</span></li>
+        <li><input type="checkbox"><span>"שאל את הפתקים שלי": צ'אט שעונה עם הפניות לעמודים</span></li>
+        <li><input type="checkbox"><span>מגבלת שימוש לכל משתמש, כדי שהחשבון לא יתרוקן</span></li>
+      </ul>
+      <div class="dod"><b>הגדרת סיום</b>שאלה על פתק שנכתב לפני חודש מקבלת תשובה נכונה עם קישור לעמוד.</div>
+    </div>
+  </details>
+
+  <details class="sprint">
+    <summary><span class="num">7</span><h3>פרסום, ייבוא וייצוא</h3><span class="progress"></span>
+      <span class="goal">הנתונים לא נעולים במערכת.</span></summary>
+    <div class="body">
+      <ul class="tasks">
+        <li><input type="checkbox"><span>פרסום עמוד כקישור ציבורי לקריאה בלבד</span></li>
+        <li><input type="checkbox"><span>ייצוא עמוד או ענף ל-Markdown</span></li>
+        <li><input type="checkbox"><span>ייבוא קובצי Markdown, וייבוא מייצוא של Notion</span></li>
+        <li><input type="checkbox"><span>גיבוי מלא כקובץ ZIP</span></li>
+        <li><input type="checkbox"><span>היסטוריית גרסאות לעמוד</span></li>
+      </ul>
+      <div class="dod"><b>הגדרת סיום</b>ייצוא וייבוא חוזר של ענף מחזיר את אותו מבנה ותוכן.</div>
+    </div>
+  </details>
+
+  <details class="sprint">
+    <summary><span class="num">8</span><h3>עריכה משותפת (רשות)</h3><span class="progress"></span>
+      <span class="goal">רק אם יוחלט שהמערכת משמשת יותר ממשתמש אחד.</span></summary>
+    <div class="body">
+      <ul class="tasks">
+        <li><input type="checkbox"><span>שיתוף עמוד עם משתמש אחר, הרשאות קריאה ועריכה</span></li>
+        <li><input type="checkbox"><span>Yjs עם שרת סנכרון חיצוני (Vercel לא מחזיק חיבורי WebSocket ארוכים)</span></li>
+        <li><input type="checkbox"><span>סמנים של משתמשים אחרים בזמן אמת</span></li>
+        <li><input type="checkbox"><span>הערות על בלוקים</span></li>
+      </ul>
+      <div class="dod"><b>הגדרת סיום</b>שני דפדפנים עורכים את אותו עמוד בלי לדרוס זה את זה.</div>
+    </div>
+  </details>
+</section>
+
+<section id="risks">
+  <h2>סיכונים</h2>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>סיכון</th><th>מה עושים</th></tr></thead>
+    <tbody>
+      <tr><td>עברית ב-BlockNote. היו תקלות בתפריט הצד ובגרירה בכיוון ימין-לשמאל; הן סגורות מ-2025–2026, אבל לא נבדקו אצלנו</td><td>ספרינט 0 נגמר בשער החלטה. חלופה: Tiptap</td></tr>
+      <tr><td>BlockNote עדיין בגרסה 0.x, ושינויים שוברים אפשריים</td><td>נעילת גרסה מדויקת, ועדכון רק בענף נפרד</td></tr>
+      <tr><td>רישיון: חבילות <code>xl-*</code> ב-GPL-3.0</td><td>לא מתקינים אותן. בדיקה ב-CI שנכשלת אם הן מופיעות ב-<code>package.json</code></td></tr>
+      <tr><td>עלויות: Supabase ו-Vercel בחינם עד גבול, ומודל השפה בתשלום לפי שימוש</td><td>מגבלת שימוש בספרינט 6, והתראה בחשבון הספק</td></tr>
+      <tr><td>Supabase בחינם נכבה אחרי שבוע בלי פעילות</td><td>לבדוק את המדיניות הנוכחית בספרינט 1</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section id="open">
+  <h2>שאלות פתוחות</h2>
+  <ul class="plain">
+    <li><b>משתמש יחיד או רבים?</b> ההנחה כרגע: אדם אחד, עם התחברות כדי שהנתונים יהיו פרטיים. משפיע על ספרינט 8.</li>
+    <li><b>איזה מודל לבינה המלאכותית?</b> ההנחה: Claude דרך Vercel AI SDK, עם אפשרות להחליף ספק.</li>
+    <li><b>שפת התיעוד במאגר הציבורי:</b> כרגע עברית. אנגלית תפתח את הפרויקט לתורמים מבחוץ.</li>
+  </ul>
+</section>
+
+<footer>מאגר: <a href="https://github.com/liormedan/mynoteai">github.com/liormedan/mynoteai</a> · רישיון MIT</footer>
+</main>
+
+<script>
+(function () {
+  var KEY = "mynoteai-plan-v1";
+  var state = {};
+  try { state = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) {}
+
+  document.querySelectorAll(".sprint").forEach(function (sprint, si) {
+    var boxes = sprint.querySelectorAll("ul.tasks input");
+    var progress = sprint.querySelector(".progress");
+    function update() {
+      var done = 0;
+      boxes.forEach(function (b) {
+        b.parentElement.classList.toggle("done", b.checked);
+        if (b.checked) done++;
+      });
+      progress.textContent = done + " / " + boxes.length;
+    }
+    boxes.forEach(function (box, bi) {
+      var id = si + "-" + bi;
+      box.checked = !!state[id];
+      box.addEventListener("change", function () {
+        state[id] = box.checked;
+        try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+        update();
+      });
+    });
+    update();
+  });
+})();
+</script>
+</body>
+</html>
