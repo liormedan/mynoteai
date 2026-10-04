@@ -18,7 +18,7 @@ import { fileURLToPath } from "node:url";
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const PLAN_FILE = join(ROOT, "docs", "plan.html");
 const PROGRESS_FILE = join(ROOT, "docs", "progress.js");
-const PLAN_PATHS = [/^docs\//, /^README\.md$/, /^CLAUDE\.md$/, /^LICENSE$/, /^\.gitignore$/, /^\.gitattributes$/, /^scripts\/plan-check\.mjs$/, /^\.github\//];
+const PLAN_PATHS = [/^docs\//, /^README(\.[a-z]{2})?\.md$/, /^CLAUDE\.md$/, /^LICENSE$/, /^\.gitignore$/, /^\.gitattributes$/, /^scripts\/plan-check\.mjs$/, /^\.github\//];
 const TASK_ID = /\bS(\d+)-(\d+)\b/g;
 
 const args = new Set(process.argv.slice(2));

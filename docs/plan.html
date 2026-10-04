@@ -162,6 +162,8 @@ footer { margin-top: 56px; color: var(--muted); font-size: 0.85rem; }
     <li><b>לא משתמשים בחבילות <code>@blocknote/xl-*</code>.</b> הן ברישיון GPL-3.0 ויכפו את הרישיון על כל המאגר. את הבינה המלאכותית בונים ישירות עם Vercel AI SDK, וייצוא נעשה ל-Markdown עם פונקציות הליבה.</li>
     <li><b>מודל הפצה: משתמש יחיד לכל התקנה.</b> המאגר הוא קוד פתוח שמפתחים מורידים ומתקינים כמחברת עצמאית, עם חשבון Vercel ופרויקט Firebase משלהם. אין שרת מרכזי, אין הרשמה ואין ריבוי משתמשים. ההתחברות קיימת רק כדי לנעול את ההתקנה לבעלים שלה.</li>
     <li><b>חוויית ההתקנה היא חלק מהמוצר.</b> <code>pnpm dev</code> רץ מול Firebase Emulator בלי שום חשבון, וסקריפט התקנה מחבר לענן. היעד: ממאגר נקי למחברת שעובדת ב-Vercel תוך 15 דקות.</li>
+    <li><b>עברית ואנגלית מהיום הראשון.</b> הממשק דו-לשוני עם next-intl, וכיוון הדף (<code>dir</code>) נקבע לפי שפת הממשק. התוכן עצמו מקבל כיוון לפי כל בלוק, כך שאפשר לכתוב עברית בממשק אנגלי ולהפך. shadcn/ui מוגדר עם <code>rtl: true</code>, ל-BlockNote יש מילון עברי מובנה (<code>he</code>), ובקוד משתמשים רק במחלקות לוגיות (<code>ms-</code>, <code>pe-</code>, <code>start-</code>) ולא ב-<code>ml-</code> / <code>right-</code>.</li>
+    <li><b>שפת המאגר:</b> README, מדריך ההתקנה, הערות בקוד והודעות קומיט — באנגלית, לקהל המפתחים. יש גם <code>README.he.md</code> ומדריך התקנה בעברית. התוכנית הזו ו-<code>CLAUDE.md</code> נשארים בעברית.</li>
     <li><b>Firebase כי זה מה שעובדים איתו</b> בשאר הפרויקטים. הקוד בצד הלקוח מדבר ישירות עם Firestore דרך כללי אבטחה, ונתיבי שרת ב-Next.js משתמשים ב-Admin SDK רק למה שחייב שרת: עוגיית התחברות, בינה מלאכותית, פרסום ציבורי.</li>
     <li><b>תוכן העמוד נשמר כ-JSON של BlockNote במסמך נפרד</b> מהמטא-דאטה של העמוד, כדי שטעינת העץ בסרגל הצד לא תמשוך את כל התוכן. במקביל נשמר טקסט שטוח לחיפוש.</li>
     <li><b>ל-Firestore אין חיפוש מלא בטקסט.</b> למשתמש יחיד בונים אינדקס בדפדפן (FlexSearch). אם יהיו הרבה משתמשים — הרחבה של Typesense או Algolia.</li>
@@ -181,6 +183,7 @@ footer { margin-top: 56px; color: var(--muted); font-size: 0.85rem; }
       <tr><td class="repo"><a href="https://github.com/firebase/firebase-js-sdk">firebase/firebase-js-sdk</a></td><td>Firestore, Auth ו-Storage בצד הלקוח</td><td>Apache-2.0</td><td class="num">5.1k</td><td class="num">10/2026</td><td><span class="tag use">בשימוש</span></td></tr>
       <tr><td class="repo"><a href="https://github.com/firebase/firebase-admin-node">firebase/firebase-admin-node</a></td><td>Admin SDK בנתיבי השרת של Next.js, כולל חיפוש וקטורי</td><td>Apache-2.0</td><td class="num">1.8k</td><td class="num">10/2026</td><td><span class="tag use">בשימוש</span></td></tr>
       <tr><td class="repo"><a href="https://github.com/awinogrodzki/next-firebase-auth-edge">awinogrodzki/next-firebase-auth-edge</a></td><td>התחברות Firebase ב-middleware של Next.js, עם עוגייה חתומה</td><td>MIT</td><td class="num">665</td><td class="num">08/2026</td><td><span class="tag use">בשימוש</span></td></tr>
+      <tr><td class="repo"><a href="https://github.com/amannn/next-intl">amannn/next-intl</a></td><td>ממשק בעברית ובאנגלית ב-App Router, כולל כיוון לפי שפה</td><td>MIT</td><td class="num">4.4k</td><td class="num">10/2026</td><td><span class="tag use">בשימוש</span></td></tr>
       <tr><td class="repo"><a href="https://github.com/nextapps-de/flexsearch">nextapps-de/flexsearch</a></td><td>אינדקס חיפוש בדפדפן, נשמר ב-IndexedDB</td><td>Apache-2.0</td><td class="num">13.8k</td><td class="num">06/2026</td><td><span class="tag use">ספרינט 4</span></td></tr>
       <tr><td class="repo"><a href="https://github.com/shadcn-ui/ui">shadcn-ui/ui</a></td><td>רכיבי ממשק (סרגל צד, דיאלוגים, תפריטים)</td><td>MIT</td><td class="num">125k</td><td class="num">10/2026</td><td><span class="tag use">בשימוש</span></td></tr>
       <tr><td class="repo"><a href="https://github.com/dip/cmdk">dip/cmdk</a></td><td>חלון פקודות וחיפוש <code>Ctrl+K</code></td><td>MIT</td><td class="num">13k</td><td class="num">10/2025</td><td><span class="tag use">בשימוש</span></td></tr>
@@ -207,7 +210,7 @@ footer { margin-top: 56px; color: var(--muted); font-size: 0.85rem; }
 
 <section id="sprints">
   <h2>ספרינטים</h2>
-  <p class="sub">ספרינט = שבוע עבודה בערך. כל ספרינט נגמר בגרסה שעובדת ופרוסה ב-Vercel. הסטטוס של כל משימה נגזר מ-git בלבד, לא מסימון ידני — ראו <a href="#git">גרף גיט ובקרה</a>.</p>
+  <p class="sub">ספרינט = שבוע עבודה בערך. כל ספרינט נגמר בגרסה שעובדת ופרוסה ב-Vercel, ונבדק בממשק עברי וגם בממשק אנגלי. הסטטוס של כל משימה נגזר מ-git בלבד, לא מסימון ידני — ראו <a href="#git">גרף גיט ובקרה</a>.</p>
   <p id="progress-missing" class="notice" hidden>אין נתוני התקדמות. מריצים <code>node scripts/plan-check.mjs --write</code> ומרעננים את הדף.</p>
 
   <details class="sprint gate" data-sprint="0" data-branch="sprint-0" data-verify="pnpm lint && pnpm typecheck && pnpm build" data-gate="true" open>
@@ -222,6 +225,8 @@ footer { margin-top: 56px; color: var(--muted); font-size: 0.85rem; }
         <li data-task="S0-5"><span class="tid">S0-5</span><span class="st"></span><span class="txt">חיבור הפרויקט ל-Vercel ופריסה ראשונה</span></li>
         <li data-task="S0-6"><span class="tid">S0-6</span><span class="st"></span><span class="txt">עמוד ניסוי עם BlockNote: כתיבה בעברית, ערבוב עברית ואנגלית, רשימות, גרירת בלוקים, תפריט <code>/</code>, טבלה</span></li>
         <li data-task="S0-7"><span class="tid">S0-7</span><span class="st"></span><span class="txt">כיוון לכל בלוק לפי התוכן (<code>dir="auto"</code>) ובדיקה שתפריט הצד נמצא בצד הנכון</span></li>
+        <li data-task="S0-8"><span class="tid">S0-8</span><span class="st"></span><span class="txt">תשתית שפות: next-intl עם <code>he</code> ו-<code>en</code>, <code>&lt;html lang dir&gt;</code> לפי השפה, מעבר שפה בממשק, ומילון BlockNote בשפה הנבחרת</span></li>
+        <li data-task="S0-9"><span class="tid">S0-9</span><span class="st"></span><span class="txt">כללי RTL בקוד: shadcn/ui עם <code>rtl: true</code>, ובדיקת lint שנכשלת על מחלקות פיזיות (<code>ml-</code>, <code>pr-</code>, <code>left-</code>, <code>text-right</code>)</span></li>
       </ul>
       <div class="dod"><b>שער החלטה</b>אם העברית ב-BlockNote שבורה ואין לה תיקון סביר — עוברים ל-Tiptap עם ממשק משלנו, והספרינטים 2–3 מתארכים בשבועיים.</div>
     </div>
@@ -238,7 +243,7 @@ footer { margin-top: 56px; color: var(--muted); font-size: 0.85rem; }
         <li data-task="S1-4"><span class="tid">S1-4</span><span class="st"></span><span class="txt">בעלים יחיד: <code>firestore.rules</code> ו-<code>storage.rules</code> נוצרים מתבנית עם <code>OWNER_EMAIL</code>, ומאשרים גישה רק לאימייל הזה כשהוא מאומת. כולל בדיקת שדות וטיפוסים</span></li>
         <li data-task="S1-5"><span class="tid">S1-5</span><span class="st"></span><span class="txt"><code>firebase.json</code>, <code>firestore.rules</code>, <code>firestore.indexes.json</code> ו-<code>storage.rules</code> במאגר, ופריסה שלהם עם <code>firebase deploy</code></span></li>
         <li data-task="S1-6"><span class="tid">S1-6</span><span class="st"></span><span class="txt">middleware עם <code>next-firebase-auth-edge</code> שמפנה משתמש לא מחובר לעמוד הכניסה, ודוחה כל מי שאינו <code>OWNER_EMAIL</code></span></li>
-        <li data-task="S1-7"><span class="tid">S1-7</span><span class="st"></span><span class="txt"><code>pnpm dev</code> רץ כברירת מחדל מול Firebase Emulator עם נתוני דוגמה — מפתח חדש מנסה את המחברת בלי שום חשבון</span></li>
+        <li data-task="S1-7"><span class="tid">S1-7</span><span class="st"></span><span class="txt"><code>pnpm dev</code> רץ כברירת מחדל מול Firebase Emulator עם נתוני דוגמה בעברית ובאנגלית — מפתח חדש מנסה את המחברת בלי שום חשבון</span></li>
       </ul>
       <div class="dod"><b>הגדרת סיום</b>בדיקות כללי אבטחה ב-Firebase Emulator (<code>@firebase/rules-unit-testing</code>) מוכיחות שמשתמש מחובר שאינו הבעלים לא קורא ולא כותב כלום. שכפול נקי של המאגר ו-<code>pnpm dev</code> מגיעים למחברת עובדת בלי חשבון ענן.</div>
     </div>
@@ -272,6 +277,7 @@ footer { margin-top: 56px; color: var(--muted); font-size: 0.85rem; }
         <li data-task="S3-5"><span class="tid">S3-5</span><span class="st"></span><span class="txt">סל מחזור: מחיקה רכה, שחזור, ומחיקה סופית רק בלחיצה מפורשת (מחיקת ענף ב-batches של עד 500 כתיבות)</span></li>
         <li data-task="S3-6"><span class="tid">S3-6</span><span class="st"></span><span class="txt">שביל ניווט (breadcrumbs) בראש העמוד</span></li>
         <li data-task="S3-7"><span class="tid">S3-7</span><span class="st"></span><span class="txt">מועדפים</span></li>
+        <li data-task="S3-8"><span class="tid">S3-8</span><span class="st"></span><span class="txt">יצירת עמוד מתבנית: תבניות מובנות (יומן, סיכום פגישה, רשימת משימות, דף פרויקט) בעברית ובאנגלית לפי שפת הממשק, ושמירת עמוד קיים כתבנית</span></li>
       </ul>
       <div class="dod"><b>הגדרת סיום</b>עץ של 500 עמודים נטען בפחות משנייה, והזזת ענף שלם שומרת על כל הילדים.</div>
     </div>
@@ -359,7 +365,7 @@ footer { margin-top: 56px; color: var(--muted); font-size: 0.85rem; }
       <ul class="tasks">
         <li data-task="S9-1"><span class="tid">S9-1</span><span class="st"></span><span class="txt">סקריפט התקנה <code>pnpm setup</code>: בחירה או יצירה של פרויקט Firebase, כתיבת <code>.env.local</code>, יצירת כללי האבטחה עם <code>OWNER_EMAIL</code>, ופריסת הכללים והאינדקסים</span></li>
         <li data-task="S9-2"><span class="tid">S9-2</span><span class="st"></span><span class="txt">כפתור Deploy to Vercel ב-README, עם רשימת משתני הסביבה ובדיקה בהפעלה שמסבירה מה חסר</span></li>
-        <li data-task="S9-3"><span class="tid">S9-3</span><span class="st"></span><span class="txt">מדריך התקנה צעד אחר צעד: Firebase, Vercel, Google sign-in, מפתח API לבינה מלאכותית, ו-Storage כרשות</span></li>
+        <li data-task="S9-3"><span class="tid">S9-3</span><span class="st"></span><span class="txt">מדריך התקנה צעד אחר צעד באנגלית ובעברית: Firebase, Vercel, Google sign-in, מפתח API לבינה מלאכותית, ו-Storage כרשות</span></li>
         <li data-task="S9-4"><span class="tid">S9-4</span><span class="st"></span><span class="txt">בדיקת התקנה נקייה ב-CI (<code>pnpm test:install</code>): שכפול טרי, התקנה ובנייה מול האמולטור</span></li>
         <li data-task="S9-5"><span class="tid">S9-5</span><span class="st"></span><span class="txt">עדכונים: איך מפתח מושך גרסה חדשה לעותק שלו, ומיגרציות לנתונים קיימים ב-Firestore</span></li>
         <li data-task="S9-6"><span class="tid">S9-6</span><span class="st"></span><span class="txt">CHANGELOG, גרסאות סמנטיות ו-GitHub Release לכל תגית</span></li>
@@ -406,6 +412,7 @@ footer { margin-top: 56px; color: var(--muted); font-size: 0.85rem; }
     <thead><tr><th>סיכון</th><th>מה עושים</th></tr></thead>
     <tbody>
       <tr><td>עברית ב-BlockNote. היו תקלות בתפריט הצד ובגרירה בכיוון ימין-לשמאל; הן סגורות מ-2025–2026, אבל לא נבדקו אצלנו</td><td>ספרינט 0 נגמר בשער החלטה. חלופה: Tiptap</td></tr>
+      <tr><td>שבירה שקטה של RTL: רכיב חדש שנכתב עם <code>ml-4</code> נראה תקין באנגלית ושבור בעברית</td><td>בדיקת lint על מחלקות פיזיות מספרינט 0, וכל תנאי סיום של ספרינט נבדק בשתי השפות</td></tr>
       <tr><td>BlockNote עדיין בגרסה 0.x, ושינויים שוברים אפשריים</td><td>נעילת גרסה מדויקת, ועדכון רק בענף נפרד</td></tr>
       <tr><td>רישיון: חבילות <code>xl-*</code> ב-GPL-3.0</td><td>לא מתקינים אותן. בדיקה ב-CI שנכשלת אם הן מופיעות ב-<code>package.json</code></td></tr>
       <tr><td>Cloud Storage for Firebase דורש תוכנית Blaze (חשבון חיוב) מאז 3.2.2026, גם בשימוש קטן. מפתח שלא רוצה לחבר כרטיס אשראי לא יוכל להעלות תמונות</td><td>Storage הוא רשות. בלעדיו המחברת עובדת, וההעלאה מוחלפת בהדבקת קישור. המדריך מסביר איך להפעיל Blaze עם התראת תקציב</td></tr>
@@ -423,6 +430,7 @@ footer { margin-top: 56px; color: var(--muted); font-size: 0.85rem; }
   <h2>שאלות פתוחות</h2>
   <ul class="plain">
     <li><b>הוכרע ב-5.10.2026 — משתמש יחיד:</b> קוד פתוח שמפתחים מורידים ומתקינים כמחברת עצמאית. ספרינט 8 בוטל ונוסף ספרינט 9.</li>
+    <li><b>הוכרע ב-5.10.2026 — שפה:</b> המאגר באנגלית לקהל המפתחים, עם תמיכה מלאה בעברית בממשק, בתוכן ובתבניות.</li>
     <li><b>הוכרע ב-5.10.2026 — בינה מלאכותית:</b> כל מפתח מביא מפתח API משלו. ברירת המחדל Claude, ו-AI SDK מאפשר להחליף ספק.</li>
     <li><b>שפת התיעוד במאגר הציבורי:</b> כרגע עברית. אנגלית תפתח את הפרויקט לתורמים מבחוץ.</li>
   </ul>

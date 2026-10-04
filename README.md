@@ -1,50 +1,61 @@
 # mynoteai
 
-מחברת אישית בסגנון Notion, עם עוזר בינה מלאכותית. קוד פתוח למפתחים: כל אחד מתקין עותק משלו, עם חשבון Vercel ופרויקט Firebase משלו. משתמש יחיד בכל התקנה, בלי שרת מרכזי ובלי הרשמה.
+**English** · [עברית](README.he.md)
 
-> הפרויקט בשלב תכנון. עדיין אין קוד יישום.
+A personal, Notion-style notebook with an AI assistant. Open source for developers: everyone installs their own copy, on their own Vercel account and Firebase project. One user per install — no central server, no sign-ups.
 
-## מחסנית
+> Status: planning. There is no application code yet.
 
-| שכבה | בחירה |
+## Hebrew and RTL
+
+Hebrew is a first-class language, not an afterthought:
+
+- UI in English and Hebrew, with full right-to-left layout.
+- Text direction per block, so Hebrew and English can be mixed on the same page.
+- Search that understands Hebrew prefixes (ה, ו, ב, ל…).
+- Page templates and sample data in both languages.
+
+## Stack
+
+| Layer | Choice |
 |---|---|
-| מסגרת | Next.js 16 (App Router) + TypeScript |
-| עורך | [BlockNote](https://github.com/TypeCellOS/BlockNote) — ליבה בלבד (MPL-2.0) |
-| נתונים, התחברות, קבצים | Firebase (Firestore, Auth, Storage) |
-| ממשק | Tailwind + shadcn/ui |
-| בינה מלאכותית | Vercel AI SDK + חיפוש וקטורי של Firestore |
-| פריסה | Vercel |
+| Framework | Next.js 16 (App Router) + TypeScript |
+| Editor | [BlockNote](https://github.com/TypeCellOS/BlockNote) — core packages only (MPL-2.0) |
+| Data, auth, files | Firebase (Firestore, Auth, Storage) |
+| UI | Tailwind + shadcn/ui (RTL), next-intl |
+| AI | Vercel AI SDK + Firestore vector search, bring your own API key |
+| Hosting | Vercel |
 
-## תוכנית
+## Roadmap
 
-התוכנית המלאה — רשימת המאגרים שנבחרו ונדחו, ספרינטים, סיכונים — ב-[`docs/plan.html`](docs/plan.html).
+The full plan — chosen and rejected libraries, sprints, risks — lives in [`docs/plan.html`](docs/plan.html) (written in Hebrew).
 
-| ספרינט | נושא |
+| Sprint | Scope |
 |---|---|
-| 0 | תשתית ובדיקת עברית ב-BlockNote |
-| 1 | בעלים יחיד, מבנה נתונים, הרצה מקומית בלי חשבון |
-| 2 | העורך ושמירה אוטומטית |
-| 3 | עץ עמודים בסרגל הצד |
-| 4 | חיפוש וחלון פקודות |
-| 5 | מסדי נתונים: טבלה וקנבן |
-| 6 | בינה מלאכותית |
-| 7 | פרסום, ייבוא וייצוא |
-| ~~8~~ | ~~עריכה משותפת~~ — בוטל, משתמש יחיד |
-| 9 | הפצה למפתחים: סקריפט התקנה, Deploy to Vercel, מדריך — v1.0 |
+| 0 | Project skeleton, i18n and RTL foundations, BlockNote Hebrew check |
+| 1 | Single owner, data model, local dev on the Firebase Emulator with no account |
+| 2 | Editor and autosave |
+| 3 | Page tree, page templates |
+| 4 | Search and command palette |
+| 5 | Databases: table and kanban views |
+| 6 | AI |
+| 7 | Publishing, import and export |
+| ~~8~~ | ~~Collaboration~~ — dropped, single user |
+| 9 | Developer distribution: setup script, Deploy to Vercel, install guide — v1.0 |
 
-## גרף גיט מתוכנן
+## Planned git graph
 
-ענף לכל ספרינט, מיזוג ל-`main` ותגית בסוף כל ספרינט. הגרף המפורט, ברמת משימה, ב-[`docs/plan.html`](docs/plan.html).
+One branch per sprint, merged into `main` and tagged when the sprint closes. The task-level graph is in [`docs/plan.html`](docs/plan.html).
 
 ```mermaid
 gitGraph
   commit id: "plan"
   branch sprint-0
-  commit id: "S0 infra + Hebrew"
+  commit id: "S0 infra + i18n"
   checkout main
   merge sprint-0 tag: "v0.0"
   branch sprint-1
-  commit id: "S1 auth + data"
+  commit id: "S1 owner + data"
   checkout main
   merge sprint-1 tag: "v0.1"
   branch sprint-2
@@ -77,19 +88,19 @@ gitGraph
   merge sprint-9 tag: "v0.9"
 ```
 
-## בקרה מול התוכנית
+## Plan check
 
-כל קומיט בענף ספרינט מתחיל במזהה משימה (`S1-3: …`). הסקריפט משווה את היסטוריית git לתוכנית ומדווח על סטיות:
+Every commit on a sprint branch starts with a task id (`S1-3: …`). A script compares the git history with the plan and reports deviations:
 
 ```bash
 node scripts/plan-check.mjs
 ```
 
-- `--write` — מעדכן את `docs/progress.js`, והדף `plan.html` מציג ממנו סטטוס לכל משימה וגרף בפועל.
-- `--verify` — מריץ גם את פקודת האימות של כל ספרינט שהתחיל.
+- `--write` — updates `docs/progress.js`; `plan.html` reads it to show per-task status and the actual graph.
+- `--verify` — also runs the verification command of every sprint that has started.
 
-GitHub Actions מריץ את הבדיקה על כל דחיפה ו-PR. הכללים המלאים ב-[`CLAUDE.md`](CLAUDE.md).
+GitHub Actions runs the check on every push and pull request.
 
-## רישיון
+## License
 
-[MIT](LICENSE). הפרויקט לא משתמש בחבילות `@blocknote/xl-*`, שהן ברישיון GPL-3.0.
+[MIT](LICENSE). The project does not use the `@blocknote/xl-*` packages, which are GPL-3.0.
