@@ -1,0 +1,31 @@
+name: ci
+
+on:
+  push:
+    branches: [main, "sprint-*"]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      - name: No GPL BlockNote packages (@blocknote/xl-*)
+        run: |
+          if grep -q '"@blocknote/xl-' package.json; then
+            echo "@blocknote/xl-* packages are GPL-3.0 and would relicense this MIT project."
+            exit 1
+          fi
+
+      - run: pnpm lint
+      - run: pnpm format:check
+      - run: pnpm typecheck
+      - run: pnpm test
+      - run: pnpm build
