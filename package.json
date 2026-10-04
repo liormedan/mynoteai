@@ -6,7 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "format": "prettier --write src *.ts *.mjs *.json",
+    "format:check": "prettier --check src *.ts *.mjs *.json",
+    "plan:check": "node scripts/plan-check.mjs"
   },
   "dependencies": {
     "@blocknote/core": "0.55.0",
