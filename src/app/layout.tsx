@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Noto_Sans_Hebrew } from "next/font/google";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getTranslations } from "next-intl/server";
+import { DirectionProvider } from "@/components/ui/direction";
+import { localeDirection, type Locale } from "@/i18n/config";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -7,23 +11,36 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
+const notoHebrew = Noto_Sans_Hebrew({
+  variable: "--font-noto-hebrew",
+  subsets: ["hebrew"],
+});
+
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "mynoteai",
-  description: "A personal, Notion-style notebook",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("App");
+  return { title: t("title"), description: t("tagline") };
+}
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const locale = (await getLocale()) as Locale;
+  const dir = localeDirection[locale];
+
   return (
     <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      lang={locale}
+      dir={dir}
+      className={`${geistSans.variable} ${notoHebrew.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col">{children}</body>
+      <body className="flex min-h-full flex-col">
+        <NextIntlClientProvider>
+          <DirectionProvider dir={dir}>{children}</DirectionProvider>
+        </NextIntlClientProvider>
+      </body>
     </html>
   );
 }

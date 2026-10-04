@@ -1,3 +1,12 @@
 ignoredBuiltDependencies:
+  - '@parcel/watcher'
+  - '@swc/core'
   - sharp
   - unrs-resolver
+
+overrides:
+  # @swc/core >= 1.16.12 refuses to load when any ancestor of its native cache
+  # directory is writable by another principal, which breaks `next build` on
+  # Windows machines with shared-profile ACLs. Pulled in by next-intl (~1.16.0).
+  # Remove once a newer release relaxes the check.
+  '@swc/core': 1.16.2
