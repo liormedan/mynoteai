@@ -102,8 +102,25 @@ td.num { white-space: nowrap; font-variant-numeric: tabular-nums; }
 .sprint .body { padding: 0 16px 16px; border-top: 1px solid var(--border); }
 .sprint ul.tasks { list-style: none; padding: 0; margin: 12px 0; }
 .sprint ul.tasks li { display: flex; gap: 10px; align-items: flex-start; padding: 5px 0; }
-.sprint ul.tasks input { margin-top: 5px; width: 16px; height: 16px; accent-color: var(--accent); flex-shrink: 0; }
-.sprint ul.tasks li.done span { color: var(--muted); text-decoration: line-through; }
+.sprint ul.tasks .tid { font-family: "Cascadia Code", Consolas, monospace; font-size: 0.8rem; color: var(--muted); min-width: 3.4em; padding-top: 2px; direction: ltr; text-align: right; flex-shrink: 0; }
+.sprint ul.tasks .st { flex-shrink: 0; margin-top: 2px; }
+.sprint ul.tasks li[data-status-live="done"] .txt { color: var(--muted); }
+.sprint ul.tasks li[data-status="dropped"] .txt { color: var(--muted); text-decoration: line-through; }
+.tag.todo { background: var(--surface-2); color: var(--muted); }
+.tag.progress { background: var(--accent-soft); color: var(--accent); }
+.tag.done { background: var(--use-soft); color: var(--use); }
+.tag.dropped { background: var(--surface-2); color: var(--muted); text-decoration: line-through; }
+.commits { font-size: 0.8rem; color: var(--muted); direction: ltr; text-align: right; }
+
+.graph-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px; overflow-x: auto; direction: ltr; }
+.graph-box .mermaid { min-width: 520px; }
+pre.gitlog { margin: 0; font-family: "Cascadia Code", Consolas, monospace; font-size: 0.82rem; line-height: 1.45; white-space: pre; direction: ltr; text-align: left; }
+.notice { background: var(--ref-soft); color: var(--text); border-radius: 8px; padding: 10px 12px; font-size: 0.92rem; }
+ul.devs { list-style: none; padding: 0; margin: 8px 0; }
+ul.devs li { padding: 6px 10px; border-radius: 8px; margin: 4px 0; font-size: 0.92rem; }
+ul.devs li.error { background: var(--no-soft); }
+ul.devs li.warn { background: var(--ref-soft); }
+.conv { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
 .dod { background: var(--surface-2); border-radius: 8px; padding: 10px 12px; font-size: 0.9rem; }
 .dod b { display: block; margin-bottom: 2px; }
 .gate { border-inline-start: 3px solid var(--ref); }
@@ -123,6 +140,7 @@ footer { margin-top: 56px; color: var(--muted); font-size: 0.85rem; }
     <a href="#decisions">החלטות</a>
     <a href="#repos">מאגרים</a>
     <a href="#sprints">ספרינטים</a>
+    <a href="#git">גרף גיט ובקרה</a>
     <a href="#risks">סיכונים</a>
     <a href="#open">שאלות פתוחות</a>
   </nav>
@@ -187,148 +205,178 @@ footer { margin-top: 56px; color: var(--muted); font-size: 0.85rem; }
 
 <section id="sprints">
   <h2>ספרינטים</h2>
-  <p class="sub">ספרינט = שבוע עבודה בערך. כל ספרינט נגמר בגרסה שעובדת ופרוסה ב-Vercel. סימוני ההתקדמות נשמרים בדפדפן הזה בלבד.</p>
+  <p class="sub">ספרינט = שבוע עבודה בערך. כל ספרינט נגמר בגרסה שעובדת ופרוסה ב-Vercel. הסטטוס של כל משימה נגזר מ-git בלבד, לא מסימון ידני — ראו <a href="#git">גרף גיט ובקרה</a>.</p>
+  <p id="progress-missing" class="notice" hidden>אין נתוני התקדמות. מריצים <code>node scripts/plan-check.mjs --write</code> ומרעננים את הדף.</p>
 
-  <details class="sprint gate" open>
+  <details class="sprint gate" data-sprint="0" data-branch="sprint-0" data-verify="pnpm lint && pnpm typecheck && pnpm build" data-gate="true" open>
     <summary><span class="num">0</span><h3>תשתית ובדיקת עברית</h3><span class="progress"></span>
       <span class="goal">שלד ריק שעולה ל-Vercel, ותשובה ברורה: האם BlockNote עובד טוב בעברית.</span></summary>
     <div class="body">
       <ul class="tasks">
-        <li><input type="checkbox"><span>מאגר ציבורי ב-GitHub עם רישיון MIT, README ותוכנית</span></li>
-        <li><input type="checkbox"><span>שלד Next.js 16 + TypeScript + Tailwind + shadcn/ui, עם <code>pnpm</code></span></li>
-        <li><input type="checkbox"><span>ESLint, Prettier, ובדיקות Vitest ריקות שרצות</span></li>
-        <li><input type="checkbox"><span>GitHub Actions: בדיקת טיפוסים, lint ובנייה על כל PR</span></li>
-        <li><input type="checkbox"><span>חיבור הפרויקט ל-Vercel ופריסה ראשונה</span></li>
-        <li><input type="checkbox"><span>עמוד ניסוי עם BlockNote: כתיבה בעברית, ערבוב עברית ואנגלית, רשימות, גרירת בלוקים, תפריט <code>/</code>, טבלה</span></li>
-        <li><input type="checkbox"><span>כיוון לכל בלוק לפי התוכן (<code>dir="auto"</code>) ובדיקה שתפריט הצד נמצא בצד הנכון</span></li>
+        <li data-task="S0-1"><span class="tid">S0-1</span><span class="st"></span><span class="txt">מאגר ציבורי ב-GitHub עם רישיון MIT, README ותוכנית</span></li>
+        <li data-task="S0-2"><span class="tid">S0-2</span><span class="st"></span><span class="txt">שלד Next.js 16 + TypeScript + Tailwind + shadcn/ui, עם <code>pnpm</code></span></li>
+        <li data-task="S0-3"><span class="tid">S0-3</span><span class="st"></span><span class="txt">ESLint, Prettier, ובדיקות Vitest ריקות שרצות</span></li>
+        <li data-task="S0-4"><span class="tid">S0-4</span><span class="st"></span><span class="txt">GitHub Actions: בדיקת טיפוסים, lint ובנייה על כל PR</span></li>
+        <li data-task="S0-5"><span class="tid">S0-5</span><span class="st"></span><span class="txt">חיבור הפרויקט ל-Vercel ופריסה ראשונה</span></li>
+        <li data-task="S0-6"><span class="tid">S0-6</span><span class="st"></span><span class="txt">עמוד ניסוי עם BlockNote: כתיבה בעברית, ערבוב עברית ואנגלית, רשימות, גרירת בלוקים, תפריט <code>/</code>, טבלה</span></li>
+        <li data-task="S0-7"><span class="tid">S0-7</span><span class="st"></span><span class="txt">כיוון לכל בלוק לפי התוכן (<code>dir="auto"</code>) ובדיקה שתפריט הצד נמצא בצד הנכון</span></li>
       </ul>
       <div class="dod"><b>שער החלטה</b>אם העברית ב-BlockNote שבורה ואין לה תיקון סביר — עוברים ל-Tiptap עם ממשק משלנו, והספרינטים 2–3 מתארכים בשבועיים.</div>
     </div>
   </details>
 
-  <details class="sprint">
+  <details class="sprint" data-sprint="1" data-branch="sprint-1" data-verify="pnpm test:rules">
     <summary><span class="num">1</span><h3>התחברות ומבנה נתונים</h3><span class="progress"></span>
       <span class="goal">משתמש נכנס, ורואה רק את העמודים שלו.</span></summary>
     <div class="body">
       <ul class="tasks">
-        <li><input type="checkbox"><span>פרויקט Firebase, ומשתני סביבה ב-Vercel (הגדרות לקוח + חשבון שירות ל-Admin SDK)</span></li>
-        <li><input type="checkbox"><span>התחברות עם Google ועם קישור במייל דרך Firebase Auth</span></li>
-        <li><input type="checkbox"><span>מבנה נתונים: <code>users/{uid}/pages/{pageId}</code> עם <code>title, icon, coverUrl, parentId, position, type, isArchived, isFavorite, createdAt, updatedAt</code>, ותוכן ב-<code>users/{uid}/pages/{pageId}/content/main</code> עם <code>blocks, plainText</code></span></li>
-        <li><input type="checkbox"><span><code>firestore.rules</code>: משתמש קורא וכותב רק תחת <code>users/{uid}</code> שלו, עם בדיקת שדות וטיפוסים</span></li>
-        <li><input type="checkbox"><span><code>firebase.json</code>, <code>firestore.rules</code>, <code>firestore.indexes.json</code> ו-<code>storage.rules</code> במאגר, ופריסה שלהם עם <code>firebase deploy</code></span></li>
-        <li><input type="checkbox"><span>middleware עם <code>next-firebase-auth-edge</code> שמפנה משתמש לא מחובר לעמוד הכניסה</span></li>
+        <li data-task="S1-1"><span class="tid">S1-1</span><span class="st"></span><span class="txt">פרויקט Firebase, ומשתני סביבה ב-Vercel (הגדרות לקוח + חשבון שירות ל-Admin SDK)</span></li>
+        <li data-task="S1-2"><span class="tid">S1-2</span><span class="st"></span><span class="txt">התחברות עם Google ועם קישור במייל דרך Firebase Auth</span></li>
+        <li data-task="S1-3"><span class="tid">S1-3</span><span class="st"></span><span class="txt">מבנה נתונים: <code>users/{uid}/pages/{pageId}</code> עם <code>title, icon, coverUrl, parentId, position, type, isArchived, isFavorite, createdAt, updatedAt</code>, ותוכן ב-<code>users/{uid}/pages/{pageId}/content/main</code> עם <code>blocks, plainText</code></span></li>
+        <li data-task="S1-4"><span class="tid">S1-4</span><span class="st"></span><span class="txt"><code>firestore.rules</code>: משתמש קורא וכותב רק תחת <code>users/{uid}</code> שלו, עם בדיקת שדות וטיפוסים</span></li>
+        <li data-task="S1-5"><span class="tid">S1-5</span><span class="st"></span><span class="txt"><code>firebase.json</code>, <code>firestore.rules</code>, <code>firestore.indexes.json</code> ו-<code>storage.rules</code> במאגר, ופריסה שלהם עם <code>firebase deploy</code></span></li>
+        <li data-task="S1-6"><span class="tid">S1-6</span><span class="st"></span><span class="txt">middleware עם <code>next-firebase-auth-edge</code> שמפנה משתמש לא מחובר לעמוד הכניסה</span></li>
       </ul>
       <div class="dod"><b>הגדרת סיום</b>בדיקות כללי אבטחה ב-Firebase Emulator (<code>@firebase/rules-unit-testing</code>) מוכיחות ששני משתמשים לא רואים זה את העמודים של זה.</div>
     </div>
   </details>
 
-  <details class="sprint">
+  <details class="sprint" data-sprint="2" data-branch="sprint-2" data-verify="pnpm test">
     <summary><span class="num">2</span><h3>העורך</h3><span class="progress"></span>
       <span class="goal">פותחים עמוד, כותבים, והתוכן נשמר לבד.</span></summary>
     <div class="body">
       <ul class="tasks">
-        <li><input type="checkbox"><span>רכיב העורך נטען בצד הלקוח בלבד (<code>dynamic</code> עם <code>ssr: false</code>)</span></li>
-        <li><input type="checkbox"><span>שמירה אוטומטית עם השהיה של כשנייה, וחיווי "נשמר" / "שומר…"</span></li>
-        <li><input type="checkbox"><span>כותרת, אייקון ותמונת שער לכל עמוד</span></li>
-        <li><input type="checkbox"><span>העלאת תמונות וקבצים ל-Cloud Storage for Firebase מתוך העורך, תחת <code>users/{uid}/</code></span></li>
-        <li><input type="checkbox"><span>קישור לעמוד אחר מתוך הטקסט (<code>@</code> או <code>[[</code>)</span></li>
-        <li><input type="checkbox"><span>מצב כהה שמשפיע גם על העורך</span></li>
+        <li data-task="S2-1"><span class="tid">S2-1</span><span class="st"></span><span class="txt">רכיב העורך נטען בצד הלקוח בלבד (<code>dynamic</code> עם <code>ssr: false</code>)</span></li>
+        <li data-task="S2-2"><span class="tid">S2-2</span><span class="st"></span><span class="txt">שמירה אוטומטית עם השהיה של כשנייה, וחיווי "נשמר" / "שומר…"</span></li>
+        <li data-task="S2-3"><span class="tid">S2-3</span><span class="st"></span><span class="txt">כותרת, אייקון ותמונת שער לכל עמוד</span></li>
+        <li data-task="S2-4"><span class="tid">S2-4</span><span class="st"></span><span class="txt">העלאת תמונות וקבצים ל-Cloud Storage for Firebase מתוך העורך, תחת <code>users/{uid}/</code></span></li>
+        <li data-task="S2-5"><span class="tid">S2-5</span><span class="st"></span><span class="txt">קישור לעמוד אחר מתוך הטקסט (<code>@</code> או <code>[[</code>)</span></li>
+        <li data-task="S2-6"><span class="tid">S2-6</span><span class="st"></span><span class="txt">מצב כהה שמשפיע גם על העורך</span></li>
       </ul>
       <div class="dod"><b>הגדרת סיום</b>רענון הדפדפן באמצע כתיבה לא מאבד יותר משנייה של טקסט.</div>
     </div>
   </details>
 
-  <details class="sprint">
+  <details class="sprint" data-sprint="3" data-branch="sprint-3" data-verify="pnpm test">
     <summary><span class="num">3</span><h3>עץ עמודים</h3><span class="progress"></span>
       <span class="goal">סרגל צד עם עמודים מקוננים, כמו ב-Notion.</span></summary>
     <div class="body">
       <ul class="tasks">
-        <li><input type="checkbox"><span>סרגל צד עם עץ שנפתח ונסגר, שנבנה ממאזין <code>onSnapshot</code> אחד על מטא-הדאטה של העמודים</span></li>
-        <li><input type="checkbox"><span>מטמון מקומי של Firestore (IndexedDB), כדי שכל טעינה לא תספור מחדש קריאה לכל עמוד</span></li>
-        <li><input type="checkbox"><span>יצירת עמוד חדש בכל רמה, שינוי שם, שכפול</span></li>
-        <li><input type="checkbox"><span>גרירה להזזת עמוד ולשינוי סדר</span></li>
-        <li><input type="checkbox"><span>סל מחזור: מחיקה רכה, שחזור, ומחיקה סופית רק בלחיצה מפורשת (מחיקת ענף ב-batches של עד 500 כתיבות)</span></li>
-        <li><input type="checkbox"><span>שביל ניווט (breadcrumbs) בראש העמוד</span></li>
-        <li><input type="checkbox"><span>מועדפים</span></li>
+        <li data-task="S3-1"><span class="tid">S3-1</span><span class="st"></span><span class="txt">סרגל צד עם עץ שנפתח ונסגר, שנבנה ממאזין <code>onSnapshot</code> אחד על מטא-הדאטה של העמודים</span></li>
+        <li data-task="S3-2"><span class="tid">S3-2</span><span class="st"></span><span class="txt">מטמון מקומי של Firestore (IndexedDB), כדי שכל טעינה לא תספור מחדש קריאה לכל עמוד</span></li>
+        <li data-task="S3-3"><span class="tid">S3-3</span><span class="st"></span><span class="txt">יצירת עמוד חדש בכל רמה, שינוי שם, שכפול</span></li>
+        <li data-task="S3-4"><span class="tid">S3-4</span><span class="st"></span><span class="txt">גרירה להזזת עמוד ולשינוי סדר</span></li>
+        <li data-task="S3-5"><span class="tid">S3-5</span><span class="st"></span><span class="txt">סל מחזור: מחיקה רכה, שחזור, ומחיקה סופית רק בלחיצה מפורשת (מחיקת ענף ב-batches של עד 500 כתיבות)</span></li>
+        <li data-task="S3-6"><span class="tid">S3-6</span><span class="st"></span><span class="txt">שביל ניווט (breadcrumbs) בראש העמוד</span></li>
+        <li data-task="S3-7"><span class="tid">S3-7</span><span class="st"></span><span class="txt">מועדפים</span></li>
       </ul>
       <div class="dod"><b>הגדרת סיום</b>עץ של 500 עמודים נטען בפחות משנייה, והזזת ענף שלם שומרת על כל הילדים.</div>
     </div>
   </details>
 
-  <details class="sprint">
+  <details class="sprint" data-sprint="4" data-branch="sprint-4" data-verify="pnpm test">
     <summary><span class="num">4</span><h3>חיפוש וניווט</h3><span class="progress"></span>
       <span class="goal">מוצאים כל פתק תוך שתי שניות מהמקלדת.</span></summary>
     <div class="body">
       <ul class="tasks">
-        <li><input type="checkbox"><span>אינדקס FlexSearch בדפדפן על <code>title</code> ו-<code>plainText</code>, שנשמר ב-IndexedDB ומתעדכן אחרי כל שמירה</span></li>
-        <li><input type="checkbox"><span>מקודד עברי: הסרת אותיות שימוש (ה, ו, ב, ל, מ, ש, כ) ואיחוד אותיות סופיות</span></li>
-        <li><input type="checkbox"><span>חלון פקודות <code>Ctrl+K</code>: חיפוש, עמודים אחרונים, יצירת עמוד</span></li>
-        <li><input type="checkbox"><span>קיצורי מקלדת: עמוד חדש, מעבר לסרגל, החלפת מצב כהה</span></li>
-        <li><input type="checkbox"><span>תצוגה מותאמת לנייד</span></li>
-        <li><input type="checkbox"><span>PWA: התקנה כאפליקציה במחשב ובטלפון</span></li>
+        <li data-task="S4-1"><span class="tid">S4-1</span><span class="st"></span><span class="txt">אינדקס FlexSearch בדפדפן על <code>title</code> ו-<code>plainText</code>, שנשמר ב-IndexedDB ומתעדכן אחרי כל שמירה</span></li>
+        <li data-task="S4-2"><span class="tid">S4-2</span><span class="st"></span><span class="txt">מקודד עברי: הסרת אותיות שימוש (ה, ו, ב, ל, מ, ש, כ) ואיחוד אותיות סופיות</span></li>
+        <li data-task="S4-3"><span class="tid">S4-3</span><span class="st"></span><span class="txt">חלון פקודות <code>Ctrl+K</code>: חיפוש, עמודים אחרונים, יצירת עמוד</span></li>
+        <li data-task="S4-4"><span class="tid">S4-4</span><span class="st"></span><span class="txt">קיצורי מקלדת: עמוד חדש, מעבר לסרגל, החלפת מצב כהה</span></li>
+        <li data-task="S4-5"><span class="tid">S4-5</span><span class="st"></span><span class="txt">תצוגה מותאמת לנייד</span></li>
+        <li data-task="S4-6"><span class="tid">S4-6</span><span class="st"></span><span class="txt">PWA: התקנה כאפליקציה במחשב ובטלפון</span></li>
       </ul>
       <div class="dod"><b>הגדרת סיום</b>מילה עברית עם תחילית (ה, ו, ב, ל) נמצאת בחיפוש.</div>
     </div>
   </details>
 
-  <details class="sprint">
+  <details class="sprint" data-sprint="5" data-branch="sprint-5" data-verify="pnpm test">
     <summary><span class="num">5</span><h3>מסדי נתונים</h3><span class="progress"></span>
       <span class="goal">עמוד שהוא טבלה, עם שדות, מיון, סינון ולוח קנבן.</span></summary>
     <div class="body">
       <ul class="tasks">
-        <li><input type="checkbox"><span>סוג עמוד <code>database</code>, וכל שורה היא עמוד רגיל עם מאפיינים</span></li>
-        <li><input type="checkbox"><span>סוגי שדות: טקסט, מספר, בחירה, בחירה מרובה, תאריך, תיבת סימון, קישור</span></li>
-        <li><input type="checkbox"><span>תצוגת טבלה עם TanStack Table: עריכה בתא, מיון, סינון</span></li>
-        <li><input type="checkbox"><span>תצוגת לוח (קנבן) לפי שדה בחירה, עם גרירה</span></li>
-        <li><input type="checkbox"><span>תצוגות שמורות לכל מסד נתונים</span></li>
+        <li data-task="S5-1"><span class="tid">S5-1</span><span class="st"></span><span class="txt">סוג עמוד <code>database</code>, וכל שורה היא עמוד רגיל עם מאפיינים</span></li>
+        <li data-task="S5-2"><span class="tid">S5-2</span><span class="st"></span><span class="txt">סוגי שדות: טקסט, מספר, בחירה, בחירה מרובה, תאריך, תיבת סימון, קישור</span></li>
+        <li data-task="S5-3"><span class="tid">S5-3</span><span class="st"></span><span class="txt">תצוגת טבלה עם TanStack Table: עריכה בתא, מיון, סינון</span></li>
+        <li data-task="S5-4"><span class="tid">S5-4</span><span class="st"></span><span class="txt">תצוגת לוח (קנבן) לפי שדה בחירה, עם גרירה</span></li>
+        <li data-task="S5-5"><span class="tid">S5-5</span><span class="st"></span><span class="txt">תצוגות שמורות לכל מסד נתונים</span></li>
       </ul>
       <div class="dod"><b>הגדרת סיום</b>אפשר לנהל רשימת משימות שלמה בלוח קנבן בלי לגעת בקוד.</div>
     </div>
   </details>
 
-  <details class="sprint">
+  <details class="sprint" data-sprint="6" data-branch="sprint-6" data-verify="pnpm test">
     <summary><span class="num">6</span><h3>בינה מלאכותית</h3><span class="progress"></span>
       <span class="goal">העוזר שנותן לפרויקט את השם: כתיבה, סיכום ושאלות על הפתקים.</span></summary>
     <div class="body">
       <ul class="tasks">
-        <li><input type="checkbox"><span>נתיב API עם Vercel AI SDK והזרמת תשובות, מפתח המודל רק בצד השרת</span></li>
-        <li><input type="checkbox"><span>פקודות בעורך: המשך כתיבה, סיכום, שכתוב, תרגום, רשימת משימות מהטקסט</span></li>
-        <li><input type="checkbox"><span>embeddings לכל עמוד כשדה וקטורי ב-Firestore, עם אינדקס וקטורי וחיפוש <code>findNearest</code> דרך Admin SDK</span></li>
-        <li><input type="checkbox"><span>"שאל את הפתקים שלי": צ'אט שעונה עם הפניות לעמודים</span></li>
-        <li><input type="checkbox"><span>מגבלת שימוש לכל משתמש, כדי שהחשבון לא יתרוקן</span></li>
+        <li data-task="S6-1"><span class="tid">S6-1</span><span class="st"></span><span class="txt">נתיב API עם Vercel AI SDK והזרמת תשובות, מפתח המודל רק בצד השרת</span></li>
+        <li data-task="S6-2"><span class="tid">S6-2</span><span class="st"></span><span class="txt">פקודות בעורך: המשך כתיבה, סיכום, שכתוב, תרגום, רשימת משימות מהטקסט</span></li>
+        <li data-task="S6-3"><span class="tid">S6-3</span><span class="st"></span><span class="txt">embeddings לכל עמוד כשדה וקטורי ב-Firestore, עם אינדקס וקטורי וחיפוש <code>findNearest</code> דרך Admin SDK</span></li>
+        <li data-task="S6-4"><span class="tid">S6-4</span><span class="st"></span><span class="txt">"שאל את הפתקים שלי": צ'אט שעונה עם הפניות לעמודים</span></li>
+        <li data-task="S6-5"><span class="tid">S6-5</span><span class="st"></span><span class="txt">מגבלת שימוש לכל משתמש, כדי שהחשבון לא יתרוקן</span></li>
       </ul>
       <div class="dod"><b>הגדרת סיום</b>שאלה על פתק שנכתב לפני חודש מקבלת תשובה נכונה עם קישור לעמוד.</div>
     </div>
   </details>
 
-  <details class="sprint">
+  <details class="sprint" data-sprint="7" data-branch="sprint-7" data-verify="pnpm test">
     <summary><span class="num">7</span><h3>פרסום, ייבוא וייצוא</h3><span class="progress"></span>
       <span class="goal">הנתונים לא נעולים במערכת.</span></summary>
     <div class="body">
       <ul class="tasks">
-        <li><input type="checkbox"><span>פרסום עמוד כקישור ציבורי לקריאה בלבד</span></li>
-        <li><input type="checkbox"><span>ייצוא עמוד או ענף ל-Markdown</span></li>
-        <li><input type="checkbox"><span>ייבוא קובצי Markdown, וייבוא מייצוא של Notion</span></li>
-        <li><input type="checkbox"><span>גיבוי מלא כקובץ ZIP</span></li>
-        <li><input type="checkbox"><span>היסטוריית גרסאות לעמוד</span></li>
+        <li data-task="S7-1"><span class="tid">S7-1</span><span class="st"></span><span class="txt">פרסום עמוד כקישור ציבורי לקריאה בלבד</span></li>
+        <li data-task="S7-2"><span class="tid">S7-2</span><span class="st"></span><span class="txt">ייצוא עמוד או ענף ל-Markdown</span></li>
+        <li data-task="S7-3"><span class="tid">S7-3</span><span class="st"></span><span class="txt">ייבוא קובצי Markdown, וייבוא מייצוא של Notion</span></li>
+        <li data-task="S7-4"><span class="tid">S7-4</span><span class="st"></span><span class="txt">גיבוי מלא כקובץ ZIP</span></li>
+        <li data-task="S7-5"><span class="tid">S7-5</span><span class="st"></span><span class="txt">היסטוריית גרסאות לעמוד</span></li>
       </ul>
       <div class="dod"><b>הגדרת סיום</b>ייצוא וייבוא חוזר של ענף מחזיר את אותו מבנה ותוכן.</div>
     </div>
   </details>
 
-  <details class="sprint">
+  <details class="sprint" data-sprint="8" data-branch="sprint-8" data-verify="pnpm test">
     <summary><span class="num">8</span><h3>עריכה משותפת (רשות)</h3><span class="progress"></span>
       <span class="goal">רק אם יוחלט שהמערכת משמשת יותר ממשתמש אחד.</span></summary>
     <div class="body">
       <ul class="tasks">
-        <li><input type="checkbox"><span>שיתוף עמוד עם משתמש אחר, הרשאות קריאה ועריכה</span></li>
-        <li><input type="checkbox"><span>Yjs עם ספק סנכרון: מעל Firestore (שכבר נותן עדכונים בזמן אמת) או שרת חיצוני. Vercel לא מחזיק חיבורי WebSocket ארוכים</span></li>
-        <li><input type="checkbox"><span>סמנים של משתמשים אחרים בזמן אמת</span></li>
-        <li><input type="checkbox"><span>הערות על בלוקים</span></li>
+        <li data-task="S8-1"><span class="tid">S8-1</span><span class="st"></span><span class="txt">שיתוף עמוד עם משתמש אחר, הרשאות קריאה ועריכה</span></li>
+        <li data-task="S8-2"><span class="tid">S8-2</span><span class="st"></span><span class="txt">Yjs עם ספק סנכרון: מעל Firestore (שכבר נותן עדכונים בזמן אמת) או שרת חיצוני. Vercel לא מחזיק חיבורי WebSocket ארוכים</span></li>
+        <li data-task="S8-3"><span class="tid">S8-3</span><span class="st"></span><span class="txt">סמנים של משתמשים אחרים בזמן אמת</span></li>
+        <li data-task="S8-4"><span class="tid">S8-4</span><span class="st"></span><span class="txt">הערות על בלוקים</span></li>
       </ul>
       <div class="dod"><b>הגדרת סיום</b>שני דפדפנים עורכים את אותו עמוד בלי לדרוס זה את זה.</div>
     </div>
   </details>
+</section>
+
+<section id="git">
+  <h2>גרף גיט ובקרה</h2>
+
+  <div class="conv">
+    <div class="card"><div class="k">ענפים</div><p><code>main</code> תמיד פרוס ותקין. לכל ספרינט ענף <code>sprint-N</code> שיוצא מ-<code>main</code> אחרי שהספרינט הקודם נסגר.</p></div>
+    <div class="card"><div class="k">קומיטים</div><p>כל קומיט בענף ספרינט מתחיל במזהה המשימה: <code>S1-3: Firestore data model</code>. כמה משימות: <code>S1-3, S1-4: …</code></p></div>
+    <div class="card"><div class="k">סגירת ספרינט</div><p>PR מ-<code>sprint-N</code> ל-<code>main</code>, מיזוג עם <code>--no-ff</code>, ותגית <code>v0.N</code> על קומיט המיזוג.</p></div>
+    <div class="card"><div class="k">שינוי בתוכנית</div><p>ישירות ל-<code>main</code>, ורק בקובצי תכנון (<code>docs/</code>, <code>README.md</code>, <code>CLAUDE.md</code>). משימה שמוותרים עליה מקבלת <code>data-status="dropped"</code> ולא נמחקת.</p></div>
+  </div>
+
+  <h3 style="margin-top:24px">הגרף המתוכנן</h3>
+  <p class="sub">נבנה אוטומטית מרשימת המשימות למעלה. כל נקודה היא משימה, וכל מיזוג ל-<code>main</code> הוא ספרינט שנסגר.</p>
+  <div class="graph-box"><pre class="mermaid" id="planned-graph"></pre></div>
+
+  <h3 style="margin-top:24px">הגרף בפועל</h3>
+  <p class="sub" id="actual-meta"></p>
+  <div class="graph-box"><pre class="gitlog" id="actual-graph">—</pre></div>
+
+  <h3 style="margin-top:24px">סטיות מהתוכנית</h3>
+  <ul class="devs" id="deviations"><li>—</li></ul>
+
+  <h3 style="margin-top:24px">מתי בודקים</h3>
+  <ul class="plain">
+    <li><b>אחרי כל קומיט:</b> <code>node scripts/plan-check.mjs</code> — מזהים לא קיימים, קוד שנכנס ישר ל-<code>main</code>, ספרינט שהתחיל לפני שהקודם נסגר.</li>
+    <li><b>בכל PR ודחיפה:</b> GitHub Actions מריץ את אותה בדיקה ונכשל על שגיאה.</li>
+    <li><b>לפני סגירת ספרינט:</b> <code>node scripts/plan-check.mjs --verify</code> מריץ גם את פקודת האימות של הספרינט, ואחר כך סקירה של השינויים מול הטקסט של כל משימה ומול הגדרת הסיום. רק אז תגית.</li>
+  </ul>
 </section>
 
 <section id="risks">
@@ -361,35 +409,73 @@ footer { margin-top: 56px; color: var(--muted); font-size: 0.85rem; }
 <footer>מאגר: <a href="https://github.com/liormedan/mynoteai">github.com/liormedan/mynoteai</a> · רישיון MIT</footer>
 </main>
 
+<script src="progress.js"></script>
 <script>
 (function () {
-  var KEY = "mynoteai-plan-v1";
-  var state = {};
-  try { state = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) {}
+  var P = window.PLAN_PROGRESS || null;
+  var label = { done: "בוצע", progress: "בעבודה", todo: "לא התחיל", dropped: "בוטל" };
+  document.getElementById("progress-missing").hidden = !!P;
 
-  document.querySelectorAll(".sprint").forEach(function (sprint, si) {
-    var boxes = sprint.querySelectorAll("ul.tasks input");
-    var progress = sprint.querySelector(".progress");
-    function update() {
-      var done = 0;
-      boxes.forEach(function (b) {
-        b.parentElement.classList.toggle("done", b.checked);
-        if (b.checked) done++;
-      });
-      progress.textContent = done + " / " + boxes.length;
-    }
-    boxes.forEach(function (box, bi) {
-      var id = si + "-" + bi;
-      box.checked = !!state[id];
-      box.addEventListener("change", function () {
-        state[id] = box.checked;
-        try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
-        update();
-      });
+  document.querySelectorAll(".sprint").forEach(function (sprint) {
+    var items = sprint.querySelectorAll("li[data-task]");
+    var done = 0, active = 0;
+    items.forEach(function (li) {
+      var id = li.getAttribute("data-task");
+      var status = li.getAttribute("data-status") === "dropped" ? "dropped" : (P && P.tasks[id] ? P.tasks[id].status : "todo");
+      li.setAttribute("data-status-live", status);
+      li.querySelector(".st").innerHTML = '<span class="tag ' + status + '">' + label[status] + "</span>";
+      if (status !== "dropped") active++;
+      if (status === "done") done++;
+      var commits = P && P.tasks[id] ? P.tasks[id].commits : [];
+      if (commits.length) {
+        li.querySelector(".txt").insertAdjacentHTML("beforeend",
+          '<div class="commits">' + commits.map(function (c) { return c.sha + (c.onMain ? "" : " (branch)"); }).join(" · ") + "</div>");
+      }
     });
-    update();
+    var n = sprint.getAttribute("data-sprint");
+    var st = P && P.sprints[n];
+    var state = !st ? "" : st.closed ? " · סגור " + st.tag : st.ref ? " · " + st.ref : "";
+    sprint.querySelector(".progress").textContent = done + " / " + active + state;
   });
+
+  if (P) {
+    document.getElementById("actual-graph").textContent = P.graph;
+    document.getElementById("actual-meta").textContent =
+      "נוצר " + new Date(P.generatedAt).toLocaleString("he-IL") + " · HEAD " + P.head + " · ענף " + P.branch;
+    var devs = document.getElementById("deviations");
+    devs.innerHTML = P.deviations.length
+      ? P.deviations.map(function (d) {
+          var li = document.createElement("li");
+          li.className = d.level;
+          li.textContent = (d.level === "error" ? "שגיאה: " : "אזהרה: ") + d.msg;
+          return li.outerHTML;
+        }).join("")
+      : "<li>אין סטיות מהתוכנית.</li>";
+  }
+
+  // planned graph, built from the task list
+  var lines = ["gitGraph TB:", '  commit id: "plan"'];
+  document.querySelectorAll(".sprint").forEach(function (sprint) {
+    var branch = sprint.getAttribute("data-branch");
+    var n = sprint.getAttribute("data-sprint");
+    lines.push("  branch " + branch);
+    sprint.querySelectorAll("li[data-task]").forEach(function (li) {
+      var status = li.getAttribute("data-status-live");
+      var type = status === "done" ? " type: HIGHLIGHT" : status === "dropped" ? " type: REVERSE" : "";
+      lines.push('  commit id: "' + li.getAttribute("data-task") + '"' + type);
+    });
+    lines.push("  checkout main");
+    lines.push("  merge " + branch + ' tag: "v0.' + n + '"');
+  });
+  document.getElementById("planned-graph").textContent = lines.join("\n");
 })();
+</script>
+<script type="module">
+  import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+  var t = document.documentElement.getAttribute("data-theme");
+  var dark = t ? t === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
+  mermaid.initialize({ startOnLoad: false, theme: dark ? "dark" : "default", gitGraph: { mainBranchName: "main", showCommitLabel: true, rotateCommitLabel: false } });
+  await mermaid.run({ querySelector: "#planned-graph" });
 </script>
 </body>
 </html>

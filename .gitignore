@@ -14,3 +14,5 @@ firebase-debug*.log
 firestore-debug.log
 ui-debug.log
 service-account*.json
+docs/progress.js
+.claude/launch.json
