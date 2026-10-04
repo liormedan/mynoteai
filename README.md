@@ -10,9 +10,9 @@
 |---|---|
 | מסגרת | Next.js 16 (App Router) + TypeScript |
 | עורך | [BlockNote](https://github.com/TypeCellOS/BlockNote) — ליבה בלבד (MPL-2.0) |
-| נתונים, התחברות, קבצים | Supabase |
+| נתונים, התחברות, קבצים | Firebase (Firestore, Auth, Storage) |
 | ממשק | Tailwind + shadcn/ui |
-| בינה מלאכותית | Vercel AI SDK + pgvector |
+| בינה מלאכותית | Vercel AI SDK + חיפוש וקטורי של Firestore |
 | פריסה | Vercel |
 
 ## תוכנית

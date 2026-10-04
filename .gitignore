@@ -9,4 +9,8 @@ coverage/
 *.log
 .DS_Store
 Thumbs.db
-supabase/.temp/
+.firebase/
+firebase-debug*.log
+firestore-debug.log
+ui-debug.log
+service-account*.json

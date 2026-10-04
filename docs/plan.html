@@ -133,7 +133,7 @@ footer { margin-top: 56px; color: var(--muted); font-size: 0.85rem; }
   <div class="grid">
     <div class="card"><div class="k">מסגרת</div><div class="v">Next.js 16 (App Router) + TypeScript</div></div>
     <div class="card"><div class="k">עורך</div><div class="v">BlockNote 0.55 (ליבה, MPL-2.0)</div></div>
-    <div class="card"><div class="k">נתונים, התחברות, קבצים</div><div class="v">Supabase (Postgres + Auth + Storage)</div></div>
+    <div class="card"><div class="k">נתונים, התחברות, קבצים</div><div class="v">Firebase (Firestore + Auth + Storage)</div></div>
     <div class="card"><div class="k">ממשק</div><div class="v">Tailwind + shadcn/ui</div></div>
     <div class="card"><div class="k">פריסה</div><div class="v">Vercel, פריסה אוטומטית מ-<code>main</code></div></div>
     <div class="card"><div class="k">רישיון המאגר</div><div class="v">MIT</div></div>
@@ -142,7 +142,9 @@ footer { margin-top: 56px; color: var(--muted); font-size: 0.85rem; }
     <li><b>לא בונים עורך לבד.</b> העורך הוא רוב העבודה בפרויקט כזה, ו-BlockNote נותן אותו מוכן: תפריט <code>/</code>, גרירת בלוקים, קינון, טבלאות ותמונות.</li>
     <li><b>לא לוקחים מערכת שלמה.</b> AppFlowy, AFFiNE, Docmost ו-Outline דורשים שרת קבוע עם Docker ולא רצים ב-Vercel.</li>
     <li><b>לא משתמשים בחבילות <code>@blocknote/xl-*</code>.</b> הן ברישיון GPL-3.0 ויכפו את הרישיון על כל המאגר. את הבינה המלאכותית בונים ישירות עם Vercel AI SDK, וייצוא נעשה ל-Markdown עם פונקציות הליבה.</li>
-    <li><b>תוכן העמוד נשמר כ-JSON של BlockNote</b> בעמודת <code>jsonb</code>, ובמקביל טקסט שטוח לחיפוש.</li>
+    <li><b>Firebase כי זה מה שעובדים איתו</b> בשאר הפרויקטים. הקוד בצד הלקוח מדבר ישירות עם Firestore דרך כללי אבטחה, ונתיבי שרת ב-Next.js משתמשים ב-Admin SDK רק למה שחייב שרת: עוגיית התחברות, בינה מלאכותית, פרסום ציבורי.</li>
+    <li><b>תוכן העמוד נשמר כ-JSON של BlockNote במסמך נפרד</b> מהמטא-דאטה של העמוד, כדי שטעינת העץ בסרגל הצד לא תמשוך את כל התוכן. במקביל נשמר טקסט שטוח לחיפוש.</li>
+    <li><b>ל-Firestore אין חיפוש מלא בטקסט.</b> למשתמש יחיד בונים אינדקס בדפדפן (FlexSearch). אם יהיו הרבה משתמשים — הרחבה של Typesense או Algolia.</li>
   </ul>
 </section>
 
@@ -156,13 +158,17 @@ footer { margin-top: 56px; color: var(--muted); font-size: 0.85rem; }
     <tbody>
       <tr><td class="repo"><a href="https://github.com/TypeCellOS/BlockNote">TypeCellOS/BlockNote</a></td><td>עורך הבלוקים. חבילות: <code>@blocknote/core</code>, <code>react</code>, <code>shadcn</code></td><td>MPL-2.0 (ליבה)</td><td class="num">10.3k</td><td class="num">10/2026</td><td><span class="tag use">בשימוש</span></td></tr>
       <tr><td class="repo"><a href="https://github.com/vercel/next.js">vercel/next.js</a></td><td>מסגרת היישום</td><td>MIT</td><td class="num">143k</td><td class="num">10/2026</td><td><span class="tag use">בשימוש</span></td></tr>
-      <tr><td class="repo"><a href="https://github.com/supabase/supabase">supabase/supabase</a></td><td>מסד נתונים, התחברות, אחסון תמונות, חיפוש</td><td>Apache-2.0</td><td class="num">111k</td><td class="num">10/2026</td><td><span class="tag use">בשימוש</span></td></tr>
+      <tr><td class="repo"><a href="https://github.com/firebase/firebase-js-sdk">firebase/firebase-js-sdk</a></td><td>Firestore, Auth ו-Storage בצד הלקוח</td><td>Apache-2.0</td><td class="num">5.1k</td><td class="num">10/2026</td><td><span class="tag use">בשימוש</span></td></tr>
+      <tr><td class="repo"><a href="https://github.com/firebase/firebase-admin-node">firebase/firebase-admin-node</a></td><td>Admin SDK בנתיבי השרת של Next.js, כולל חיפוש וקטורי</td><td>Apache-2.0</td><td class="num">1.8k</td><td class="num">10/2026</td><td><span class="tag use">בשימוש</span></td></tr>
+      <tr><td class="repo"><a href="https://github.com/awinogrodzki/next-firebase-auth-edge">awinogrodzki/next-firebase-auth-edge</a></td><td>התחברות Firebase ב-middleware של Next.js, עם עוגייה חתומה</td><td>MIT</td><td class="num">665</td><td class="num">08/2026</td><td><span class="tag use">בשימוש</span></td></tr>
+      <tr><td class="repo"><a href="https://github.com/nextapps-de/flexsearch">nextapps-de/flexsearch</a></td><td>אינדקס חיפוש בדפדפן, נשמר ב-IndexedDB</td><td>Apache-2.0</td><td class="num">13.8k</td><td class="num">06/2026</td><td><span class="tag use">ספרינט 4</span></td></tr>
       <tr><td class="repo"><a href="https://github.com/shadcn-ui/ui">shadcn-ui/ui</a></td><td>רכיבי ממשק (סרגל צד, דיאלוגים, תפריטים)</td><td>MIT</td><td class="num">125k</td><td class="num">10/2026</td><td><span class="tag use">בשימוש</span></td></tr>
       <tr><td class="repo"><a href="https://github.com/dip/cmdk">dip/cmdk</a></td><td>חלון פקודות וחיפוש <code>Ctrl+K</code></td><td>MIT</td><td class="num">13k</td><td class="num">10/2025</td><td><span class="tag use">בשימוש</span></td></tr>
       <tr><td class="repo"><a href="https://github.com/clauderic/dnd-kit">clauderic/dnd-kit</a></td><td>גרירה בעץ העמודים ובלוח קנבן</td><td>MIT</td><td class="num">17.7k</td><td class="num">09/2026</td><td><span class="tag use">בשימוש</span></td></tr>
       <tr><td class="repo"><a href="https://github.com/TanStack/table">TanStack/table</a></td><td>תצוגת טבלה למסדי נתונים בסגנון Notion</td><td>MIT</td><td class="num">28.5k</td><td class="num">10/2026</td><td><span class="tag use">ספרינט 5</span></td></tr>
       <tr><td class="repo"><a href="https://github.com/vercel/ai">vercel/ai</a></td><td>Vercel AI SDK — כתיבה בעזרת מודל, צ'אט על הפתקים</td><td>Apache-2.0</td><td class="num">27.1k</td><td class="num">10/2026</td><td><span class="tag use">ספרינט 6</span></td></tr>
-      <tr><td class="repo"><a href="https://github.com/pgvector/pgvector">pgvector/pgvector</a></td><td>חיפוש סמנטי בתוך Supabase</td><td>PostgreSQL</td><td class="num">23.2k</td><td class="num">10/2026</td><td><span class="tag use">ספרינט 6</span></td></tr>
+      <tr><td class="repo"><a href="https://github.com/lucaong/minisearch">lucaong/minisearch</a></td><td>אינדקס חיפוש קטן יותר — חלופה ל-FlexSearch</td><td>MIT</td><td class="num">6.2k</td><td class="num">09/2025</td><td><span class="tag ref">חלופה</span></td></tr>
+      <tr><td class="repo"><a href="https://github.com/genkit-ai/genkit">genkit-ai/genkit</a></td><td>מסגרת הבינה המלאכותית של Firebase. מיותרת כשיש Vercel AI SDK</td><td>Apache-2.0</td><td class="num">6.5k</td><td class="num">10/2026</td><td><span class="tag no">נדחה — כפילות</span></td></tr>
       <tr><td class="repo"><a href="https://github.com/yjs/yjs">yjs/yjs</a></td><td>עריכה משותפת בזמן אמת (BlockNote תומך מובנה)</td><td>MIT</td><td class="num">22.9k</td><td class="num">10/2026</td><td><span class="tag ref">אולי, ספרינט 8</span></td></tr>
       <tr><td class="repo"><a href="https://github.com/jameskerr/react-arborist">jameskerr/react-arborist</a></td><td>עץ עם גרירה מוכנה — חלופה ל-dnd-kit בסרגל הצד</td><td>MIT</td><td class="num">3.7k</td><td class="num">07/2026</td><td><span class="tag ref">חלופה</span></td></tr>
       <tr><td class="repo"><a href="https://github.com/ueberdosis/tiptap">ueberdosis/tiptap</a></td><td>השכבה ש-BlockNote בנוי עליה. ניגע בה רק להרחבות מיוחדות</td><td>MIT</td><td class="num">38.6k</td><td class="num">10/2026</td><td><span class="tag ref">מתחת לעורך</span></td></tr>
@@ -205,14 +211,14 @@ footer { margin-top: 56px; color: var(--muted); font-size: 0.85rem; }
       <span class="goal">משתמש נכנס, ורואה רק את העמודים שלו.</span></summary>
     <div class="body">
       <ul class="tasks">
-        <li><input type="checkbox"><span>פרויקט Supabase, ומשתני סביבה ב-Vercel</span></li>
-        <li><input type="checkbox"><span>התחברות עם קישור במייל ועם Google דרך Supabase Auth</span></li>
-        <li><input type="checkbox"><span>טבלת <code>pages</code>: <code>id, owner_id, parent_id, title, icon, cover_url, content jsonb, plain_text, position, is_archived, created_at, updated_at</code></span></li>
-        <li><input type="checkbox"><span>מדיניות RLS: כל משתמש רואה וכותב רק את השורות שלו</span></li>
-        <li><input type="checkbox"><span>קובצי migration במאגר (<code>supabase/migrations</code>) וטיפוסים שנוצרים אוטומטית</span></li>
-        <li><input type="checkbox"><span>middleware שמפנה משתמש לא מחובר לעמוד הכניסה</span></li>
+        <li><input type="checkbox"><span>פרויקט Firebase, ומשתני סביבה ב-Vercel (הגדרות לקוח + חשבון שירות ל-Admin SDK)</span></li>
+        <li><input type="checkbox"><span>התחברות עם Google ועם קישור במייל דרך Firebase Auth</span></li>
+        <li><input type="checkbox"><span>מבנה נתונים: <code>users/{uid}/pages/{pageId}</code> עם <code>title, icon, coverUrl, parentId, position, type, isArchived, isFavorite, createdAt, updatedAt</code>, ותוכן ב-<code>users/{uid}/pages/{pageId}/content/main</code> עם <code>blocks, plainText</code></span></li>
+        <li><input type="checkbox"><span><code>firestore.rules</code>: משתמש קורא וכותב רק תחת <code>users/{uid}</code> שלו, עם בדיקת שדות וטיפוסים</span></li>
+        <li><input type="checkbox"><span><code>firebase.json</code>, <code>firestore.rules</code>, <code>firestore.indexes.json</code> ו-<code>storage.rules</code> במאגר, ופריסה שלהם עם <code>firebase deploy</code></span></li>
+        <li><input type="checkbox"><span>middleware עם <code>next-firebase-auth-edge</code> שמפנה משתמש לא מחובר לעמוד הכניסה</span></li>
       </ul>
-      <div class="dod"><b>הגדרת סיום</b>שני משתמשים שונים לא רואים זה את העמודים של זה, וזה נבדק בבדיקה אוטומטית.</div>
+      <div class="dod"><b>הגדרת סיום</b>בדיקות כללי אבטחה ב-Firebase Emulator (<code>@firebase/rules-unit-testing</code>) מוכיחות ששני משתמשים לא רואים זה את העמודים של זה.</div>
     </div>
   </details>
 
@@ -224,7 +230,7 @@ footer { margin-top: 56px; color: var(--muted); font-size: 0.85rem; }
         <li><input type="checkbox"><span>רכיב העורך נטען בצד הלקוח בלבד (<code>dynamic</code> עם <code>ssr: false</code>)</span></li>
         <li><input type="checkbox"><span>שמירה אוטומטית עם השהיה של כשנייה, וחיווי "נשמר" / "שומר…"</span></li>
         <li><input type="checkbox"><span>כותרת, אייקון ותמונת שער לכל עמוד</span></li>
-        <li><input type="checkbox"><span>העלאת תמונות וקבצים ל-Supabase Storage מתוך העורך</span></li>
+        <li><input type="checkbox"><span>העלאת תמונות וקבצים ל-Cloud Storage for Firebase מתוך העורך, תחת <code>users/{uid}/</code></span></li>
         <li><input type="checkbox"><span>קישור לעמוד אחר מתוך הטקסט (<code>@</code> או <code>[[</code>)</span></li>
         <li><input type="checkbox"><span>מצב כהה שמשפיע גם על העורך</span></li>
       </ul>
@@ -237,10 +243,11 @@ footer { margin-top: 56px; color: var(--muted); font-size: 0.85rem; }
       <span class="goal">סרגל צד עם עמודים מקוננים, כמו ב-Notion.</span></summary>
     <div class="body">
       <ul class="tasks">
-        <li><input type="checkbox"><span>סרגל צד עם עץ שנפתח ונסגר, טעינה עצלה של ילדים</span></li>
+        <li><input type="checkbox"><span>סרגל צד עם עץ שנפתח ונסגר, שנבנה ממאזין <code>onSnapshot</code> אחד על מטא-הדאטה של העמודים</span></li>
+        <li><input type="checkbox"><span>מטמון מקומי של Firestore (IndexedDB), כדי שכל טעינה לא תספור מחדש קריאה לכל עמוד</span></li>
         <li><input type="checkbox"><span>יצירת עמוד חדש בכל רמה, שינוי שם, שכפול</span></li>
         <li><input type="checkbox"><span>גרירה להזזת עמוד ולשינוי סדר</span></li>
-        <li><input type="checkbox"><span>סל מחזור: מחיקה רכה, שחזור, ומחיקה סופית רק בלחיצה מפורשת</span></li>
+        <li><input type="checkbox"><span>סל מחזור: מחיקה רכה, שחזור, ומחיקה סופית רק בלחיצה מפורשת (מחיקת ענף ב-batches של עד 500 כתיבות)</span></li>
         <li><input type="checkbox"><span>שביל ניווט (breadcrumbs) בראש העמוד</span></li>
         <li><input type="checkbox"><span>מועדפים</span></li>
       </ul>
@@ -253,7 +260,8 @@ footer { margin-top: 56px; color: var(--muted); font-size: 0.85rem; }
       <span class="goal">מוצאים כל פתק תוך שתי שניות מהמקלדת.</span></summary>
     <div class="body">
       <ul class="tasks">
-        <li><input type="checkbox"><span>חיפוש מלא בטקסט ב-Postgres על <code>title</code> ו-<code>plain_text</code>, כולל עברית</span></li>
+        <li><input type="checkbox"><span>אינדקס FlexSearch בדפדפן על <code>title</code> ו-<code>plainText</code>, שנשמר ב-IndexedDB ומתעדכן אחרי כל שמירה</span></li>
+        <li><input type="checkbox"><span>מקודד עברי: הסרת אותיות שימוש (ה, ו, ב, ל, מ, ש, כ) ואיחוד אותיות סופיות</span></li>
         <li><input type="checkbox"><span>חלון פקודות <code>Ctrl+K</code>: חיפוש, עמודים אחרונים, יצירת עמוד</span></li>
         <li><input type="checkbox"><span>קיצורי מקלדת: עמוד חדש, מעבר לסרגל, החלפת מצב כהה</span></li>
         <li><input type="checkbox"><span>תצוגה מותאמת לנייד</span></li>
@@ -285,7 +293,7 @@ footer { margin-top: 56px; color: var(--muted); font-size: 0.85rem; }
       <ul class="tasks">
         <li><input type="checkbox"><span>נתיב API עם Vercel AI SDK והזרמת תשובות, מפתח המודל רק בצד השרת</span></li>
         <li><input type="checkbox"><span>פקודות בעורך: המשך כתיבה, סיכום, שכתוב, תרגום, רשימת משימות מהטקסט</span></li>
-        <li><input type="checkbox"><span>embeddings לכל עמוד ב-pgvector, עדכון אחרי שמירה</span></li>
+        <li><input type="checkbox"><span>embeddings לכל עמוד כשדה וקטורי ב-Firestore, עם אינדקס וקטורי וחיפוש <code>findNearest</code> דרך Admin SDK</span></li>
         <li><input type="checkbox"><span>"שאל את הפתקים שלי": צ'אט שעונה עם הפניות לעמודים</span></li>
         <li><input type="checkbox"><span>מגבלת שימוש לכל משתמש, כדי שהחשבון לא יתרוקן</span></li>
       </ul>
@@ -314,7 +322,7 @@ footer { margin-top: 56px; color: var(--muted); font-size: 0.85rem; }
     <div class="body">
       <ul class="tasks">
         <li><input type="checkbox"><span>שיתוף עמוד עם משתמש אחר, הרשאות קריאה ועריכה</span></li>
-        <li><input type="checkbox"><span>Yjs עם שרת סנכרון חיצוני (Vercel לא מחזיק חיבורי WebSocket ארוכים)</span></li>
+        <li><input type="checkbox"><span>Yjs עם ספק סנכרון: מעל Firestore (שכבר נותן עדכונים בזמן אמת) או שרת חיצוני. Vercel לא מחזיק חיבורי WebSocket ארוכים</span></li>
         <li><input type="checkbox"><span>סמנים של משתמשים אחרים בזמן אמת</span></li>
         <li><input type="checkbox"><span>הערות על בלוקים</span></li>
       </ul>
@@ -332,8 +340,10 @@ footer { margin-top: 56px; color: var(--muted); font-size: 0.85rem; }
       <tr><td>עברית ב-BlockNote. היו תקלות בתפריט הצד ובגרירה בכיוון ימין-לשמאל; הן סגורות מ-2025–2026, אבל לא נבדקו אצלנו</td><td>ספרינט 0 נגמר בשער החלטה. חלופה: Tiptap</td></tr>
       <tr><td>BlockNote עדיין בגרסה 0.x, ושינויים שוברים אפשריים</td><td>נעילת גרסה מדויקת, ועדכון רק בענף נפרד</td></tr>
       <tr><td>רישיון: חבילות <code>xl-*</code> ב-GPL-3.0</td><td>לא מתקינים אותן. בדיקה ב-CI שנכשלת אם הן מופיעות ב-<code>package.json</code></td></tr>
-      <tr><td>עלויות: Supabase ו-Vercel בחינם עד גבול, ומודל השפה בתשלום לפי שימוש</td><td>מגבלת שימוש בספרינט 6, והתראה בחשבון הספק</td></tr>
-      <tr><td>Supabase בחינם נכבה אחרי שבוע בלי פעילות</td><td>לבדוק את המדיניות הנוכחית בספרינט 1</td></tr>
+      <tr><td>Cloud Storage for Firebase דורש תוכנית Blaze (חשבון חיוב) מאז 3.2.2026, גם בשימוש קטן</td><td>להפעיל Blaze עם התראת תקציב נמוכה. בתוך מכסת החינם החשבון נשאר על אפס</td></tr>
+      <tr><td>מסמך ב-Firestore מוגבל ל-1MiB, ועמוד ארוך מאוד עלול לחרוג</td><td>תמונות נשמרות כקישור ל-Storage, ובדיקת גודל לפני שמירה עם אזהרה למשתמש</td></tr>
+      <tr><td>Firestore גובה לפי קריאה, ועץ של מאות עמודים נקרא בכל טעינה</td><td>מאזין אחד עם מטמון מקומי, ומטא-דאטה מופרדת מהתוכן</td></tr>
+      <tr><td>עלויות: Firebase ו-Vercel בחינם עד גבול, ומודל השפה בתשלום לפי שימוש</td><td>מגבלת שימוש בספרינט 6, והתראה בחשבון הספק</td></tr>
     </tbody>
   </table>
   </div>
