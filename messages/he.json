@@ -116,5 +116,22 @@
   },
   "Common": {
     "close": "סגירה"
+  },
+  "Command": {
+    "open": "חיפוש",
+    "title": "חלון פקודות",
+    "description": "חיפוש בעמודים והפעלת פקודות",
+    "placeholder": "חיפוש עמודים או פקודה…",
+    "results": "עמודים",
+    "recent": "אחרונים",
+    "actions": "פעולות",
+    "noResults": "לא נמצאו עמודים",
+    "createNamed": "יצירת עמוד בשם „{title}”",
+    "newPage": "עמוד חדש",
+    "goHome": "מעבר לדף הבית",
+    "focusSidebar": "מעבר לרשימת העמודים",
+    "toggleTheme": "החלפה בין מצב כהה לבהיר",
+    "switchLanguage": "מעבר לאנגלית (English)",
+    "indexing": "{count, plural, one {קורא עוד עמוד אחד…} other {קורא עוד # עמודים…}}"
   }
 }

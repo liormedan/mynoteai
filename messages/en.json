@@ -116,5 +116,22 @@
   },
   "Common": {
     "close": "Close"
+  },
+  "Command": {
+    "open": "Search",
+    "title": "Command window",
+    "description": "Search pages and run commands",
+    "placeholder": "Search pages or type a command…",
+    "results": "Pages",
+    "recent": "Recent",
+    "actions": "Actions",
+    "noResults": "No pages found",
+    "createNamed": "Create a page named “{title}”",
+    "newPage": "New page",
+    "goHome": "Go to home",
+    "focusSidebar": "Go to the page list",
+    "toggleTheme": "Switch between dark and light",
+    "switchLanguage": "Switch to Hebrew (עברית)",
+    "indexing": "{count, plural, one {Reading one more page…} other {Reading # more pages…}}"
   }
 }
