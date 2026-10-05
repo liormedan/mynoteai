@@ -35,6 +35,8 @@ export type Page = {
   isFavorite: boolean;
   createdAt: Date;
   updatedAt: Date;
+  /** Last content save; null on pages saved before this field existed. */
+  contentUpdatedAt: Date | null;
 };
 
 export type PageContent = {
@@ -71,6 +73,7 @@ export const pageConverter: FirestoreDataConverter<Page> = {
       isFavorite: d.isFavorite === true,
       createdAt: toDate(d.createdAt),
       updatedAt: toDate(d.updatedAt),
+      contentUpdatedAt: d.contentUpdatedAt ? toDate(d.contentUpdatedAt) : null,
     };
   },
 };

@@ -20,6 +20,7 @@ import {
   pageRef,
   type Page,
 } from "./model";
+import { emitContentSaved } from "./content-events";
 
 /** Firestore rejects documents over 1 MiB; leave room for the other fields. */
 export const MAX_BLOCKS_BYTES = 900_000;
@@ -69,14 +70,19 @@ export async function saveContent(pageId: string, blocks: PartialBlock[]) {
   const json = JSON.stringify(blocks);
   const bytes = new TextEncoder().encode(json).length;
   if (bytes > MAX_BLOCKS_BYTES) throw new ContentTooLargeError(bytes);
+  const plainText = blocksToPlainText(blocks);
   const { db } = getFirebase();
   const batch = writeBatch(db);
   batch.set(doc(db, PAGES, pageId, CONTENT, MAIN_CONTENT), {
     blocks: json,
-    plainText: blocksToPlainText(blocks),
+    plainText,
     updatedAt: serverTimestamp(),
   });
-  batch.update(doc(db, PAGES, pageId), { updatedAt: serverTimestamp() });
+  batch.update(doc(db, PAGES, pageId), {
+    updatedAt: serverTimestamp(),
+    contentUpdatedAt: serverTimestamp(),
+  });
+  emitContentSaved(pageId, plainText);
   await batch.commit();
 }
 

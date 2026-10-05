@@ -27,6 +27,7 @@ const page = (
   isFavorite: false,
   createdAt: new Date(0),
   updatedAt: new Date(0),
+  contentUpdatedAt: null,
   ...extra,
 });
 

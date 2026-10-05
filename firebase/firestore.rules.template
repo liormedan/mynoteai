@@ -19,7 +19,7 @@ service cloud.firestore {
 
     function isValidPage(d) {
       return d.keys().hasAll(['title', 'parentId', 'position', 'type', 'isArchived', 'isFavorite', 'createdAt', 'updatedAt'])
-        && d.keys().hasOnly(['title', 'icon', 'coverUrl', 'parentId', 'position', 'type', 'isArchived', 'isFavorite', 'createdAt', 'updatedAt'])
+        && d.keys().hasOnly(['title', 'icon', 'coverUrl', 'parentId', 'position', 'type', 'isArchived', 'isFavorite', 'createdAt', 'updatedAt', 'contentUpdatedAt'])
         && d.title is string && d.title.size() <= 500
         && optionalString(d, 'icon', 64)
         && optionalString(d, 'coverUrl', 2048)
@@ -29,7 +29,8 @@ service cloud.firestore {
         && d.isArchived is bool
         && d.isFavorite is bool
         && d.createdAt is timestamp
-        && d.updatedAt is timestamp;
+        && d.updatedAt is timestamp
+        && (!('contentUpdatedAt' in d) || d.contentUpdatedAt is timestamp);
     }
 
     function isValidContent(d) {
