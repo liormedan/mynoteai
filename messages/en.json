@@ -5,7 +5,9 @@
   },
   "Home": {
     "editorLab": "Editor lab",
-    "editorLabDescription": "Try the block editor with Hebrew, English and mixed text."
+    "editorLabDescription": "Try the block editor with Hebrew, English and mixed text.",
+    "signedInAs": "Signed in as <addr>{email}</addr>",
+    "signOut": "Sign out"
   },
   "LocaleSwitcher": {
     "label": "Language",
@@ -16,5 +18,21 @@
     "title": "Editor lab",
     "description": "A playground for checking the editor in both directions. Nothing here is saved.",
     "back": "Back"
+  },
+  "Login": {
+    "title": "Sign in",
+    "subtitle": "This notebook belongs to one person. Sign in with the owner account.",
+    "google": "Continue with Google",
+    "or": "or",
+    "emailLabel": "Email",
+    "emailPlaceholder": "you@example.com",
+    "sendLink": "Email me a sign-in link",
+    "linkSent": "Check your inbox: we sent a sign-in link to {email}.",
+    "finishing": "Signing you in…",
+    "enterEmailAgain": "Confirm the email address the link was sent to.",
+    "confirm": "Sign in",
+    "notOwner": "This account is not the owner of this notebook.",
+    "failed": "Sign-in failed. Please try again.",
+    "emulator": "Development mode: sign-in runs on the Firebase emulator. In the Google window choose “Add new account” and use {email}."
   }
 }
