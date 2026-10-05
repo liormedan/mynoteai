@@ -1,13 +1,16 @@
 {
   "App": {
     "title": "mynoteai",
-    "tagline": "מחברת אישית בסגנון Notion."
+    "tagline": "מחברת אישית בסגנון Notion.",
+    "loading": "טוען…",
+    "untitled": "ללא שם"
   },
   "Home": {
     "editorLab": "מעבדת העורך",
-    "editorLabDescription": "לנסות את עורך הבלוקים עם עברית, אנגלית וטקסט מעורב.",
-    "signedInAs": "מחובר בתור <addr>{email}</addr>",
-    "signOut": "יציאה"
+    "signOut": "יציאה",
+    "recent": "עמודים",
+    "newPage": "עמוד חדש",
+    "empty": "עוד אין עמודים. צרו את הראשון."
   },
   "LocaleSwitcher": {
     "label": "שפה",
@@ -34,5 +37,34 @@
     "notOwner": "החשבון הזה אינו הבעלים של המחברת.",
     "failed": "הכניסה נכשלה. נסו שוב.",
     "emulator": "מצב פיתוח: הכניסה רצה על האמולטור של Firebase. בחלון של Google בחרו “Add new account” והשתמשו ב-{email}."
+  },
+  "Theme": {
+    "light": "בהיר",
+    "dark": "כהה",
+    "system": "לפי המערכת",
+    "switchTo": "מעבר לערכת נושא: {theme}"
+  },
+  "Page": {
+    "titlePlaceholder": "ללא שם",
+    "addIcon": "הוספת אייקון",
+    "removeIcon": "הסרת אייקון",
+    "chooseIcon": "בחירת אייקון",
+    "addCover": "הוספת תמונת שער",
+    "changeCover": "החלפת תמונת שער",
+    "removeCover": "הסרת תמונת שער",
+    "gradients": "מעברי צבע",
+    "imageLink": "קישור לתמונה",
+    "imageLinkPlaceholder": "https://…",
+    "apply": "החלה",
+    "invalidLink": "יש להזין קישור http(s) לתמונה.",
+    "status": {
+      "pending": "יש שינויים שלא נשמרו",
+      "saving": "שומר…",
+      "saved": "נשמר",
+      "error": "לא נשמר — בדקו את החיבור"
+    },
+    "tooLarge": "העמוד גדול מדי לשמירה ({size} MB). כדאי לפצל אותו לעמודים קטנים יותר.",
+    "notFound": "העמוד לא קיים או שנמחק.",
+    "backHome": "חזרה לעמודים"
   }
 }
