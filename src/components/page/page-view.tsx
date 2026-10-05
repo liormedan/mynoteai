@@ -16,7 +16,6 @@ import {
   saveContent,
   updatePage,
   usePage,
-  usePages,
 } from "@/lib/pages/client";
 import { detectDirection } from "@/components/editor/direction";
 import { parseCover } from "@/lib/pages/cover";
@@ -28,6 +27,10 @@ import {
   writeDraft,
 } from "@/lib/pages/draft";
 import { uploadPageFile } from "@/lib/pages/upload";
+import { restorePage } from "@/lib/pages/actions";
+import { usePagesStore } from "@/lib/pages/store";
+import { ancestors } from "@/lib/pages/tree";
+import { Breadcrumbs } from "./breadcrumbs";
 import { CoverPicker } from "./cover-picker";
 import { IconPicker } from "./icon-picker";
 
@@ -71,9 +74,17 @@ export function PageView({
 function LoadedPage({ page, locale }: { page: Page; locale: Locale }) {
   const t = useTranslations("Page");
   const tApp = useTranslations("App");
-  const pages = usePages();
+  const { live, byId } = usePagesStore();
   const [blocks, setBlocks] = useState<NotePartialBlock[] | null>(null);
   const [title, setTitle] = useState(page.title);
+  const [titleFocused, setTitleFocused] = useState(false);
+  // Follow renames made elsewhere (sidebar, another tab) unless the title is
+  // being edited here; while typing, the local value is the newest.
+  const [serverTitle, setServerTitle] = useState(page.title);
+  if (page.title !== serverTitle) {
+    setServerTitle(page.title);
+    if (!titleFocused) setTitle(page.title);
+  }
   const [contentStatus, setContentStatus] = useState<SaveStatus>("idle");
   const [titleStatus, setTitleStatus] = useState<SaveStatus>("idle");
   const [tooLarge, setTooLarge] = useState<number | null>(null);
@@ -179,13 +190,43 @@ function LoadedPage({ page, locale }: { page: Page; locale: Locale }) {
   // Icon, buttons and title follow the title's language, like a text block.
   const headerDir = detectDirection(title) ?? localeDirection[locale];
   const summaries = useMemo(
-    () =>
-      (pages ?? []).map((p) => ({ id: p.id, title: p.title, icon: p.icon })),
-    [pages],
+    () => live.map((p) => ({ id: p.id, title: p.title, icon: p.icon })),
+    [live],
   );
+  // The page itself, or a page above it, may be in the trash.
+  const archivedRoot = page.isArchived
+    ? page
+    : ancestors(byId, page.id).find((p) => p.isArchived);
 
   return (
     <main className="flex flex-1 flex-col">
+      <div className="sticky top-12 z-20 flex h-10 items-center gap-3 bg-background/90 px-4 backdrop-blur">
+        <Breadcrumbs page={page} />
+        <span
+          role="status"
+          aria-live="polite"
+          className={`ms-auto shrink-0 text-xs ${status === "error" ? "text-destructive" : ""}`}
+        >
+          {status !== "idle" && t(`status.${status}`)}
+        </span>
+      </div>
+
+      {archivedRoot && (
+        <div
+          role="alert"
+          className="flex items-center justify-center gap-3 bg-destructive/10 px-4 py-2 text-sm"
+        >
+          {archivedRoot.id === page.id ? t("inTrash") : t("inTrashAncestor")}
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={() => void restorePage(archivedRoot.id)}
+          >
+            {t("restore")}
+          </Button>
+        </div>
+      )}
+
       {cover && (
         <div className="group relative h-44 w-full overflow-hidden bg-muted sm:h-56">
           {cover.kind === "gradient" ? (
@@ -259,13 +300,6 @@ function LoadedPage({ page, locale }: { page: Page; locale: Locale }) {
               </Button>
             </CoverPicker>
           )}
-          <span
-            role="status"
-            aria-live="polite"
-            className={`ms-auto text-xs ${status === "error" ? "text-destructive" : ""}`}
-          >
-            {status !== "idle" && t(`status.${status}`)}
-          </span>
         </div>
 
         <textarea
@@ -280,6 +314,8 @@ function LoadedPage({ page, locale }: { page: Page; locale: Locale }) {
             setTitle(e.target.value);
             titleSaver.schedule(e.target.value);
           }}
+          onFocus={() => setTitleFocused(true)}
+          onBlur={() => setTitleFocused(false)}
           onKeyDown={(e) => {
             if (e.key === "Enter") e.preventDefault();
           }}
