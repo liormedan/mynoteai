@@ -40,6 +40,21 @@ service cloud.firestore {
         && d.updatedAt is timestamp;
     }
 
+    function isValidTemplate(d) {
+      return d.keys().hasOnly(['title', 'icon', 'blocks', 'createdAt'])
+        && d.keys().hasAll(['title', 'blocks', 'createdAt'])
+        && d.title is string && d.title.size() <= 500
+        && optionalString(d, 'icon', 64)
+        && d.blocks is string
+        && d.createdAt is timestamp;
+    }
+
+    // Page templates saved by the owner (built-in templates live in the app).
+    match /templates/{templateId} {
+      allow read, delete: if isOwner();
+      allow create: if isOwner() && isValidTemplate(request.resource.data);
+    }
+
     match /pages/{pageId} {
       allow read, delete: if isOwner();
       allow create: if isOwner() && isValidPage(request.resource.data);
