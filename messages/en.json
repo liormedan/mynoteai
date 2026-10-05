@@ -8,7 +8,7 @@
   "Home": {
     "editorLab": "Editor lab",
     "signOut": "Sign out",
-    "recent": "Pages",
+    "recent": "Recently edited",
     "newPage": "New page",
     "empty": "No pages yet. Create the first one."
   },
@@ -65,6 +65,56 @@
     },
     "tooLarge": "This page is too large to save ({size} MB). Split it into smaller pages.",
     "notFound": "This page does not exist or was deleted.",
-    "backHome": "Back to pages"
+    "backHome": "Back to pages",
+    "inTrash": "This page is in the trash.",
+    "inTrashAncestor": "A page above this one is in the trash.",
+    "restore": "Restore",
+    "breadcrumbs": "Breadcrumbs"
+  },
+  "Sidebar": {
+    "pages": "Pages",
+    "favorites": "Favorites",
+    "newPage": "New page",
+    "emptyPage": "Empty page",
+    "templates": "Templates",
+    "myTemplates": "My templates",
+    "deleteTemplate": "Delete template",
+    "addChild": "Add a page inside",
+    "more": "More actions",
+    "rename": "Rename",
+    "duplicate": "Duplicate",
+    "copySuffix": " (copy)",
+    "addFavorite": "Add to favorites",
+    "removeFavorite": "Remove from favorites",
+    "moveTo": "Move to…",
+    "saveAsTemplate": "Save as template",
+    "templateSaved": "Saved as a template",
+    "delete": "Move to trash",
+    "expand": "Expand",
+    "collapse": "Collapse",
+    "trash": "Trash",
+    "offline": "Offline — changes will sync",
+    "noPages": "No pages yet",
+    "openMenu": "Open pages"
+  },
+  "Move": {
+    "title": "Move \"{page}\" to…",
+    "topLevel": "Top level",
+    "search": "Filter pages",
+    "none": "No matching pages"
+  },
+  "Trash": {
+    "title": "Trash",
+    "empty": "The trash is empty.",
+    "restore": "Restore",
+    "deleteForever": "Delete forever",
+    "confirmDelete": "Click again to delete for good",
+    "emptyTrash": "Empty trash",
+    "confirmEmpty": "Click again to delete everything in the trash",
+    "deletedAt": "Moved to trash {when}",
+    "hint": "A page in the trash takes its sub-pages with it."
+  },
+  "Common": {
+    "close": "Close"
   }
 }

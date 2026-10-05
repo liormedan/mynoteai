@@ -35,10 +35,21 @@ describe("findPhysicalClasses", () => {
     ).toEqual([]);
   });
 
-  it("skips comment lines", () => {
-    expect(classes(`// Code is always left-to-right\n * right-to-left`)).toEqual(
+  it("ignores bare direction words used as values", () => {
+    expect(classes(`side = "right"; type Side = "left" | "right";`)).toEqual(
       [],
     );
+    expect(classes(`className="border-l rounded-r text-left"`)).toEqual([
+      "border-l",
+      "rounded-r",
+      "text-left",
+    ]);
+  });
+
+  it("skips comment lines", () => {
+    expect(
+      classes(`// Code is always left-to-right\n * right-to-left`),
+    ).toEqual([]);
   });
 
   it("respects the rtl-ok escape hatch", () => {

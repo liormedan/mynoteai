@@ -6,21 +6,28 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { Button } from "@/components/ui/button";
-import { getFirebase } from "@/lib/firebase/client";
-import { usePages } from "@/lib/pages/client";
-import { createPage } from "@/lib/pages/model";
+import { createPageUnder } from "@/lib/pages/actions";
+import { usePagesStore } from "@/lib/pages/store";
+
+const RECENT_LIMIT = 20;
 
 export function HomeView() {
   const t = useTranslations();
   const format = useFormatter();
   const now = useNow({ updateInterval: 60_000 });
   const router = useRouter();
-  const pages = usePages();
+  const { live, all, loading } = usePagesStore();
+  const pages = loading
+    ? null
+    : [...live]
+        .sort((a, b) => b.updatedAt.getTime() - a.updatedAt.getTime())
+        // The sidebar holds the full tree; home shows what changed lately.
+        .slice(0, RECENT_LIMIT);
   const [pending, startTransition] = useTransition();
 
   const newPage = () =>
     startTransition(async () => {
-      const id = await createPage(getFirebase().db);
+      const id = await createPageUnder(all, null);
       router.push(`/p/${id}`);
     });
 
@@ -55,7 +62,10 @@ export function HomeView() {
                   {p.title || t("App.untitled")}
                 </bdi>
                 <span className="text-xs text-muted-foreground">
-                  {format.relativeTime(p.updatedAt, now)}
+                  {format.relativeTime(
+                    p.updatedAt > now ? now : p.updatedAt,
+                    now,
+                  )}
                 </span>
               </Link>
             </li>
