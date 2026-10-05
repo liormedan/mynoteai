@@ -2,7 +2,8 @@
 // Renders firebase/*.rules from their templates with the install's OWNER_EMAIL.
 //
 //   node scripts/firebase-rules.mjs            render for local dev (.env.local, then .env.development)
-//   node scripts/firebase-rules.mjs --deploy   render from .env.local and deploy Firestore rules + indexes
+//   node scripts/firebase-rules.mjs --deploy   render from .env.production.local (or .env.local) and deploy
+//                                              Firestore rules + indexes to that project
 //
 // The generated files are git-ignored: every install has its own owner.
 
@@ -40,7 +41,9 @@ export function renderRules(template, ownerEmail) {
 }
 
 function loadEnv(deploy) {
-  const files = deploy ? [".env.local"] : [".env.development", ".env.local"];
+  const files = deploy
+    ? [".env.local", ".env.production.local"]
+    : [".env.development", ".env.local"];
   return Object.assign(
     {},
     ...files.map((f) => readEnvFile(join(ROOT, f))),
@@ -70,7 +73,7 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
     const project = env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
     if (!project || project.startsWith("demo-")) {
       throw new Error(
-        "Set NEXT_PUBLIC_FIREBASE_PROJECT_ID in .env.local to your real Firebase project.",
+        "Set NEXT_PUBLIC_FIREBASE_PROJECT_ID in .env.production.local to your real Firebase project.",
       );
     }
     execFileSync(
