@@ -51,3 +51,10 @@
   border-left: 0;
   border-right: 1px solid var(--bn-colors-side-menu);
 }
+
+/* The editor sits on the page itself, not in a card: use the app's colors. */
+.bn-root.bn-container,
+.bn-root.bn-container[data-color-scheme] {
+  --bn-colors-editor-background: transparent;
+  --bn-colors-editor-text: var(--foreground);
+}

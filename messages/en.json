@@ -1,13 +1,16 @@
 {
   "App": {
     "title": "mynoteai",
-    "tagline": "A personal, Notion-style notebook."
+    "tagline": "A personal, Notion-style notebook.",
+    "loading": "Loading…",
+    "untitled": "Untitled"
   },
   "Home": {
     "editorLab": "Editor lab",
-    "editorLabDescription": "Try the block editor with Hebrew, English and mixed text.",
-    "signedInAs": "Signed in as <addr>{email}</addr>",
-    "signOut": "Sign out"
+    "signOut": "Sign out",
+    "recent": "Pages",
+    "newPage": "New page",
+    "empty": "No pages yet. Create the first one."
   },
   "LocaleSwitcher": {
     "label": "Language",
@@ -34,5 +37,34 @@
     "notOwner": "This account is not the owner of this notebook.",
     "failed": "Sign-in failed. Please try again.",
     "emulator": "Development mode: sign-in runs on the Firebase emulator. In the Google window choose “Add new account” and use {email}."
+  },
+  "Theme": {
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System",
+    "switchTo": "Switch to {theme} theme"
+  },
+  "Page": {
+    "titlePlaceholder": "Untitled",
+    "addIcon": "Add icon",
+    "removeIcon": "Remove icon",
+    "chooseIcon": "Choose an icon",
+    "addCover": "Add cover",
+    "changeCover": "Change cover",
+    "removeCover": "Remove cover",
+    "gradients": "Gradients",
+    "imageLink": "Image link",
+    "imageLinkPlaceholder": "https://…",
+    "apply": "Apply",
+    "invalidLink": "Enter an http(s) image link.",
+    "status": {
+      "pending": "Unsaved changes",
+      "saving": "Saving…",
+      "saved": "Saved",
+      "error": "Not saved — check your connection"
+    },
+    "tooLarge": "This page is too large to save ({size} MB). Split it into smaller pages.",
+    "notFound": "This page does not exist or was deleted.",
+    "backHome": "Back to pages"
   }
 }
