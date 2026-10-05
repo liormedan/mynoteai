@@ -1,0 +1,53 @@
+/*
+ * BlockNote 0.55 has no RTL support and uses physical properties for nested
+ * blocks. Mirror them when the page runs right-to-left, so children indent
+ * from the right and the nesting guide line sits on the right.
+ * Tracking upstream: https://github.com/TypeCellOS/BlockNote/issues/492
+ */
+/* Per-block decorations: switch to logical properties so they follow each
+   block's own direction (blockContent has dir="auto"). */
+.bn-editor [data-content-type="quote"] blockquote {
+  border-left: 0;
+  border-inline-start: 2px solid currentColor;
+  padding-left: 0;
+  padding-inline-start: 1em;
+}
+
+.bn-editor .bn-block-content[data-content-type="bulletListItem"]::before,
+.bn-editor .bn-block-content[data-content-type="numberedListItem"]::before {
+  padding-right: 0;
+  padding-inline-end: 4px;
+}
+
+.bn-editor .bn-block-content[data-content-type="checkListItem"] > div > input {
+  margin-left: 0;
+  margin-right: 0;
+  margin-inline: 4px 8px;
+}
+
+.bn-editor [data-content-type="table"] th {
+  text-align: start;
+}
+
+/* Nesting follows the page direction. */
+[dir="rtl"] .bn-block-group .bn-block-group {
+  margin-left: 0;
+  margin-right: 24px;
+}
+
+[dir="rtl"]
+  .bn-block-group
+  .bn-block-group
+  > .bn-block-outer:not([data-prev-depth-changed])::before {
+  left: auto;
+  right: -20px;
+}
+
+[dir="rtl"]
+  .bn-block-group
+  .bn-block:not(:has(.bn-toggle-wrapper))
+  .bn-block-group
+  .bn-block-outer:not([data-prev-depth-changed])::before {
+  border-left: 0;
+  border-right: 1px solid var(--bn-colors-side-menu);
+}

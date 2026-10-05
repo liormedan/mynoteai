@@ -1,0 +1,20 @@
+{
+  "App": {
+    "title": "mynoteai",
+    "tagline": "A personal, Notion-style notebook."
+  },
+  "Home": {
+    "editorLab": "Editor lab",
+    "editorLabDescription": "Try the block editor with Hebrew, English and mixed text."
+  },
+  "LocaleSwitcher": {
+    "label": "Language",
+    "en": "English",
+    "he": "עברית"
+  },
+  "EditorLab": {
+    "title": "Editor lab",
+    "description": "A playground for checking the editor in both directions. Nothing here is saved.",
+    "back": "Back"
+  }
+}

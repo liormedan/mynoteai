@@ -1,0 +1,20 @@
+{
+  "App": {
+    "title": "mynoteai",
+    "tagline": "מחברת אישית בסגנון Notion."
+  },
+  "Home": {
+    "editorLab": "מעבדת העורך",
+    "editorLabDescription": "לנסות את עורך הבלוקים עם עברית, אנגלית וטקסט מעורב."
+  },
+  "LocaleSwitcher": {
+    "label": "שפה",
+    "en": "English",
+    "he": "עברית"
+  },
+  "EditorLab": {
+    "title": "מעבדת העורך",
+    "description": "מגרש משחקים לבדיקת העורך בשני הכיוונים. שום דבר כאן לא נשמר.",
+    "back": "חזרה"
+  }
+}
