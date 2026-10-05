@@ -5,11 +5,8 @@ import {
   doc,
   getDoc,
   onSnapshot,
-  orderBy,
-  query,
   serverTimestamp,
   updateDoc,
-  where,
   writeBatch,
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
@@ -21,7 +18,6 @@ import {
   MAIN_CONTENT,
   PAGES,
   pageRef,
-  pagesCollection,
   type Page,
 } from "./model";
 
@@ -32,20 +28,6 @@ export class ContentTooLargeError extends Error {
   constructor(public bytes: number) {
     super(`Page content is ${bytes} bytes`);
   }
-}
-
-/** All live pages, newest first. Updates in real time (and offline, from the cache). */
-export function usePages() {
-  const [pages, setPages] = useState<Page[] | null>(null);
-  useEffect(() => {
-    const q = query(
-      pagesCollection(getFirebase().db),
-      where("isArchived", "==", false),
-      orderBy("updatedAt", "desc"),
-    );
-    return onSnapshot(q, (snap) => setPages(snap.docs.map((d) => d.data())));
-  }, []);
-  return pages;
 }
 
 export type PageState =

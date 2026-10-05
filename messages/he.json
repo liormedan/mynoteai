@@ -8,7 +8,7 @@
   "Home": {
     "editorLab": "מעבדת העורך",
     "signOut": "יציאה",
-    "recent": "עמודים",
+    "recent": "נערכו לאחרונה",
     "newPage": "עמוד חדש",
     "empty": "עוד אין עמודים. צרו את הראשון."
   },
@@ -65,6 +65,56 @@
     },
     "tooLarge": "העמוד גדול מדי לשמירה ({size} MB). כדאי לפצל אותו לעמודים קטנים יותר.",
     "notFound": "העמוד לא קיים או שנמחק.",
-    "backHome": "חזרה לעמודים"
+    "backHome": "חזרה לעמודים",
+    "inTrash": "העמוד הזה נמצא בסל המחזור.",
+    "inTrashAncestor": "עמוד שמעל העמוד הזה נמצא בסל המחזור.",
+    "restore": "שחזור",
+    "breadcrumbs": "מיקום העמוד"
+  },
+  "Sidebar": {
+    "pages": "עמודים",
+    "favorites": "מועדפים",
+    "newPage": "עמוד חדש",
+    "emptyPage": "עמוד ריק",
+    "templates": "תבניות",
+    "myTemplates": "התבניות שלי",
+    "deleteTemplate": "מחיקת תבנית",
+    "addChild": "הוספת עמוד בתוך העמוד",
+    "more": "פעולות נוספות",
+    "rename": "שינוי שם",
+    "duplicate": "שכפול",
+    "copySuffix": " (עותק)",
+    "addFavorite": "הוספה למועדפים",
+    "removeFavorite": "הסרה מהמועדפים",
+    "moveTo": "העברה אל…",
+    "saveAsTemplate": "שמירה כתבנית",
+    "templateSaved": "נשמר כתבנית",
+    "delete": "העברה לסל המחזור",
+    "expand": "פתיחה",
+    "collapse": "סגירה",
+    "trash": "סל המחזור",
+    "offline": "אין חיבור — השינויים יסונכרנו",
+    "noPages": "עוד אין עמודים",
+    "openMenu": "פתיחת העמודים"
+  },
+  "Move": {
+    "title": "העברת \"{page}\" אל…",
+    "topLevel": "הרמה העליונה",
+    "search": "סינון עמודים",
+    "none": "אין עמודים מתאימים"
+  },
+  "Trash": {
+    "title": "סל המחזור",
+    "empty": "סל המחזור ריק.",
+    "restore": "שחזור",
+    "deleteForever": "מחיקה לצמיתות",
+    "confirmDelete": "לחצו שוב כדי למחוק סופית",
+    "emptyTrash": "ריקון סל המחזור",
+    "confirmEmpty": "לחצו שוב כדי למחוק את כל מה שבסל",
+    "deletedAt": "הועבר לסל {when}",
+    "hint": "עמוד בסל המחזור לוקח איתו את העמודים שבתוכו."
+  },
+  "Common": {
+    "close": "סגירה"
   }
 }

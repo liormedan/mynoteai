@@ -179,3 +179,30 @@ describe("data validation", () => {
     await assertSucceeds(setDoc(doc(db, "pages/seed/content/main"), content));
   });
 });
+
+describe("templates", () => {
+  const template = () => ({
+    title: "סיכום פגישה",
+    icon: "🗓️",
+    blocks: "[]",
+    createdAt: serverTimestamp(),
+  });
+
+  it("lets the owner save, list and delete templates", async () => {
+    const db = asOwner();
+    await assertSucceeds(setDoc(doc(db, "templates/t1"), template()));
+    await assertSucceeds(getDocs(doc(db, "templates/t1").parent));
+    await assertSucceeds(deleteDoc(doc(db, "templates/t1")));
+  });
+
+  it("rejects anyone else and malformed templates", async () => {
+    await assertFails(setDoc(doc(asStranger(), "templates/t2"), template()));
+    await assertFails(getDocs(doc(asAnonymous(), "templates/t2").parent));
+    await assertFails(
+      setDoc(doc(asOwner(), "templates/t3"), { ...template(), blocks: [] }),
+    );
+    await assertFails(
+      setDoc(doc(asOwner(), "templates/t4"), { ...template(), extra: 1 }),
+    );
+  });
+});

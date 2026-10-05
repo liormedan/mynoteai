@@ -11,8 +11,11 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const SCAN = ["src"];
 const EXT = /\.(tsx?|jsx?|css)$/;
 
+// Spacing and position utilities always take a value (ml-4, left-0); borders,
+// rounded corners and alignment can also stand alone (border-l, text-right).
+// Bare words like "left" are prop values, not classes.
 const PHYSICAL =
-  /(?<=^|[\s"'`:!{(])-?(?:m[lr]|p[lr]|scroll-m[lr]|scroll-p[lr]|border-[lr]|rounded-(?:[lr]|[tb][lr])|left|right|text-(?:left|right)|float-(?:left|right)|clear-(?:left|right))(?=-|[\s"'`)}]|$)/g;
+  /(?<=^|[\s"'`:!{(])-?(?:(?:m[lr]|p[lr]|scroll-m[lr]|scroll-p[lr]|left|right)(?=-)|(?:border-[lr]|rounded-(?:[lr]|[tb][lr])|text-(?:left|right)|float-(?:left|right)|clear-(?:left|right))(?=-|[\s"'`)}]|$))/g;
 
 const LOGICAL = {
   ml: "ms",
