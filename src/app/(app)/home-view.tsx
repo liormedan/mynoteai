@@ -32,7 +32,7 @@ export function HomeView() {
     });
 
   return (
-    <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-6 p-8">
+    <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-6 p-4 sm:p-8">
       <div className="flex items-center justify-between gap-4">
         <h1 className="text-2xl font-semibold">{t("Home.recent")}</h1>
         <Button onClick={newPage} disabled={pending}>

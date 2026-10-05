@@ -58,3 +58,20 @@
   --bn-colors-editor-background: transparent;
   --bn-colors-editor-text: var(--foreground);
 }
+
+/* Phones: BlockNote's 54px gutters hold the drag handle, which needs a mouse
+ * anyway; give the width to the text and scale headings down. */
+@media (max-width: 639px) {
+  .bn-editor {
+    padding-inline: 16px;
+  }
+  .bn-editor .bn-block-content[data-content-type="heading"] {
+    --level: 2em;
+  }
+  .bn-editor .bn-block-content[data-content-type="heading"][data-level="2"] {
+    --level: 1.5em;
+  }
+  .bn-editor .bn-block-content[data-content-type="heading"][data-level="3"] {
+    --level: 1.2em;
+  }
+}
