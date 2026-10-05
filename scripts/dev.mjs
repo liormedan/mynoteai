@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // `pnpm dev`: the whole app on your machine, no Google account needed.
-// Renders the security rules, starts the Auth + Firestore emulators (data kept
+// Renders the security rules, starts the Auth, Firestore and Storage emulators (data kept
 // in .firebase/emulator-data between runs), seeds sample pages on first run,
 // then starts `next dev`. Ctrl+C stops everything and saves the emulator data.
 
@@ -25,7 +25,7 @@ await run("node", ["scripts/firebase-rules.mjs"]);
 const args = [
   "emulators:exec",
   "--only",
-  "auth,firestore",
+  "auth,firestore,storage",
   "--project",
   "demo-mynoteai",
   "--ui",
