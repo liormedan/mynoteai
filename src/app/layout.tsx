@@ -1,7 +1,8 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Noto_Sans_Hebrew } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getTranslations } from "next-intl/server";
+import { ServiceWorker } from "@/components/service-worker";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { DirectionProvider } from "@/components/ui/direction";
 import { localeDirection, type Locale } from "@/i18n/config";
@@ -24,8 +25,19 @@ const geistMono = Geist_Mono({
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("App");
-  return { title: t("title"), description: t("tagline") };
+  return {
+    title: t("title"),
+    description: t("tagline"),
+    appleWebApp: { capable: true, title: t("title") },
+  };
 }
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
+  ],
+};
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {
   const locale = (await getLocale()) as Locale;
@@ -43,6 +55,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
         <NextIntlClientProvider>
           <ThemeProvider>
             <DirectionProvider dir={dir}>{children}</DirectionProvider>
+            <ServiceWorker />
           </ThemeProvider>
         </NextIntlClientProvider>
       </body>

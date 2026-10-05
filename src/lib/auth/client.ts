@@ -1,6 +1,7 @@
 "use client";
 
 import { signOut as firebaseSignOut, type User } from "firebase/auth";
+import { clearServiceWorkerCache } from "@/components/service-worker";
 import { getFirebase } from "@/lib/firebase/client";
 
 /** Exchanges the Firebase ID token for the signed session cookies set by the proxy. */
@@ -15,6 +16,7 @@ export async function startSession(user: User) {
 export async function endSession() {
   await firebaseSignOut(getFirebase().auth);
   await fetch("/api/logout");
+  await clearServiceWorkerCache();
 }
 
 export const EMAIL_FOR_SIGN_IN = "mynoteai:emailForSignIn";
