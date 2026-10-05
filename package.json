@@ -10,7 +10,7 @@
     "lint": "eslint && node scripts/check-rtl.mjs",
     "typecheck": "next typegen && tsc --noEmit",
     "test": "vitest run",
-    "test:rules": "firebase emulators:exec --only firestore,storage --project demo-mynoteai-rules \"vitest run --config vitest.rules.config.ts\"",
+    "test:rules": "node scripts/firebase-rules.mjs && firebase emulators:exec --only firestore,storage --project demo-mynoteai-rules \"vitest run --config vitest.rules.config.ts\"",
     "rules:deploy": "node scripts/firebase-rules.mjs --deploy",
     "format": "prettier --write src *.ts *.mjs *.json",
     "format:check": "prettier --check src *.ts *.mjs *.json",
