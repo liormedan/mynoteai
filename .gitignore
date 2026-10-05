@@ -16,11 +16,14 @@ next-env.d.ts
 # env files
 .env*
 !.env.example
+!.env.development
 
 # vercel
 .vercel
 
 # firebase
+firebase/firestore.rules
+firebase/storage.rules
 .firebase/
 firebase-debug*.log
 firestore-debug.log

@@ -5,7 +5,9 @@
   },
   "Home": {
     "editorLab": "מעבדת העורך",
-    "editorLabDescription": "לנסות את עורך הבלוקים עם עברית, אנגלית וטקסט מעורב."
+    "editorLabDescription": "לנסות את עורך הבלוקים עם עברית, אנגלית וטקסט מעורב.",
+    "signedInAs": "מחובר בתור <addr>{email}</addr>",
+    "signOut": "יציאה"
   },
   "LocaleSwitcher": {
     "label": "שפה",
@@ -16,5 +18,21 @@
     "title": "מעבדת העורך",
     "description": "מגרש משחקים לבדיקת העורך בשני הכיוונים. שום דבר כאן לא נשמר.",
     "back": "חזרה"
+  },
+  "Login": {
+    "title": "כניסה",
+    "subtitle": "המחברת הזו שייכת לאדם אחד. נכנסים עם חשבון הבעלים.",
+    "google": "המשך עם Google",
+    "or": "או",
+    "emailLabel": "אימייל",
+    "emailPlaceholder": "you@example.com",
+    "sendLink": "שלחו לי קישור כניסה במייל",
+    "linkSent": "בדקו את תיבת הדואר: שלחנו קישור כניסה ל-{email}.",
+    "finishing": "מתחברים…",
+    "enterEmailAgain": "אשרו את כתובת האימייל שאליה נשלח הקישור.",
+    "confirm": "כניסה",
+    "notOwner": "החשבון הזה אינו הבעלים של המחברת.",
+    "failed": "הכניסה נכשלה. נסו שוב.",
+    "emulator": "מצב פיתוח: הכניסה רצה על האמולטור של Firebase. בחלון של Google בחרו “Add new account” והשתמשו ב-{email}."
   }
 }
