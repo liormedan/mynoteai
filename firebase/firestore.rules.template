@@ -1,0 +1,58 @@
+rules_version = '2';
+
+// Generated from firebase/firestore.rules.template by scripts/firebase-rules.mjs.
+// Do not edit firebase/firestore.rules by hand.
+//
+// mynoteai has a single owner per install. Only that account, with a verified
+// email, can read or write anything.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isOwner() {
+      return request.auth != null
+        && request.auth.token.email_verified == true
+        && request.auth.token.email.lower() == "{{OWNER_EMAIL}}";
+    }
+
+    function optionalString(d, key, max) {
+      return !(key in d) || d[key] == null || (d[key] is string && d[key].size() <= max);
+    }
+
+    function isValidPage(d) {
+      return d.keys().hasAll(['title', 'parentId', 'position', 'type', 'isArchived', 'isFavorite', 'createdAt', 'updatedAt'])
+        && d.keys().hasOnly(['title', 'icon', 'coverUrl', 'parentId', 'position', 'type', 'isArchived', 'isFavorite', 'createdAt', 'updatedAt'])
+        && d.title is string && d.title.size() <= 500
+        && optionalString(d, 'icon', 64)
+        && optionalString(d, 'coverUrl', 2048)
+        && (d.parentId == null || (d.parentId is string && d.parentId.size() <= 128))
+        && d.position is number
+        && d.type in ['page', 'database']
+        && d.isArchived is bool
+        && d.isFavorite is bool
+        && d.createdAt is timestamp
+        && d.updatedAt is timestamp;
+    }
+
+    function isValidContent(d) {
+      return d.keys().hasOnly(['blocks', 'plainText', 'updatedAt'])
+        && d.keys().hasAll(['blocks', 'plainText', 'updatedAt'])
+        && d.blocks is string
+        && d.plainText is string
+        && d.updatedAt is timestamp;
+    }
+
+    match /pages/{pageId} {
+      allow read, delete: if isOwner();
+      allow create: if isOwner() && isValidPage(request.resource.data);
+      allow update: if isOwner()
+        && isValidPage(request.resource.data)
+        && request.resource.data.createdAt == resource.data.createdAt;
+
+      match /content/{contentId} {
+        allow read, delete: if isOwner();
+        allow create, update: if isOwner()
+          && contentId == 'main'
+          && isValidContent(request.resource.data);
+      }
+    }
+  }
+}
