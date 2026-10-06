@@ -342,3 +342,30 @@ export function groupRows(rows: Row[], prop: Property) {
   }
   return groups;
 }
+
+/**
+ * Starting values for a row added while filters are on, so it stays in
+ * view: "status is Done" makes the new row Done.
+ */
+export function valuesFromFilters(db: Database, filters: Filter[]): Props {
+  const out: Props = {};
+  for (const f of filters) {
+    const prop = db.properties.find((p) => p.id === f.prop);
+    if (!prop) continue;
+    if (f.op === "checked") out[prop.id] = true;
+    else if (f.op === "is" && f.value) {
+      if (
+        prop.type === "select" ||
+        prop.type === "date" ||
+        prop.type === "text" ||
+        prop.type === "url"
+      )
+        out[prop.id] = f.value;
+      else if (prop.type === "number" && isFinite(Number(f.value)))
+        out[prop.id] = Number(f.value);
+    } else if (f.op === "contains" && f.value && prop.type === "multiSelect") {
+      out[prop.id] = [f.value];
+    }
+  }
+  return out;
+}

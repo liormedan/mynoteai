@@ -1,7 +1,7 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
   Popover,
   PopoverContent,
@@ -83,11 +83,14 @@ function TextValue({ prop, raw, onChange, variant }: Props) {
   const locale = useLocale();
   const value = coerce(prop.type, raw);
   const [editing, setEditing] = useState(false);
+  // Escape unmounts the input, which may still fire blur: skip that save.
+  const cancelled = useRef(false);
   const text = value === null ? "" : String(value);
 
   if (editing) {
     const commit = (input: string) => {
       setEditing(false);
+      if (cancelled.current) return;
       const next =
         prop.type === "number"
           ? coerce("number", input)
@@ -114,7 +117,10 @@ function TextValue({ prop, raw, onChange, variant }: Props) {
         onBlur={(e) => commit(e.target.value)}
         onKeyDown={(e) => {
           if (e.key === "Enter") e.currentTarget.blur();
-          if (e.key === "Escape") setEditing(false);
+          if (e.key === "Escape") {
+            cancelled.current = true;
+            setEditing(false);
+          }
         }}
       />
     );
@@ -126,7 +132,10 @@ function TextValue({ prop, raw, onChange, variant }: Props) {
         type="button"
         aria-label={`${prop.name}: ${text || t("empty")}`}
         className="flex min-h-[inherit] min-w-0 flex-1 items-center text-start outline-none"
-        onClick={() => setEditing(true)}
+        onClick={() => {
+          cancelled.current = false;
+          setEditing(true);
+        }}
       >
         {isEmpty(value) ? (
           variant === "panel" && (

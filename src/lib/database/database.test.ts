@@ -9,6 +9,7 @@ import {
   parseDatabase,
   parseProps,
   sortRows,
+  valuesFromFilters,
   type Row,
 } from "./values";
 
@@ -244,5 +245,18 @@ describe("board", () => {
   it("puts a value whose option was deleted under no value", () => {
     const groups = groupRows([row("x", "x", 1, { status: "gone" })], status);
     expect(ids(groups.get(null)!)).toEqual(["x"]);
+  });
+});
+
+describe("new rows under filters", () => {
+  it("start with the values the filters ask for", () => {
+    expect(
+      valuesFromFilters(db, [
+        { prop: "status", op: "is", value: "done" },
+        { prop: "tags", op: "contains", value: "work" },
+        { prop: "urgent", op: "checked", value: null },
+        { prop: "est", op: "gt", value: "3" },
+      ]),
+    ).toEqual({ status: "done", tags: ["work"], urgent: true });
   });
 });
