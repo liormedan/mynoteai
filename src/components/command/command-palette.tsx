@@ -8,6 +8,7 @@ import {
   Plus,
   SunMoon,
   Table2,
+  Bot,
 } from "lucide-react";
 import { useCreateDatabase } from "@/components/database/use-create-database";
 import { useLocale, useTranslations } from "next-intl";
@@ -114,6 +115,7 @@ function useActions() {
     () => ({
       goTo: (id: string) => router.push(`/p/${id}`),
       goHome: () => router.push("/"),
+      goAgents: () => router.push("/agents"),
       newPage: async (title?: string) => {
         const id = await createPageUnder(all, null, { title });
         router.push(`/p/${id}`);
@@ -183,6 +185,12 @@ function Palette({
       label: t("newDatabase"),
       icon: Table2,
       run: () => void createDatabase(),
+    },
+    {
+      id: "agents",
+      label: t("agents"),
+      icon: Bot,
+      run: actions.goAgents,
     },
     {
       id: "home",

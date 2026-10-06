@@ -1,6 +1,6 @@
 "use client";
 
-import { CloudOff, Menu, Trash2 } from "lucide-react";
+import { Bot, CloudOff, Menu, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -128,6 +128,12 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
             {t("offline")}
           </p>
         )}
+        <Button variant="ghost" size="sm" className="justify-start" asChild>
+          <Link href="/agents" onClick={onNavigate}>
+            <Bot />
+            {t("agents")}
+          </Link>
+        </Button>
         <TrashDialog>
           <Button variant="ghost" size="sm" className="justify-start">
             <Trash2 />

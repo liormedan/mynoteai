@@ -96,7 +96,8 @@
     "offline": "Offline — changes will sync",
     "noPages": "No pages yet",
     "openMenu": "Open pages",
-    "database": "Database"
+    "database": "Database",
+    "agents": "Agents (MCP)"
   },
   "Move": {
     "title": "Move \"{page}\" to…",
@@ -134,7 +135,8 @@
     "toggleTheme": "Switch between dark and light",
     "switchLanguage": "Switch to Hebrew (עברית)",
     "indexing": "{count, plural, one {Reading one more page…} other {Reading # more pages…}}",
-    "newDatabase": "New database"
+    "newDatabase": "New database",
+    "agents": "Connect agents (MCP)"
   },
   "Database": {
     "defaultTitle": "Database",
@@ -231,5 +233,25 @@
     "duplicateView": "Duplicate view",
     "deleteView": "Delete view",
     "copySuffix": " (copy)"
+  },
+  "Agents": {
+    "title": "Connect agents (MCP)",
+    "intro": "An agent that speaks MCP, such as Claude Code, Claude Desktop or Cursor, can search the notebook, read pages and write to it. There is no model and no API key here: the agent you already use connects to this address with a token.",
+    "on": "The server is on. An agent with the right token can connect.",
+    "off": "The server is off. To turn it on: create a token (below), save it in the MCP_TOKEN environment variable (on Vercel: Settings → Environment Variables) and redeploy.",
+    "tooShort": "MCP_TOKEN is set but too short. It needs at least 32 characters.",
+    "urlTitle": "Server address",
+    "tokenTitle": "Token",
+    "tokenText": "Create a random string with this command and save it in MCP_TOKEN. In the instructions below, replace {placeholder} with that string.",
+    "tokenWarning": "The token gives full access to the notebook. Keep it like a password. To revoke access, change the token and redeploy.",
+    "claudeCode": "Run in a terminal:",
+    "claudeDesktop": "Add to claude_desktop_config.json (Settings → Developer → Edit Config) and restart Claude Desktop:",
+    "cursor": "Add to .cursor/mcp.json in a project, or to ~/.cursor/mcp.json for all projects:",
+    "toolsTitle": "What the agent can do",
+    "toolsRead": "Read: search (Hebrew prefixes included), the page tree, a page as Markdown, and database rows.",
+    "toolsWrite": "Write: create a page or a database, append to a page, change a title or icon, and add or update rows.",
+    "toolsSafe": "It cannot delete for good: it can only move pages to the trash, where they can be restored. An open page updates as soon as the agent writes to it.",
+    "copy": "Copy",
+    "copied": "Copied"
   }
 }

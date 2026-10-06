@@ -14,7 +14,9 @@ import { storageEnabled } from "@/lib/firebase/client";
 import {
   ContentTooLargeError,
   loadContent,
+  rememberContent,
   saveContent,
+  watchContent,
   updatePage,
   usePage,
 } from "@/lib/pages/client";
@@ -92,6 +94,8 @@ function LoadedPage({ page, locale }: { page: Page; locale: Locale }) {
   const [titleStatus, setTitleStatus] = useState<SaveStatus>("idle");
   const [tooLarge, setTooLarge] = useState<number | null>(null);
   const titleRef = useRef<HTMLTextAreaElement>(null);
+  // Bumped to remount the editor with content that changed elsewhere.
+  const [editorKey, setEditorKey] = useState(0);
 
   const contentSaver = useMemo(
     () =>
@@ -135,6 +139,7 @@ function LoadedPage({ page, locale }: { page: Page; locale: Locale }) {
         draft,
       );
       setBlocks(picked.value);
+      rememberContent(page.id, picked.value);
       if (picked.fromDraft && draft)
         contentSaver.schedule({ blocks: draft.value, at: draft.at });
     });
@@ -142,6 +147,20 @@ function LoadedPage({ page, locale }: { page: Page; locale: Locale }) {
       cancelled = true;
     };
   }, [page.id, contentSaver]);
+
+  // Content changed elsewhere (an agent, another device) replaces what is
+  // shown, unless there are edits here not saved yet: those win.
+  useEffect(
+    () =>
+      watchContent(page.id, (server) => {
+        if (contentSaver.hasPending) return false;
+        clearDraft(page.id, Date.now());
+        setBlocks(server as NotePartialBlock[]);
+        setEditorKey((k) => k + 1);
+        return true;
+      }),
+    [page.id, contentSaver],
+  );
 
   // Write out anything pending when the tab is hidden or the page is left.
   useEffect(() => {
@@ -354,6 +373,7 @@ function LoadedPage({ page, locale }: { page: Page; locale: Locale }) {
             </p>
           ) : (
             <Editor
+              key={editorKey}
               locale={locale}
               initialContent={blocks}
               onChange={(doc) => {
