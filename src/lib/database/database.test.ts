@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { dropPosition } from "./board";
 import type { Database, Property } from "./types";
 import {
   coerce,
@@ -258,5 +259,19 @@ describe("new rows under filters", () => {
         { prop: "est", op: "gt", value: "3" },
       ]),
     ).toEqual({ status: "done", tags: ["work"], urgent: true });
+  });
+});
+
+describe("board drops", () => {
+  const col = [row("a", "a", 1), row("b", "b", 2), row("c", "c", 3)];
+  it("lands between neighbours, at either end, or at the column's end", () => {
+    expect(dropPosition(col, "x", { id: "b", after: false })).toBe(1.5);
+    expect(dropPosition(col, "x", { id: "b", after: true })).toBe(2.5);
+    expect(dropPosition(col, "x", { id: "a", after: false })).toBe(0);
+    expect(dropPosition(col, "x", null)).toBe(4);
+    expect(dropPosition([], "x", null)).toBe(1);
+  });
+  it("ignores the moving card's own place", () => {
+    expect(dropPosition(col, "b", { id: "c", after: false })).toBe(2);
   });
 });

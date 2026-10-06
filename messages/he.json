@@ -202,6 +202,27 @@
       "unchecked": "לא מסומן",
       "isEmpty": "ריק",
       "isNotEmpty": "לא ריק"
+    },
+    "noValue": "ללא {name}",
+    "boardNeedsSelect": "לוח מסודר בעמודות לפי שדה בחירה. בחרו שדה:",
+    "groupBy": "קיבוץ לפי",
+    "addSelectField": "הוספת שדה סטטוס",
+    "dragging": "גוררים את „{title}”",
+    "groupMenu": "פעולות על העמודה",
+    "groupName": "שם העמודה",
+    "deleteGroup": "מחיקת העמודה",
+    "newGroup": "עמודה חדשה",
+    "addGroup": "הוספת עמודה",
+    "color": {
+      "gray": "אפור",
+      "brown": "חום",
+      "orange": "כתום",
+      "yellow": "צהוב",
+      "green": "ירוק",
+      "blue": "כחול",
+      "purple": "סגול",
+      "pink": "ורוד",
+      "red": "אדום"
     }
   }
 }

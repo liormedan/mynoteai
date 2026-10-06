@@ -202,6 +202,27 @@
       "unchecked": "unchecked",
       "isEmpty": "is empty",
       "isNotEmpty": "is not empty"
+    },
+    "noValue": "No {name}",
+    "boardNeedsSelect": "A board has a column for each option of a select field. Choose one:",
+    "groupBy": "Group by",
+    "addSelectField": "Add a status field",
+    "dragging": "Dragging “{title}”",
+    "groupMenu": "Column actions",
+    "groupName": "Column name",
+    "deleteGroup": "Delete column",
+    "newGroup": "New column",
+    "addGroup": "Add column",
+    "color": {
+      "gray": "Gray",
+      "brown": "Brown",
+      "orange": "Orange",
+      "yellow": "Yellow",
+      "green": "Green",
+      "blue": "Blue",
+      "purple": "Purple",
+      "pink": "Pink",
+      "red": "Red"
     }
   }
 }
