@@ -223,6 +223,13 @@
       "purple": "Purple",
       "pink": "Pink",
       "red": "Red"
-    }
+    },
+    "views": "Views",
+    "addView": "New view",
+    "viewName": "View name",
+    "viewType": "View type",
+    "duplicateView": "Duplicate view",
+    "deleteView": "Delete view",
+    "copySuffix": " (copy)"
   }
 }

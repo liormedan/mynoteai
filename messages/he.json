@@ -223,6 +223,13 @@
       "purple": "סגול",
       "pink": "ורוד",
       "red": "אדום"
-    }
+    },
+    "views": "תצוגות",
+    "addView": "תצוגה חדשה",
+    "viewName": "שם התצוגה",
+    "viewType": "סוג התצוגה",
+    "duplicateView": "שכפול התצוגה",
+    "deleteView": "מחיקת התצוגה",
+    "copySuffix": " (עותק)"
   }
 }

@@ -10,13 +10,16 @@ import { BoardView } from "./board-view";
 import { TableView } from "./table-view";
 import { asRow, useDatabase } from "./use-database";
 import { useViewEdits } from "./view-edits";
+import { ViewTabs } from "./view-tabs";
 import { ViewToolbar } from "./view-toolbar";
 
 /** A database page's body: its current view and the controls above it. */
 export function DatabaseView({ page }: { page: Page }) {
   const { all } = usePagesStore();
   const { database, rows, createOption } = useDatabase(page.id);
-  const [viewId] = useState<string | null>(null);
+  const [viewId, setViewId] = useState<string | null>(() =>
+    readLastView(page.id),
+  );
   const [editingTitle, setEditingTitle] = useState<string | null>(null);
   const view =
     database?.views.find((v) => v.id === viewId) ?? database?.views[0];
@@ -43,8 +46,29 @@ export function DatabaseView({ page }: { page: Page }) {
       createOption={createOption}
       editingTitle={editingTitle}
       onEditingTitle={setEditingTitle}
+      onSelectView={(id) => {
+        setViewId(id);
+        writeLastView(page.id, id);
+      }}
     />
   );
+}
+
+/** The view last opened in this browser, per database (a convenience only). */
+const lastViewKey = (id: string) => `mynoteai:db-view:${id}`;
+function readLastView(databaseId: string) {
+  try {
+    return localStorage.getItem(lastViewKey(databaseId));
+  } catch {
+    return null;
+  }
+}
+function writeLastView(databaseId: string, viewId: string) {
+  try {
+    localStorage.setItem(lastViewKey(databaseId), viewId);
+  } catch {
+    // private window: the first view opens next time
+  }
 }
 
 function DatabaseBody({
@@ -56,6 +80,7 @@ function DatabaseBody({
   createOption,
   editingTitle,
   onEditingTitle,
+  onSelectView,
 }: {
   page: Page;
   database: Database;
@@ -65,13 +90,20 @@ function DatabaseBody({
   createOption: (propId: string, name: string) => string | null;
   editingTitle: string | null;
   onEditingTitle: (id: string | null) => void;
+  onSelectView: (id: string) => void;
 }) {
   const edits = useViewEdits(page.id, database, view, rows);
   const viewRows = useMemo(() => rows.map(asRow), [rows]);
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex flex-wrap items-center justify-end gap-2 border-b pb-2">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b pb-2">
+        <ViewTabs
+          databaseId={page.id}
+          database={database}
+          active={view}
+          onSelect={onSelectView}
+        />
         <ViewToolbar
           database={database}
           view={view}
