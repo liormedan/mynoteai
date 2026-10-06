@@ -242,7 +242,7 @@ function LoadedPage({ page, locale }: { page: Page; locale: Locale }) {
             <Button
               size="sm"
               variant="secondary"
-              className="absolute end-4 bottom-3 opacity-0 transition-opacity group-hover:opacity-100 focus-visible:opacity-100"
+              className="absolute end-4 bottom-3 opacity-0 transition-opacity group-hover:opacity-100 focus-visible:opacity-100 pointer-coarse:opacity-100"
             >
               {t("changeCover")}
             </Button>
@@ -250,8 +250,11 @@ function LoadedPage({ page, locale }: { page: Page; locale: Locale }) {
         </div>
       )}
 
-      {/* px-[54px] matches BlockNote's own inline padding, so the title lines up with the text. */}
-      <div dir={headerDir} className="mx-auto w-full max-w-3xl px-[54px]">
+      {/* The padding matches BlockNote's own (editor.css on phones), so the title lines up with the text. */}
+      <div
+        dir={headerDir}
+        className="mx-auto w-full max-w-3xl px-4 sm:px-[54px]"
+      >
         <div className={cover && page.icon ? "-mt-10" : "mt-10"}>
           {page.icon && (
             <IconPicker
@@ -278,7 +281,7 @@ function LoadedPage({ page, locale }: { page: Page; locale: Locale }) {
               <Button
                 variant="ghost"
                 size="sm"
-                className="opacity-0 group-hover:opacity-100 focus-visible:opacity-100"
+                className="opacity-0 group-hover:opacity-100 focus-visible:opacity-100 pointer-coarse:opacity-100"
               >
                 <SmilePlus />
                 {t("addIcon")}
@@ -293,7 +296,7 @@ function LoadedPage({ page, locale }: { page: Page; locale: Locale }) {
               <Button
                 variant="ghost"
                 size="sm"
-                className="opacity-0 group-hover:opacity-100 focus-visible:opacity-100"
+                className="opacity-0 group-hover:opacity-100 focus-visible:opacity-100 pointer-coarse:opacity-100"
               >
                 <ImagePlus />
                 {t("addCover")}
@@ -309,7 +312,7 @@ function LoadedPage({ page, locale }: { page: Page; locale: Locale }) {
           value={title}
           placeholder={t("titlePlaceholder")}
           aria-label={t("titlePlaceholder")}
-          className="w-full resize-none overflow-hidden bg-transparent text-4xl font-bold outline-none placeholder:text-muted-foreground/50"
+          className="w-full resize-none overflow-hidden bg-transparent text-3xl font-bold outline-none placeholder:text-muted-foreground/50 sm:text-4xl"
           onChange={(e) => {
             setTitle(e.target.value);
             titleSaver.schedule(e.target.value);

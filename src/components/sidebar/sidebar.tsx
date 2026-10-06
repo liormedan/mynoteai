@@ -4,7 +4,8 @@ import { CloudOff, FileText, Menu, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { FOCUS_SIDEBAR_EVENT } from "@/components/command/command-palette";
 import { Button } from "@/components/ui/button";
 import { useDirection } from "@/components/ui/direction";
 import {
@@ -139,10 +140,32 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
   );
 }
 
+/** Moves keyboard focus to the open page in the tree, or the first page. */
+function focusTree(root: HTMLElement | null) {
+  const target =
+    root?.querySelector<HTMLElement>(
+      '[role="treeitem"][aria-selected="true"] a',
+    ) ?? root?.querySelector<HTMLElement>('[role="tree"] a');
+  target?.focus();
+  return !!target;
+}
+
 /** Fixed column on wide screens. */
 export function Sidebar() {
+  useEffect(() => {
+    const onFocus = () => {
+      const aside = document.getElementById("sidebar");
+      // Hidden on phones; the drawer handles the event there.
+      if (aside?.offsetParent) focusTree(aside);
+    };
+    window.addEventListener(FOCUS_SIDEBAR_EVENT, onFocus);
+    return () => window.removeEventListener(FOCUS_SIDEBAR_EVENT, onFocus);
+  }, []);
   return (
-    <aside className="sticky top-12 hidden h-[calc(100dvh-3rem)] w-64 shrink-0 border-e bg-muted/20 md:block">
+    <aside
+      id="sidebar"
+      className="sticky top-12 hidden h-[calc(100dvh-3rem)] w-64 shrink-0 border-e bg-muted/20 md:block"
+    >
       <SidebarContent />
     </aside>
   );
@@ -154,6 +177,15 @@ export function MobileSidebar() {
   const [open, setOpen] = useState(false);
   // The drawer slides in from the start edge: left in English, right in Hebrew.
   const side = useDirection() === "rtl" ? "right" : "left"; // rtl-ok: Sheet takes a physical side
+
+  useEffect(() => {
+    const onFocus = () => {
+      if (!document.getElementById("sidebar")?.offsetParent) setOpen(true);
+    };
+    window.addEventListener(FOCUS_SIDEBAR_EVENT, onFocus);
+    return () => window.removeEventListener(FOCUS_SIDEBAR_EVENT, onFocus);
+  }, []);
+
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
@@ -166,7 +198,13 @@ export function MobileSidebar() {
           <Menu />
         </Button>
       </SheetTrigger>
-      <SheetContent side={side} className="w-72 p-0">
+      <SheetContent
+        side={side}
+        className="w-72 p-0"
+        onOpenAutoFocus={(e) => {
+          if (focusTree(e.currentTarget as HTMLElement)) e.preventDefault();
+        }}
+      >
         <SheetTitle className="sr-only">{t("pages")}</SheetTitle>
         <SidebarContent onNavigate={() => setOpen(false)} />
       </SheetContent>

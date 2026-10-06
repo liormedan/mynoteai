@@ -100,7 +100,7 @@ export function NewPageMenu({ onNavigate }: { onNavigate?: () => void }) {
                   <button
                     type="button"
                     aria-label={t("deleteTemplate")}
-                    className="rounded p-0.5 opacity-0 group-hover/tpl:opacity-100 hover:bg-background focus-visible:opacity-100"
+                    className="rounded p-0.5 opacity-0 group-hover/tpl:opacity-100 hover:bg-background focus-visible:opacity-100 pointer-coarse:opacity-100"
                     onClick={(e) => {
                       e.stopPropagation();
                       e.preventDefault();

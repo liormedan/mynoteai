@@ -157,6 +157,14 @@ describe("data validation", () => {
     await assertFails(setDoc(doc(db, "pages/x"), missingTitle));
   });
 
+  it("accepts contentUpdatedAt only as a timestamp", async () => {
+    const page = doc(asOwner(), "pages/seed");
+    await assertSucceeds(
+      updateDoc(page, { contentUpdatedAt: serverTimestamp() }),
+    );
+    await assertFails(updateDoc(page, { contentUpdatedAt: "yesterday" }));
+  });
+
   it("does not let createdAt change after creation", async () => {
     await assertFails(
       updateDoc(doc(asOwner(), "pages/seed"), {

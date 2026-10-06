@@ -43,7 +43,7 @@ export function PageMenu({ page, onRename, onMove }: Props) {
           variant="ghost"
           size="icon-xs"
           aria-label={t("more")}
-          className="opacity-0 group-hover/row:opacity-100 focus-visible:opacity-100 data-[state=open]:opacity-100"
+          className="opacity-0 group-hover/row:opacity-100 focus-visible:opacity-100 data-[state=open]:opacity-100 pointer-coarse:opacity-100"
         >
           <MoreHorizontal />
         </Button>

@@ -12,7 +12,8 @@ export async function AppHeader({ children }: { children?: React.ReactNode }) {
         {t("title")}
       </Link>
       <div className="flex min-w-0 flex-1 items-center gap-2">{children}</div>
-      <LocaleSwitcher />
+      {/* On phones the language is switched from the command window. */}
+      <LocaleSwitcher className="hidden sm:flex" />
       <ThemeToggle />
       <SignOutButton />
     </header>

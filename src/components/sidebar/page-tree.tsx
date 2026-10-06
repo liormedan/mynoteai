@@ -235,7 +235,7 @@ function TreeRow({
           variant="ghost"
           size="icon-xs"
           aria-label={t("addChild")}
-          className="opacity-0 group-hover/row:opacity-100 focus-visible:opacity-100"
+          className="opacity-0 group-hover/row:opacity-100 focus-visible:opacity-100 pointer-coarse:opacity-100"
           onClick={addChild}
         >
           <Plus />
