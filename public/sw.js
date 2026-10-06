@@ -6,7 +6,8 @@
 //
 //   /_next/static/* with an immutable Cache-Control: cache first (hashed names)
 //   everything else from this origin: network first, the cached copy offline
-//   sign-in and sign-out: never cached
+//   sign-in and sign-out, and link prefetches: never cached
+//   a page never opened offline: the home page, cached by the app on start
 
 const CACHE = "mynoteai-v1";
 const NEVER = [/^\/api\//, /^\/login(\/|$)/];
@@ -31,6 +32,9 @@ self.addEventListener("fetch", (event) => {
   const url = new URL(request.url);
   if (request.method !== "GET" || url.origin !== self.location.origin) return;
   if (NEVER.some((re) => re.test(url.pathname))) return;
+  // Every link in the page tree is prefetched; keeping those would grow the
+  // cache with each page and each deploy.
+  if (request.headers.get("next-router-prefetch")) return;
 
   if (url.pathname.startsWith("/_next/static/")) {
     event.respondWith(staticAsset(request));
