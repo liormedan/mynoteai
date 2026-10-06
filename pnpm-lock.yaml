@@ -120,6 +120,9 @@ importers:
       firebase-tools:
         specifier: 15.32.1
         version: 15.32.1(@types/node@20.19.43)(encoding@0.1.13)
+      intl-messageformat:
+        specifier: 11.2.15
+        version: 11.2.15
       prettier:
         specifier: ^3.9.9
         version: 3.9.9

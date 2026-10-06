@@ -1,3 +1,4 @@
+import { IntlMessageFormat } from "intl-messageformat";
 import { describe, expect, it } from "vitest";
 import en from "../../messages/en.json";
 import he from "../../messages/he.json";
@@ -35,6 +36,23 @@ describe("messages", () => {
       expect(flat.every((v) => typeof v === "string" && v.trim() !== "")).toBe(
         true,
       );
+    }
+  });
+
+  it("parses every message as ICU (a stray <tag> or brace breaks it)", () => {
+    for (const locale of locales) {
+      for (const key of keys(all[locale])) {
+        const msg = key
+          .split(".")
+          .reduce<unknown>(
+            (o, p) => (o as Record<string, unknown>)[p],
+            all[locale],
+          );
+        expect(
+          () => new IntlMessageFormat(msg as string, locale),
+          `${locale}: ${key}`,
+        ).not.toThrow();
+      }
     }
   });
 });
