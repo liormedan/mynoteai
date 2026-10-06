@@ -159,12 +159,12 @@ footer { margin-top: 56px; color: var(--muted); font-size: 0.85rem; }
   <ul class="plain">
     <li><b>לא בונים עורך לבד.</b> העורך הוא רוב העבודה בפרויקט כזה, ו-BlockNote נותן אותו מוכן: תפריט <code>/</code>, גרירת בלוקים, קינון, טבלאות ותמונות.</li>
     <li><b>לא לוקחים מערכת שלמה.</b> AppFlowy, AFFiNE, Docmost ו-Outline דורשים שרת קבוע עם Docker ולא רצים ב-Vercel.</li>
-    <li><b>לא משתמשים בחבילות <code>@blocknote/xl-*</code>.</b> הן ברישיון GPL-3.0 ויכפו את הרישיון על כל המאגר. את הבינה המלאכותית בונים ישירות עם Vercel AI SDK, וייצוא נעשה ל-Markdown עם פונקציות הליבה.</li>
+    <li><b>לא משתמשים בחבילות <code>@blocknote/xl-*</code>.</b> הן ברישיון GPL-3.0 ויכפו את הרישיון על כל המאגר. סוכנים מתחברים דרך MCP, וההמרה ל-Markdown (לסוכנים ולייצוא) כתובה בפרויקט עצמו.</li>
     <li><b>מודל הפצה: משתמש יחיד לכל התקנה.</b> המאגר הוא קוד פתוח שמפתחים מורידים ומתקינים כמחברת עצמאית, עם חשבון Vercel ופרויקט Firebase משלהם. אין שרת מרכזי, אין הרשמה ואין ריבוי משתמשים. ההתחברות קיימת רק כדי לנעול את ההתקנה לבעלים שלה.</li>
     <li><b>חוויית ההתקנה היא חלק מהמוצר.</b> <code>pnpm dev</code> רץ מול Firebase Emulator בלי שום חשבון, וסקריפט התקנה מחבר לענן. היעד: ממאגר נקי למחברת שעובדת ב-Vercel תוך 15 דקות.</li>
     <li><b>עברית ואנגלית מהיום הראשון.</b> הממשק דו-לשוני עם next-intl, וכיוון הדף (<code>dir</code>) נקבע לפי שפת הממשק. התוכן עצמו מקבל כיוון לפי כל בלוק, כך שאפשר לכתוב עברית בממשק אנגלי ולהפך. shadcn/ui מוגדר עם <code>rtl: true</code>, ל-BlockNote יש מילון עברי מובנה (<code>he</code>), ובקוד משתמשים רק במחלקות לוגיות (<code>ms-</code>, <code>pe-</code>, <code>start-</code>) ולא ב-<code>ml-</code> / <code>right-</code>.</li>
     <li><b>שפת המאגר:</b> README, מדריך ההתקנה, הערות בקוד והודעות קומיט — באנגלית, לקהל המפתחים. יש גם <code>README.he.md</code> ומדריך התקנה בעברית. התוכנית הזו ו-<code>CLAUDE.md</code> נשארים בעברית.</li>
-    <li><b>Firebase כי זה מה שעובדים איתו</b> בשאר הפרויקטים. הקוד בצד הלקוח מדבר ישירות עם Firestore דרך כללי אבטחה, ונתיבי שרת ב-Next.js משתמשים ב-Admin SDK רק למה שחייב שרת: עוגיית התחברות, בינה מלאכותית, פרסום ציבורי.</li>
+    <li><b>Firebase כי זה מה שעובדים איתו</b> בשאר הפרויקטים. הקוד בצד הלקוח מדבר ישירות עם Firestore דרך כללי אבטחה, ונתיבי שרת ב-Next.js משתמשים ב-Admin SDK רק למה שחייב שרת: עוגיית התחברות, שרת MCP, פרסום ציבורי.</li>
     <li><b>תוכן העמוד נשמר כ-JSON של BlockNote במסמך נפרד</b> מהמטא-דאטה של העמוד, כדי שטעינת העץ בסרגל הצד לא תמשוך את כל התוכן. במקביל נשמר טקסט שטוח לחיפוש.</li>
     <li><b>ל-Firestore אין חיפוש מלא בטקסט.</b> למשתמש יחיד בונים אינדקס בדפדפן (FlexSearch). אם יהיו הרבה משתמשים — הרחבה של Typesense או Algolia.</li>
   </ul>
@@ -189,7 +189,9 @@ footer { margin-top: 56px; color: var(--muted); font-size: 0.85rem; }
       <tr><td class="repo"><a href="https://github.com/dip/cmdk">dip/cmdk</a></td><td>חלון פקודות וחיפוש <code>Ctrl+K</code></td><td>MIT</td><td class="num">13k</td><td class="num">10/2025</td><td><span class="tag use">בשימוש</span></td></tr>
       <tr><td class="repo"><a href="https://github.com/clauderic/dnd-kit">clauderic/dnd-kit</a></td><td>גרירה בעץ העמודים ובלוח קנבן</td><td>MIT</td><td class="num">17.7k</td><td class="num">09/2026</td><td><span class="tag use">בשימוש</span></td></tr>
       <tr><td class="repo"><a href="https://github.com/TanStack/table">TanStack/table</a></td><td>תצוגת טבלה למסדי נתונים בסגנון Notion</td><td>MIT</td><td class="num">28.5k</td><td class="num">10/2026</td><td><span class="tag use">ספרינט 5</span></td></tr>
-      <tr><td class="repo"><a href="https://github.com/vercel/ai">vercel/ai</a></td><td>Vercel AI SDK — כתיבה בעזרת מודל, צ'אט על הפתקים</td><td>Apache-2.0</td><td class="num">27.1k</td><td class="num">10/2026</td><td><span class="tag use">ספרינט 6</span></td></tr>
+      <tr><td class="repo"><a href="https://github.com/vercel-labs/mcp-handler">vercel-labs/mcp-handler</a></td><td>שרת MCP בנתיב של Next.js על Vercel</td><td>Apache-2.0</td><td class="num">682</td><td class="num">10/2026</td><td><span class="tag use">ספרינט 6</span></td></tr>
+      <tr><td class="repo"><a href="https://github.com/modelcontextprotocol/typescript-sdk">modelcontextprotocol/typescript-sdk</a></td><td>ה-SDK הרשמי של MCP (<code>@modelcontextprotocol/server</code>)</td><td>Apache-2.0</td><td class="num">13.5k</td><td class="num">10/2026</td><td><span class="tag use">ספרינט 6</span></td></tr>
+      <tr><td class="repo"><a href="https://github.com/vercel/ai">vercel/ai</a></td><td>Vercel AI SDK — כתיבה בעזרת מודל, צ'אט על הפתקים</td><td>Apache-2.0</td><td class="num">27.1k</td><td class="num">10/2026</td><td><span class="tag no">נדחה — MCP במקום</span></td></tr>
       <tr><td class="repo"><a href="https://github.com/lucaong/minisearch">lucaong/minisearch</a></td><td>אינדקס חיפוש קטן יותר — חלופה ל-FlexSearch</td><td>MIT</td><td class="num">6.2k</td><td class="num">09/2025</td><td><span class="tag ref">חלופה</span></td></tr>
       <tr><td class="repo"><a href="https://github.com/genkit-ai/genkit">genkit-ai/genkit</a></td><td>מסגרת הבינה המלאכותית של Firebase. מיותרת כשיש Vercel AI SDK</td><td>Apache-2.0</td><td class="num">6.5k</td><td class="num">10/2026</td><td><span class="tag no">נדחה — כפילות</span></td></tr>
       <tr><td class="repo"><a href="https://github.com/yjs/yjs">yjs/yjs</a></td><td>עריכה משותפת בזמן אמת (BlockNote תומך מובנה)</td><td>MIT</td><td class="num">22.9k</td><td class="num">10/2026</td><td><span class="tag no">נדחה — משתמש יחיד</span></td></tr>
@@ -315,17 +317,23 @@ footer { margin-top: 56px; color: var(--muted); font-size: 0.85rem; }
   </details>
 
   <details class="sprint" data-sprint="6" data-branch="sprint-6" data-verify="pnpm test">
-    <summary><span class="num">6</span><h3>בינה מלאכותית</h3><span class="progress"></span>
-      <span class="goal">העוזר שנותן לפרויקט את השם: כתיבה, סיכום ושאלות על הפתקים.</span></summary>
+    <summary><span class="num">6</span><h3>MCP — חיבור לסוכנים</h3><span class="progress"></span>
+      <span class="goal">המחברת פתוחה לכל סוכן שתומך ב-MCP (Claude Code, Claude Desktop, Cursor): הוא מחפש, קורא וכותב בה. בלי מפתח API ובלי מודל בתוך האפליקציה.</span></summary>
     <div class="body">
       <ul class="tasks">
-        <li data-task="S6-1"><span class="tid">S6-1</span><span class="st"></span><span class="txt">נתיב API עם Vercel AI SDK והזרמת תשובות. כל מפתח מביא מפתח API משלו (Anthropic, OpenAI או Google) במשתנה סביבה בצד השרת. בלי מפתח — כל פיצ'רי הבינה המלאכותית מוסתרים והמחברת עובדת כרגיל</span></li>
-        <li data-task="S6-2"><span class="tid">S6-2</span><span class="st"></span><span class="txt">פקודות בעורך: המשך כתיבה, סיכום, שכתוב, תרגום, רשימת משימות מהטקסט</span></li>
-        <li data-task="S6-3"><span class="tid">S6-3</span><span class="st"></span><span class="txt">embeddings לכל עמוד כשדה וקטורי ב-Firestore, עם אינדקס וקטורי וחיפוש <code>findNearest</code> דרך Admin SDK</span></li>
-        <li data-task="S6-4"><span class="tid">S6-4</span><span class="st"></span><span class="txt">"שאל את הפתקים שלי": צ'אט שעונה עם הפניות לעמודים</span></li>
-        <li data-task="S6-5"><span class="tid">S6-5</span><span class="st"></span><span class="txt">תקרת שימוש יומית במשתנה סביבה, כדי שחשבון ה-API של המפתח לא יתרוקן</span></li>
+        <li data-task="S6-1" data-status="dropped"><span class="tid">S6-1</span><span class="st"></span><span class="txt">נתיב API עם Vercel AI SDK והזרמת תשובות. כל מפתח מביא מפתח API משלו (Anthropic, OpenAI או Google) במשתנה סביבה בצד השרת. בלי מפתח — כל פיצ'רי הבינה המלאכותית מוסתרים והמחברת עובדת כרגיל</span></li>
+        <li data-task="S6-2" data-status="dropped"><span class="tid">S6-2</span><span class="st"></span><span class="txt">פקודות בעורך: המשך כתיבה, סיכום, שכתוב, תרגום, רשימת משימות מהטקסט</span></li>
+        <li data-task="S6-3" data-status="dropped"><span class="tid">S6-3</span><span class="st"></span><span class="txt">embeddings לכל עמוד כשדה וקטורי ב-Firestore, עם אינדקס וקטורי וחיפוש <code>findNearest</code> דרך Admin SDK</span></li>
+        <li data-task="S6-4" data-status="dropped"><span class="tid">S6-4</span><span class="st"></span><span class="txt">"שאל את הפתקים שלי": צ'אט שעונה עם הפניות לעמודים</span></li>
+        <li data-task="S6-5" data-status="dropped"><span class="tid">S6-5</span><span class="st"></span><span class="txt">תקרת שימוש יומית במשתנה סביבה, כדי שחשבון ה-API של המפתח לא יתרוקן</span></li>
+        <li data-task="S6-6"><span class="tid">S6-6</span><span class="st"></span><span class="txt">שרת MCP בנתיב <code>/api/mcp</code> (Streamable HTTP, עם <code>mcp-handler</code>), מוגן בטוקן <code>MCP_TOKEN</code> מצד השרת. בלי טוקן — הנתיב כבוי. גישה לנתונים דרך Firebase Admin SDK</span></li>
+        <li data-task="S6-7"><span class="tid">S6-7</span><span class="st"></span><span class="txt">המרה בין בלוקים של BlockNote ל-Markdown בשני הכיוונים: כותרות, פסקאות, רשימות, משימות, ציטוט, קוד, טבלה וקישורים לעמודים, עם בדיקות</span></li>
+        <li data-task="S6-8"><span class="tid">S6-8</span><span class="st"></span><span class="txt">כלי קריאה: חיפוש בכותרות ובטקסט עם המקודד העברי, רשימת עמודים לפי עץ, קריאת עמוד כ-Markdown עם שביל ומאפיינים, ושאילתה על מסד נתונים</span></li>
+        <li data-task="S6-9"><span class="tid">S6-9</span><span class="st"></span><span class="txt">כלי כתיבה: יצירת עמוד, הוספת תוכן לסוף עמוד, שינוי כותרת ואייקון, הוספה ועדכון של שורות במסד נתונים לפי שמות השדות, והעברה לסל המחזור</span></li>
+        <li data-task="S6-10"><span class="tid">S6-10</span><span class="st"></span><span class="txt">עמוד פתוח בעורך מתעדכן כשהתוכן שלו השתנה מבחוץ (סוכן או מכשיר אחר), כל עוד אין בו עריכה שלא נשמרה</span></li>
+        <li data-task="S6-11"><span class="tid">S6-11</span><span class="st"></span><span class="txt">הוראות חיבור באפליקציה וב-README: Claude Code, Claude Desktop ו-Cursor, ויצירת טוקן</span></li>
       </ul>
-      <div class="dod"><b>הגדרת סיום</b>שאלה על פתק שנכתב לפני חודש מקבלת תשובה נכונה עם קישור לעמוד.</div>
+      <div class="dod"><b>הגדרת סיום</b>Claude Code מחובר למחברת דרך MCP: מוצא פתק עברי לפי מילה עם תחילית, קורא אותו, ומוסיף לו שורה שמופיעה בעורך הפתוח בלי רענון.</div>
     </div>
   </details>
 
@@ -365,7 +373,7 @@ footer { margin-top: 56px; color: var(--muted); font-size: 0.85rem; }
       <ul class="tasks">
         <li data-task="S9-1"><span class="tid">S9-1</span><span class="st"></span><span class="txt">סקריפט התקנה <code>pnpm setup</code>: בחירה או יצירה של פרויקט Firebase, כתיבת <code>.env.local</code>, יצירת כללי האבטחה עם <code>OWNER_EMAIL</code>, ופריסת הכללים והאינדקסים</span></li>
         <li data-task="S9-2"><span class="tid">S9-2</span><span class="st"></span><span class="txt">כפתור Deploy to Vercel ב-README, עם רשימת משתני הסביבה ובדיקה בהפעלה שמסבירה מה חסר</span></li>
-        <li data-task="S9-3"><span class="tid">S9-3</span><span class="st"></span><span class="txt">מדריך התקנה צעד אחר צעד באנגלית ובעברית: Firebase, Vercel, Google sign-in, מפתח API לבינה מלאכותית, ו-Storage כרשות</span></li>
+        <li data-task="S9-3"><span class="tid">S9-3</span><span class="st"></span><span class="txt">מדריך התקנה צעד אחר צעד באנגלית ובעברית: Firebase, Vercel, Google sign-in, טוקן MCP לחיבור סוכנים, ו-Storage כרשות</span></li>
         <li data-task="S9-4"><span class="tid">S9-4</span><span class="st"></span><span class="txt">בדיקת התקנה נקייה ב-CI (<code>pnpm test:install</code>): שכפול טרי, התקנה ובנייה מול האמולטור</span></li>
         <li data-task="S9-5"><span class="tid">S9-5</span><span class="st"></span><span class="txt">עדכונים: איך מפתח מושך גרסה חדשה לעותק שלו, ומיגרציות לנתונים קיימים ב-Firestore</span></li>
         <li data-task="S9-6"><span class="tid">S9-6</span><span class="st"></span><span class="txt">CHANGELOG, גרסאות סמנטיות ו-GitHub Release לכל תגית</span></li>
@@ -432,7 +440,7 @@ footer { margin-top: 56px; color: var(--muted); font-size: 0.85rem; }
   <ul class="plain">
     <li><b>הוכרע ב-5.10.2026 — משתמש יחיד:</b> קוד פתוח שמפתחים מורידים ומתקינים כמחברת עצמאית. ספרינט 8 בוטל ונוסף ספרינט 9.</li>
     <li><b>הוכרע ב-5.10.2026 — שפה:</b> המאגר באנגלית לקהל המפתחים, עם תמיכה מלאה בעברית בממשק, בתוכן ובתבניות.</li>
-    <li><b>הוכרע ב-5.10.2026 — בינה מלאכותית:</b> כל מפתח מביא מפתח API משלו. ברירת המחדל Claude, ו-AI SDK מאפשר להחליף ספק.</li>
+    <li><b>הוכרע ב-6.10.2026 — MCP במקום בינה מלאכותית מובנית:</b> המחברת לא מריצה מודל ולא מחזיקה מפתח API. היא חושפת שרת MCP, והסוכן שהמשתמש כבר עובד איתו (Claude Code, Claude Desktop, Cursor) קורא וכותב בה. מחליף את ההכרעה מ-5.10.2026 (מפתח API לכל מפתח).</li>
     <li><b>שפת התיעוד במאגר הציבורי:</b> כרגע עברית. אנגלית תפתח את הפרויקט לתורמים מבחוץ.</li>
   </ul>
 </section>
