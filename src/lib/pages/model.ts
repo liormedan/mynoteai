@@ -12,6 +12,7 @@ import {
 } from "firebase/firestore";
 import type { Database, Props } from "@/lib/database/types";
 import { parseDatabase, parseProps } from "@/lib/database/values";
+import { blocksToPlainText } from "./plain-text";
 
 /*
  * Firestore layout — one owner per install, so no per-user nesting:
@@ -117,24 +118,8 @@ export const pageRef = (db: Firestore, id: string) =>
 export const contentRef = (db: Firestore, pageId: string) =>
   doc(db, PAGES, pageId, CONTENT, MAIN_CONTENT).withConverter(contentConverter);
 
-/** Plain text of a BlockNote document, for search and for the AI index. */
-export function blocksToPlainText(blocks: PartialBlock[]): string {
-  const out: string[] = [];
-  const walk = (value: unknown) => {
-    if (typeof value === "string") out.push(value);
-    else if (Array.isArray(value)) value.forEach(walk);
-    else if (value && typeof value === "object") {
-      const v = value as Record<string, unknown>;
-      if (typeof v.text === "string") out.push(v.text);
-      walk(v.content);
-      walk(v.cells);
-      walk(v.rows);
-      walk(v.children);
-    }
-  };
-  blocks.forEach(walk);
-  return out.join(" ").replace(/\s+/g, " ").trim();
-}
+/** Re-exported for existing callers; the function itself is server-safe. */
+export { blocksToPlainText };
 
 export type NewPage = {
   title?: string;
