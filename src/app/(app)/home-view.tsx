@@ -1,6 +1,7 @@
 "use client";
 
-import { FileText, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
+import { PageIcon } from "@/components/page/page-icon";
 import { useFormatter, useNow, useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -54,9 +55,7 @@ export function HomeView() {
                 className="flex items-center gap-3 px-4 py-2.5 hover:bg-muted"
               >
                 <span className="w-5 text-center" aria-hidden>
-                  {p.icon ?? (
-                    <FileText className="inline size-4 text-muted-foreground" />
-                  )}
+                  <PageIcon page={p} />
                 </span>
                 <bdi className="min-w-0 flex-1 truncate">
                   {p.title || t("App.untitled")}

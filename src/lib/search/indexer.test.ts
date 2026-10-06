@@ -15,6 +15,8 @@ const page = (id: string, title: string, contentAt: number): Page => ({
   createdAt: new Date(0),
   updatedAt: new Date(contentAt),
   contentUpdatedAt: new Date(contentAt),
+  props: {},
+  database: null,
 });
 
 const settle = () => new Promise((r) => setTimeout(r, 0));

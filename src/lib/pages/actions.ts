@@ -10,6 +10,7 @@ import {
   type DocumentReference,
   type Firestore,
 } from "firebase/firestore";
+import type { Database, Props } from "@/lib/database/types";
 import { getFirebase } from "@/lib/firebase/client";
 import {
   blocksToPlainText,
@@ -17,6 +18,7 @@ import {
   MAIN_CONTENT,
   PAGES,
   type Page,
+  type PageType,
 } from "./model";
 import { childrenIndex, descendantIds, positionBetween } from "./tree";
 
@@ -154,6 +156,8 @@ export async function duplicatePage(
           parentId: isRoot ? p.parentId : newIds.get(p.parentId!)!,
           position: isRoot ? rootPosition : p.position,
           type: p.type,
+          ...(Object.keys(p.props).length ? { props: p.props } : {}),
+          ...(p.database ? { database: p.database } : {}),
           isArchived: false,
           isFavorite: false,
           createdAt: serverTimestamp(),
@@ -179,6 +183,11 @@ export type PageSeed = {
   title?: string;
   icon?: string | null;
   blocks?: unknown[];
+  type?: PageType;
+  /** Where among its siblings; after the last one by default. */
+  position?: number;
+  props?: Props;
+  database?: Database;
 };
 
 /** Creates a page under `parentId` (or at the top) from optional content. */
@@ -196,8 +205,10 @@ export async function createPageUnder(
     icon: seed.icon ?? null,
     coverUrl: null,
     parentId,
-    position: nextPosition(pages, parentId),
-    type: "page",
+    position: seed.position ?? nextPosition(pages, parentId),
+    type: seed.type ?? "page",
+    ...(seed.props ? { props: seed.props } : {}),
+    ...(seed.database ? { database: seed.database } : {}),
     isArchived: false,
     isFavorite: false,
     createdAt: serverTimestamp(),

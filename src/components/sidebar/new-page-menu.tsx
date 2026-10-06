@@ -1,6 +1,7 @@
 "use client";
 
-import { ChevronDown, FilePlus, Plus, X } from "lucide-react";
+import { ChevronDown, FilePlus, Plus, Table2, X } from "lucide-react";
+import { useCreateDatabase } from "@/components/database/use-create-database";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -26,6 +27,7 @@ export function NewPageMenu({ onNavigate }: { onNavigate?: () => void }) {
   const router = useRouter();
   const { all } = usePagesStore();
   const mine = useUserTemplates();
+  const createDatabase = useCreateDatabase(onNavigate);
 
   const create = async (seed?: PageSeed) => {
     const id = await createPageUnder(all, null, seed);
@@ -59,6 +61,10 @@ export function NewPageMenu({ onNavigate }: { onNavigate?: () => void }) {
           <DropdownMenuItem onSelect={() => void create()}>
             <FilePlus />
             {t("emptyPage")}
+          </DropdownMenuItem>
+          <DropdownMenuItem onSelect={() => void createDatabase()}>
+            <Table2 />
+            {t("database")}
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuLabel>{t("templates")}</DropdownMenuLabel>

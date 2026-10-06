@@ -7,6 +7,7 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Editor } from "@/components/editor/dynamic-editor";
 import type { NotePartialBlock } from "@/components/editor/schema";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { localeDirection, type Locale } from "@/i18n/config";
 import { createAutosave, type SaveStatus } from "@/lib/autosave";
 import { storageEnabled } from "@/lib/firebase/client";
@@ -30,6 +31,8 @@ import { uploadPageFile } from "@/lib/pages/upload";
 import { restorePage } from "@/lib/pages/actions";
 import { usePagesStore } from "@/lib/pages/store";
 import { ancestors } from "@/lib/pages/tree";
+import { DatabaseView } from "@/components/database/database-view";
+import { RowProperties } from "@/components/database/row-properties";
 import { Breadcrumbs } from "./breadcrumbs";
 import { CoverPicker } from "./cover-picker";
 import { IconPicker } from "./icon-picker";
@@ -194,6 +197,7 @@ function LoadedPage({ page, locale }: { page: Page; locale: Locale }) {
     [live],
   );
   // The page itself, or a page above it, may be in the trash.
+  const isDatabase = page.type === "database";
   const archivedRoot = page.isArchived
     ? page
     : ancestors(byId, page.id).find((p) => p.isArchived);
@@ -253,7 +257,10 @@ function LoadedPage({ page, locale }: { page: Page; locale: Locale }) {
       {/* The padding matches BlockNote's own (editor.css on phones), so the title lines up with the text. */}
       <div
         dir={headerDir}
-        className="mx-auto w-full max-w-3xl px-4 sm:px-[54px]"
+        className={cn(
+          "mx-auto w-full px-4 sm:px-[54px]",
+          isDatabase ? "max-w-6xl" : "max-w-3xl",
+        )}
       >
         <div className={cover && page.icon ? "-mt-10" : "mt-10"}>
           {page.icon && (
@@ -324,6 +331,10 @@ function LoadedPage({ page, locale }: { page: Page; locale: Locale }) {
           }}
         />
 
+        {byId.get(page.parentId ?? "")?.type === "database" && (
+          <RowProperties row={page} />
+        )}
+
         {tooLarge !== null && (
           <p role="alert" className="mt-2 text-sm text-destructive">
             {t("tooLarge", { size: (tooLarge / 1_000_000).toFixed(1) })}
@@ -331,31 +342,37 @@ function LoadedPage({ page, locale }: { page: Page; locale: Locale }) {
         )}
       </div>
 
-      <div className="mx-auto w-full max-w-3xl pb-32">
-        {blocks === null ? (
-          <p className="px-6 text-sm text-muted-foreground">
-            {tApp("loading")}
-          </p>
-        ) : (
-          <Editor
-            locale={locale}
-            initialContent={blocks}
-            onChange={(doc) => {
-              const at = Date.now();
-              writeDraft(page.id, doc, at);
-              contentSaver.schedule({ blocks: doc, at });
-            }}
-            uploadFile={
-              storageEnabled
-                ? (file) => uploadPageFile(page.id, file)
-                : undefined
-            }
-            pages={summaries}
-            currentPageId={page.id}
-            untitled={tApp("untitled")}
-          />
-        )}
-      </div>
+      {isDatabase ? (
+        <div className="mx-auto w-full max-w-6xl px-4 pt-6 pb-32 sm:px-[54px]">
+          <DatabaseView page={page} />
+        </div>
+      ) : (
+        <div className="mx-auto w-full max-w-3xl pb-32">
+          {blocks === null ? (
+            <p className="px-6 text-sm text-muted-foreground">
+              {tApp("loading")}
+            </p>
+          ) : (
+            <Editor
+              locale={locale}
+              initialContent={blocks}
+              onChange={(doc) => {
+                const at = Date.now();
+                writeDraft(page.id, doc, at);
+                contentSaver.schedule({ blocks: doc, at });
+              }}
+              uploadFile={
+                storageEnabled
+                  ? (file) => uploadPageFile(page.id, file)
+                  : undefined
+              }
+              pages={summaries}
+              currentPageId={page.id}
+              untitled={tApp("untitled")}
+            />
+          )}
+        </div>
+      )}
     </main>
   );
 }

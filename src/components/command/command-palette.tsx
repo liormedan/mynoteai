@@ -2,13 +2,14 @@
 
 import { Command as CommandPrimitive } from "cmdk";
 import {
-  FileText,
   Home,
   Languages,
   PanelLeft,
   Plus,
   SunMoon,
+  Table2,
 } from "lucide-react";
+import { useCreateDatabase } from "@/components/database/use-create-database";
 import { useLocale, useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
@@ -35,6 +36,7 @@ import {
   DialogDescription,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { PageIcon } from "@/components/page/page-icon";
 import { setLocale } from "@/i18n/actions";
 import { createPageUnder } from "@/lib/pages/actions";
 import type { Page } from "@/lib/pages/model";
@@ -143,6 +145,7 @@ function Palette({
   const tApp = useTranslations("App");
   const { live, byId } = usePagesStore();
   const { search, pending } = useSearch();
+  const createDatabase = useCreateDatabase();
   const [query, setQuery] = useState("");
   const mac = useIsMac();
   const q = query.trim();
@@ -174,6 +177,12 @@ function Palette({
       icon: Plus,
       shortcut: "newPage" as const,
       run: () => void actions.newPage(),
+    },
+    {
+      id: "database",
+      label: t("newDatabase"),
+      icon: Table2,
+      run: () => void createDatabase(),
     },
     {
       id: "home",
@@ -215,7 +224,7 @@ function Palette({
         className="items-start"
       >
         <span className="mt-0.5 w-4 shrink-0 text-center" aria-hidden>
-          {page.icon ?? <FileText className="inline size-4 opacity-60" />}
+          <PageIcon page={page} />
         </span>
         <span className="flex min-w-0 flex-1 flex-col">
           <span className="flex min-w-0 items-baseline gap-2">
