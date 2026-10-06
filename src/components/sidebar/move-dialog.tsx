@@ -1,6 +1,6 @@
 "use client";
 
-import { FileText, Home } from "lucide-react";
+import { Home } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import {
@@ -9,6 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { PageIcon } from "@/components/page/page-icon";
 import { Input } from "@/components/ui/input";
 import { movePage, nextPosition } from "@/lib/pages/actions";
 import type { Page } from "@/lib/pages/model";
@@ -82,7 +83,7 @@ export function MoveDialog({
                 onClick={() => moveTo(p.id)}
               >
                 <span className="w-4 text-center" aria-hidden>
-                  {p.icon ?? <FileText className="inline size-4 opacity-60" />}
+                  <PageIcon page={p} />
                 </span>
                 <bdi className="truncate">{p.title || tApp("untitled")}</bdi>
               </button>

@@ -165,6 +165,31 @@ describe("data validation", () => {
     await assertFails(updateDoc(page, { contentUpdatedAt: "yesterday" }));
   });
 
+  it("keeps a database definition on database pages and values in props", async () => {
+    const db = asOwner();
+    const database = { properties: [], views: [] };
+    await assertSucceeds(
+      setDoc(doc(db, "pages/db1"), {
+        ...validPage(),
+        type: "database",
+        database,
+      }),
+    );
+    await assertFails(
+      setDoc(doc(db, "pages/db2"), { ...validPage(), database }),
+    );
+    await assertSucceeds(
+      setDoc(doc(db, "pages/row1"), {
+        ...validPage(),
+        parentId: "db1",
+        props: { status: "todo", tags: ["home"], done: false },
+      }),
+    );
+    await assertFails(
+      setDoc(doc(db, "pages/row2"), { ...validPage(), props: "todo" }),
+    );
+  });
+
   it("does not let createdAt change after creation", async () => {
     await assertFails(
       updateDoc(doc(asOwner(), "pages/seed"), {

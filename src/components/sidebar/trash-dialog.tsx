@@ -1,8 +1,9 @@
 "use client";
 
-import { FileText, RotateCcw, Trash2 } from "lucide-react";
+import { RotateCcw, Trash2 } from "lucide-react";
 import { useFormatter, useNow, useTranslations } from "next-intl";
 import { useState } from "react";
+import { PageIcon } from "@/components/page/page-icon";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -47,7 +48,7 @@ export function TrashDialog({ children }: { children: React.ReactNode }) {
             {trash.map((p) => (
               <li key={p.id} className="flex items-center gap-2 px-3 py-2">
                 <span className="w-5 text-center" aria-hidden>
-                  {p.icon ?? <FileText className="inline size-4 opacity-60" />}
+                  <PageIcon page={p} />
                 </span>
                 <div className="min-w-0 flex-1">
                   <bdi className="block truncate text-sm">

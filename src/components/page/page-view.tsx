@@ -30,6 +30,7 @@ import { uploadPageFile } from "@/lib/pages/upload";
 import { restorePage } from "@/lib/pages/actions";
 import { usePagesStore } from "@/lib/pages/store";
 import { ancestors } from "@/lib/pages/tree";
+import { RowProperties } from "@/components/database/row-properties";
 import { Breadcrumbs } from "./breadcrumbs";
 import { CoverPicker } from "./cover-picker";
 import { IconPicker } from "./icon-picker";
@@ -323,6 +324,10 @@ function LoadedPage({ page, locale }: { page: Page; locale: Locale }) {
             if (e.key === "Enter") e.preventDefault();
           }}
         />
+
+        {byId.get(page.parentId ?? "")?.type === "database" && (
+          <RowProperties row={page} />
+        )}
 
         {tooLarge !== null && (
           <p role="alert" className="mt-2 text-sm text-destructive">

@@ -95,7 +95,8 @@
     "trash": "סל המחזור",
     "offline": "אין חיבור — השינויים יסונכרנו",
     "noPages": "עוד אין עמודים",
-    "openMenu": "פתיחת העמודים"
+    "openMenu": "פתיחת העמודים",
+    "database": "מסד נתונים"
   },
   "Move": {
     "title": "העברת \"{page}\" אל…",
@@ -132,6 +133,21 @@
     "focusSidebar": "מעבר לרשימת העמודים",
     "toggleTheme": "החלפה בין מצב כהה לבהיר",
     "switchLanguage": "מעבר לאנגלית (English)",
-    "indexing": "{count, plural, one {קורא עוד עמוד אחד…} other {קורא עוד # עמודים…}}"
+    "indexing": "{count, plural, one {קורא עוד עמוד אחד…} other {קורא עוד # עמודים…}}",
+    "newDatabase": "מסד נתונים חדש"
+  },
+  "Database": {
+    "defaultTitle": "מסד נתונים",
+    "defaultStatus": "סטטוס",
+    "defaultTodo": "לביצוע",
+    "defaultDoing": "בתהליך",
+    "defaultDone": "בוצע",
+    "viewTable": "טבלה",
+    "viewBoard": "לוח",
+    "optionSearch": "חיפוש או אפשרות חדשה…",
+    "createOption": "יצירת „{name}”",
+    "clear": "ניקוי",
+    "empty": "ריק",
+    "openLink": "פתיחה"
   }
 }

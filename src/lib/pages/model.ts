@@ -10,6 +10,8 @@ import {
   type FirestoreDataConverter,
   type QueryDocumentSnapshot,
 } from "firebase/firestore";
+import type { Database, Props } from "@/lib/database/types";
+import { parseDatabase, parseProps } from "@/lib/database/values";
 
 /*
  * Firestore layout — one owner per install, so no per-user nesting:
@@ -37,6 +39,10 @@ export type Page = {
   updatedAt: Date;
   /** Last content save; null on pages saved before this field existed. */
   contentUpdatedAt: Date | null;
+  /** Values of a database row, by property id (empty on other pages). */
+  props: Props;
+  /** Properties and views, on pages of type "database" only. */
+  database: Database | null;
 };
 
 export type PageContent = {
@@ -74,6 +80,8 @@ export const pageConverter: FirestoreDataConverter<Page> = {
       createdAt: toDate(d.createdAt),
       updatedAt: toDate(d.updatedAt),
       contentUpdatedAt: d.contentUpdatedAt ? toDate(d.contentUpdatedAt) : null,
+      props: parseProps(d.props),
+      database: d.type === "database" ? parseDatabase(d.database) : null,
     };
   },
 };

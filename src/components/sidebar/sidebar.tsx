@@ -1,11 +1,12 @@
 "use client";
 
-import { CloudOff, FileText, Menu, Trash2 } from "lucide-react";
+import { CloudOff, Menu, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { FOCUS_SIDEBAR_EVENT } from "@/components/command/command-palette";
+import { PageIcon } from "@/components/page/page-icon";
 import { Button } from "@/components/ui/button";
 import { useDirection } from "@/components/ui/direction";
 import {
@@ -92,9 +93,7 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
                   )}
                 >
                   <span className="w-4 text-center" aria-hidden>
-                    {p.icon ?? (
-                      <FileText className="inline size-3.5 opacity-60" />
-                    )}
+                    <PageIcon page={p} className="size-3.5" />
                   </span>
                   <bdi className="truncate">{p.title || tApp("untitled")}</bdi>
                 </Link>

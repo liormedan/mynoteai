@@ -95,7 +95,8 @@
     "trash": "Trash",
     "offline": "Offline — changes will sync",
     "noPages": "No pages yet",
-    "openMenu": "Open pages"
+    "openMenu": "Open pages",
+    "database": "Database"
   },
   "Move": {
     "title": "Move \"{page}\" to…",
@@ -132,6 +133,21 @@
     "focusSidebar": "Go to the page list",
     "toggleTheme": "Switch between dark and light",
     "switchLanguage": "Switch to Hebrew (עברית)",
-    "indexing": "{count, plural, one {Reading one more page…} other {Reading # more pages…}}"
+    "indexing": "{count, plural, one {Reading one more page…} other {Reading # more pages…}}",
+    "newDatabase": "New database"
+  },
+  "Database": {
+    "defaultTitle": "Database",
+    "defaultStatus": "Status",
+    "defaultTodo": "To do",
+    "defaultDoing": "In progress",
+    "defaultDone": "Done",
+    "viewTable": "Table",
+    "viewBoard": "Board",
+    "optionSearch": "Search or add an option…",
+    "createOption": "Create “{name}”",
+    "clear": "Clear",
+    "empty": "Empty",
+    "openLink": "Open"
   }
 }

@@ -10,11 +10,12 @@ import {
   type DragEndEvent,
   type DragMoveEvent,
 } from "@dnd-kit/core";
-import { ChevronDown, ChevronRight, FileText, Plus } from "lucide-react";
+import { ChevronDown, ChevronRight, Plus } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { PageIcon } from "@/components/page/page-icon";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { createPageUnder, movePage, patchPage } from "@/lib/pages/actions";
@@ -142,7 +143,9 @@ function TreeRow({
   const tApp = useTranslations("App");
   const router = useRouter();
   const { all } = usePagesStore();
-  const { page, children } = node;
+  const { page } = node;
+  // Database rows are listed in the database itself, not in the sidebar.
+  const children = page.type === "database" ? [] : node.children;
   const open = expanded.has(page.id);
   const [renaming, setRenaming] = useState(false);
 
@@ -220,7 +223,7 @@ function TreeRow({
             draggable={false}
           >
             <span className="w-4 shrink-0 text-center" aria-hidden>
-              {page.icon ?? <FileText className="inline size-3.5 opacity-60" />}
+              <PageIcon page={page} className="size-3.5" />
             </span>
             <bdi className="truncate">{page.title || tApp("untitled")}</bdi>
           </Link>
