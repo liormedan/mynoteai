@@ -81,7 +81,10 @@ const SEP = "\x1f";
 const commits = new Map();
 for (const line of (git("log", "--all", `--format=%H${SEP}%P${SEP}%ad${SEP}%s`, "--date=short") || "").split("\n").filter(Boolean)) {
   const [sha, parents, date, subject] = line.split(SEP);
-  const ids = [...subject.matchAll(TASK_ID)].map((x) => x[0]);
+  // Task IDs count only as the subject's prefix ("S3-1, S3-2: …"), so a plan
+  // commit that merely mentions a task ("Plan: drop S9-8, …") does not start its sprint.
+  const prefix = subject.match(/^\s*(S\d+-\d+(?:\s*,\s*S\d+-\d+)*)\s*:/)?.[1] ?? "";
+  const ids = [...prefix.matchAll(TASK_ID)].map((x) => x[0]);
   commits.set(sha, { sha, short: sha.slice(0, 7), parents: parents.split(" ").filter(Boolean), date, subject, ids });
 }
 const onMain = new Set(git("rev-list", mainRef).split("\n").filter(Boolean));
