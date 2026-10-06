@@ -66,8 +66,35 @@ export async function loadContent(pageId: string) {
     : { blocks: [], updatedAt: new Date(0) };
 }
 
+/** Each open page's document as last loaded or saved on this device. */
+const knownContent = new Map<string, string>();
+
+export function rememberContent(pageId: string, blocks: unknown[]) {
+  knownContent.set(pageId, JSON.stringify(blocks));
+}
+
+/**
+ * Calls back when the stored document changes in a way this device did not
+ * write: an agent over MCP, or another device. The callback returns whether
+ * it took the change (it may not, while local edits are waiting to save).
+ */
+export function watchContent(
+  pageId: string,
+  onExternalChange: (blocks: PartialBlock[]) => boolean,
+) {
+  return onSnapshot(contentRef(getFirebase().db, pageId), (snap) => {
+    if (!snap.exists() || snap.metadata.hasPendingWrites) return;
+    const known = knownContent.get(pageId);
+    const blocks = snap.data().blocks as PartialBlock[];
+    const json = JSON.stringify(blocks);
+    if (known === undefined || json === known) return;
+    if (onExternalChange(blocks)) knownContent.set(pageId, json);
+  });
+}
+
 export async function saveContent(pageId: string, blocks: PartialBlock[]) {
   const json = JSON.stringify(blocks);
+  knownContent.set(pageId, json);
   const bytes = new TextEncoder().encode(json).length;
   if (bytes > MAX_BLOCKS_BYTES) throw new ContentTooLargeError(bytes);
   const plainText = blocksToPlainText(blocks);
