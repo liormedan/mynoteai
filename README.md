@@ -1,6 +1,6 @@
 # mynoteai
 
-**English** · [עברית](README.he.md)
+**English** · [Hebrew (עברית)](README.he.md)
 
 A personal, Notion-style notebook with an AI assistant. Open source for developers: everyone installs their own copy, on their own Vercel account and Firebase project. One user per install — no central server, no sign-ups.
 
